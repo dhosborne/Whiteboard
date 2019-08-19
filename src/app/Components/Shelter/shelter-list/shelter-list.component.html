@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="row">
+        <div class="col-auto mr-auto">
+            <h4>Inspections</h4>
+        </div>
+        <div class="col-auto">
+            <a [routerLink]="['new']" routerLinkActive="router-link-active" >
+                <i class="material-icons">add_circle_outline</i>New
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-hover" *ngIf="shelterList?.length > 0; else nothing">
+            <thead>
+                <tr>
+                    <th scope="col">MGCS</th>
+                    <th scope="col"> 7-Day</th>
+                    <th scope="col"> 28-Day</th>
+                    <th scope="col"> 84-Day</th>
+                    <th scope="col"> 168-Day</th>
+                    <th scope="col"> Air Filters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let shelter of shelterList" (dblclick)="shelterClicked(shelter._id)">
+                    <td>{{shelter.name}}</td>
+                    <td>{{shelter._7Day}}</td>
+                    <td>{{shelter._28Day}}</td>
+                    <td>{{shelter._84Day}}</td>
+                    <td>{{shelter._168Day}}</td>
+                    <td>{{shelter.airFilters}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ng-template #nothing>
+            <div class="col-auto mr-auto">
+                <h4>No shelters to display... add one</h4>
+            </div>
+        </ng-template>
+    </div>
+</div>

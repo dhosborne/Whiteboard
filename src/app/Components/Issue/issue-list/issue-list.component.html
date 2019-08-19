@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="row">
+        <div class="col-auto mr-auto">
+            <h4>Issues</h4>
+        </div>
+        <div class="col-auto">
+            <a [routerLink]="['new']">
+                <i class="material-icons">
+                    add_circle_outline
+                </i>
+                New
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-hover">
+            <thead>
+                <th scope="col">Asset</th>
+                <th scope="col">Date</th>
+                <th scope="col">Title</th>
+                <th scope="col">Completed</th>
+            </thead>
+            <tbody>
+                <tr class="table-default" *ngFor="let issue of issuesList" (dblclick)="issueClicked(issue._id)">
+                    <td scope="row">{{issue.asset}}</td>
+                    <td>{{issue.date | date: 'MM/dd'}}</td>
+                    <td>{{issue.title}}</td>
+                    <td>{{issue.completed}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
