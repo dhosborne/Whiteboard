@@ -1,1 +1,23 @@
-<p>issue-details works!</p>
+<div class="container">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-auto mr-auto"><h4>Title: {{issue.title}}</h4></div>
+            <div class="col-auto" *ngIf="!issue.completed">This issue is <strong>OPEN</strong></div>
+            <div class="col-auto" *ngIf="issue.completed">This issue is <strong>Closed</strong></div>
+            <div class="col-auto"><i class="material-icons" (click)="issueEditClicked(issue._id)">edit</i></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3"><small>Created by: {{issue.createdBy}}</small></div>
+            <div class="col-sm-3"><small>Date {{issue.date}}</small></div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm"><p>{{issue.description}}</p></div>
+        </div>
+        <hr>
+        <div class="row" [routerLink]="['/issues']" routerLinkActive="router-link-active">
+            <div class="col-sm-1"><i class="material-icons">keyboard_arrow_left</i></div>
+            <div class="col-sm-1" >Back</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row">
+        <div class="col-auto mr-auto">
+            <legend><em>Inactive Aircraft</em></legend>
+        </div>  
+    </div>
+    <div class="row">
+        <div class="col-auto">
+            <ul class="list-group" *ngFor="let av of aircraftList">
+                <li class="list-group-item d-flex justify-content-beteween align-items-center" (dblclick)="avOnClick(av._id)">
+                    {{av.tailNumber}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    

@@ -22,6 +22,10 @@ export class AircraftService {
     return this.http.get(this.endpoint, this.httpOptions);
   }
 
+  public getInactive(): Observable<any> {
+    return this.http.get(this.endpoint + 'inactive', this.httpOptions);
+  }
+
   public getAircraft(id): Observable<any> {
     return this.http.get(this.endpoint + id, this.httpOptions);
   }

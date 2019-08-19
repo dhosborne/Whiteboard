@@ -50,6 +50,18 @@
                                 formControlName="airFilters">
                     </div>
                 </fieldset>
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input
+                            class="custom-control-input"
+                            type="checkbox"
+                            name="isActive"
+                            id="isActive"
+                            checked=""
+                            formControlName="isActive">
+                        <label for="isActive" class="custom-control-label">Is Active?</label>
+                    </div>
+                </div>
                 <div class="btn-group">
                         <button type="button" *ngIf="!isNew" class="btn btn-danger" (click)="onDelete()">Delete</button>
                         <button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>

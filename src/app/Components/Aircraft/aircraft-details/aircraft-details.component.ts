@@ -32,7 +32,6 @@ export class AircraftDetailsComponent implements OnInit {
   }
 
   onEditClick(): void {
-    console.log('click!');
     this.router.navigate(['/aircraft/' + this.id + '/edit']);
   }
 

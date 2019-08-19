@@ -83,6 +83,7 @@ export class IssueEditComponent implements OnInit {
         if (data) {
           data.date = moment(data.date).format('YYYY-MM-DD');
           this.updateForm(data);
+          this.redirect();
         }
       });
     } else {
@@ -99,12 +100,13 @@ export class IssueEditComponent implements OnInit {
     this.loadShelters();
     this.assetList.push('---', 'OTHER');
   }
+
   private loadShelters(): void {
     this.shelterService.getShelters()
     .subscribe(data => {
       data.forEach(element => {
         this.shelterList.push(element);
-        this.aircraftList.push(element.name);
+        this.assetList.push(element.name);
       });
     });
   }
@@ -131,12 +133,16 @@ export class IssueEditComponent implements OnInit {
     this.issueService.deleteIssue(this.route.snapshot.paramMap.get('id'))
     .subscribe(data => {
       this.showMessage(data.message);
-      this.redirect();
+      this.router.navigate(['/issues']); // issue deleted, go back to list
     });
   }
 
   onCancel(): void {
-    this.redirect();
+    if (!this.isNew) {
+      this.redirect();
+    } else {
+      this.router.navigate(['/issues']);
+    }
   }
 
   private showMessage(message): void {

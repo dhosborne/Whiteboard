@@ -93,7 +93,11 @@ export class AircraftEditComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.router.navigate(['issues']);
+    if (this.isNew) {
+      this.router.navigate(['/aircraft']);
+    } else {
+      this.redirect();
+    }
   }
 
   redirect(): void {

@@ -1,9 +1,10 @@
 <div class="container">
     <div class="row">
-        <div class="col-auto mr-auto">
+        <div class="col-ms-auto mr-auto">
             <h4>Aircrafts</h4>
         </div>
-        <div class="col-auto">
+        <div class="col-sm-auto"><a [routerLink]="['inactive']" routerLinkActive="router-link-active" ><small><em>Looking for an inactive aircraft?</em></small></a></div>
+        <div class="col-sm-auto">
             <a [routerLink]="['new']">
                 <i class="material-icons">
                     add_circle_outline
@@ -15,22 +16,48 @@
     <div class="row">
         <ng-container *ngIf="aircraftList?.length > 0; else nothing;">
             <ng-container *ngFor="let av of aircraftList;" >
-                <div class="card text-white bg-primary mb-3" (dblclick)="avClicked(av._id)">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-auto mr-auto">
-                                {{av.tailNumber}}
-                            </div>
-                            <div class="col-auto">
-                                Batts Due: {{av.reconDate | moment: [28, 'days'] | date: 'MM/dd'}}
+                <ng-container *ngIf="av.isActive">
+                    <div class="card text-white bg-primary mb-3 avcard">
+                        <div class="card-header" (dblclick)="avClicked(av._id)">
+                            <div class="row">
+                                <div class="col-auto mr-auto">
+                                    {{av.tailNumber}}
+                                </div>
+                                <div class="col-auto">
+                                    Batts Due: {{av.reconDate | moment: [28, 'days'] | date: 'MM/dd'}}
+                                </div>
                             </div>
                         </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-auto mr-auto"><legend>Issues</legend></div>
+                                <div class="col-auto">
+                                    <a [routerLink]="['/issues/new']" routerLinkActive="router-link-active" >
+                                        <i class="material-icons">add</i>New
+                                    </a>
+                                </div>
+                            </div>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Tile</th>
+                                        <th>Date</th>
+                                        <th>Completed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let issue of issuesList">
+                                        <tr *ngIf="issue.asset === av.tailNumber && !issue.completed" (dblclick)="issueClicked(issue._id)">
+                                            <td>{{issue.title}}</td>
+                                            <td>{{issue.date}}</td>
+                                            <td>{{issue.completed}}</td>
+                                        </tr>                                    
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Primary card title</h4>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
+                </ng-container>
             </ng-container>            
         </ng-container>
 

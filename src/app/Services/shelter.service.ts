@@ -24,6 +24,10 @@ export class ShelterService {
     return this.http.get(this.endpoint, this.httpOptions);
   }
 
+  public getInactive(): Observable<any> {
+    return this.http.get(this.endpoint + 'inactive', this.httpOptions);
+  }
+
   public getShelter(id: string): Observable<any> {
     return this.http.get(this.endpoint + id, this.httpOptions);
   }

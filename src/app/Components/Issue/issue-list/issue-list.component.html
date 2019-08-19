@@ -13,6 +13,7 @@
         </div>
     </div>
     <div class="row">
+        <legend>Open</legend>
         <table class="table table-hover">
             <thead>
                 <th scope="col">Asset</th>
@@ -22,10 +23,31 @@
             </thead>
             <tbody>
                 <tr class="table-default" *ngFor="let issue of issuesList" (dblclick)="issueClicked(issue._id)">
-                    <td scope="row">{{issue.asset}}</td>
-                    <td>{{issue.date | date: 'MM/dd'}}</td>
-                    <td>{{issue.title}}</td>
-                    <td>{{issue.completed}}</td>
+                    <ng-container *ngIf="!issue.completed">
+                        <td scope="row">{{issue.asset}}</td>
+                        <td>{{issue.date | date: 'MM/dd'}}</td>
+                        <td>{{issue.title}}</td>
+                        <td>{{issue.completed}}</td>                        
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
+        <legend>Closed</legend>
+        <table class="table table-hover">
+            <thead>
+                <th scope="col">Asset</th>
+                <th scope="col">Date</th>
+                <th scope="col">Title</th>
+                <th scope="col">Completed</th>
+            </thead>
+            <tbody>
+                <tr class="table-default" *ngFor="let issue of issuesList" (dblclick)="issueClicked(issue._id)">
+                    <ng-container *ngIf="issue.completed">
+                        <td scope="row">{{issue.asset}}</td>
+                        <td>{{issue.date | date: 'MM/dd'}}</td>
+                        <td>{{issue.title}}</td>
+                        <td>{{issue.completed}}</td>                        
+                    </ng-container>
                 </tr>
             </tbody>
         </table>

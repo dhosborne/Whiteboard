@@ -24,6 +24,8 @@ import { LoginService } from './Services/login.service';
 import { IssueEditComponent } from './Components/Issue/issue-edit/issue-edit.component';
 import { IssueDetailsComponent } from './Components/Issue/issue-details/issue-details.component';
 import { IssueListComponent } from './Components/Issue/issue-list/issue-list.component';
+import { ShelterInactiveComponent } from './Components/Shelter/shelter-inactive/shelter-inactive.component';
+import { AircraftInactiveComponent } from './Components/Aircraft/aircraft-inactive/aircraft-inactive.component';
 
 
 @NgModule({
@@ -45,6 +47,8 @@ import { IssueListComponent } from './Components/Issue/issue-list/issue-list.com
     IssueEditComponent,
     IssueDetailsComponent,
     IssueListComponent,
+    ShelterInactiveComponent,
+    AircraftInactiveComponent,
   ],
   imports: [
     BrowserModule,

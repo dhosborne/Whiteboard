@@ -28,6 +28,6 @@ export class IssueListComponent implements OnInit {
   }
 
   issueClicked(id): void {
-    this.router.navigate(['issues/' + id + '/edit']);
+    this.router.navigate(['issues/' + id + '/details']);
   }
 }

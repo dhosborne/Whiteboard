@@ -17,9 +17,9 @@ export class AircraftListComponent implements OnInit {
   issuesList = new Array<Issue>();
 
   constructor(
-    private _aircraftService: AircraftService,
-    private _issueService: IssueService,
-    private _router: Router
+    private aircraftService: AircraftService,
+    private issueService: IssueService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -29,7 +29,7 @@ export class AircraftListComponent implements OnInit {
 
   private loadAircraft(): void {
     this.aircraftList.length = 0;
-    this._aircraftService.getAircrafts()
+    this.aircraftService.getAircrafts()
     .subscribe(data => {
       data.forEach((element) => {
         this.aircraftList.push(element);
@@ -39,7 +39,7 @@ export class AircraftListComponent implements OnInit {
 
   private loadIssues(): void {
     this.issuesList.length = 0;
-    this._issueService.getIssues()
+    this.issueService.getIssues()
     .subscribe(data => {
       data.forEach(element => {
         this.issuesList.push(element);
@@ -48,6 +48,10 @@ export class AircraftListComponent implements OnInit {
   }
 
   avClicked(id): void {
-    this._router.navigate(['aircraft/' + id + '/details']);
+    this.router.navigate(['aircraft/' + id + '/details']);
+  }
+
+  issueClicked(id): void {
+    this.router.navigate(['issues/' + id + '/details']);
   }
 }

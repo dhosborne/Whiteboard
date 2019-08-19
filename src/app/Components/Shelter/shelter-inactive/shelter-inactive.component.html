@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row">
+        <div class="col-auto mr-auto">
+            <legend><em>Inactive Shelters</em></legend>
+        </div>  
+    </div>
+    <div class="row">
+        <div class="col-auto">
+            <ul class="list-group" *ngFor="let shelter of shelterList">
+                <li class="list-group-item d-flex justify-content-beteween align-items-center" (dblclick)="shelterOnClick(shelter._id)">
+                    {{shelter.name}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
