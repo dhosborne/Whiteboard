@@ -1,0 +1,79 @@
+<div class="container">
+    <div class="card text-white bg-primary mb-3">
+        <div class="card-header"></div>
+        <div class="card-body">
+            <form [formGroup]="calForm" novalidate>
+                <div class="form-group">
+                    <label for="name">Name<span class="required">*</span></label>
+                    <input 
+                        type="text"
+                        id="name"
+                        name="name"
+                        class="form-control"
+                        formControlName="name"
+                        [ngClass]="{'is-invalid': f.name.invaild}">
+                    <div *ngIf="submitted && f.name.invalid" class="invalid-feedback">Name is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="serialNumber">Serial Number</label>
+                    <input 
+                        type="text"
+                        id="serialNumber"
+                        name="serialNumber"
+                        class="form-control"
+                        formControlName="serialNumber">
+                </div>
+                <div class="form-group">
+                    <label for="date">Date Calibrated<span class="required">*</span></label>
+                    <input 
+                        type="date"
+                        id="date"
+                        name="date"
+                        class="form-control"
+                        formControlName="date"
+                        [ngClass]="{'is-invalid': f.date.invaild}">
+                    <div *ngIf="submitted && f.date.invalid" class="invalid-feedback">Calibration date is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="duration">Calibration Duration (in months)<span class="required">*</span></label>
+                    <input 
+                        type="text"
+                        id="duration"
+                        name="duration"
+                        class="form-control"
+                        formControlName="duration"
+                        [ngClass]="{'is-invalid': f.duration.invaild}">
+                    <div *ngIf="submitted && f.duration.invalid" class="invalid-feedback">Calibration Duration required</div>
+                </div>
+                <div class="form-group">
+                    <label for="location"> Asset Location<span class="required">*</span></label>
+                    <input 
+                        type="location"
+                        id="location"
+                        name="location"
+                        class="form-control"
+                        formControlName="location"
+                        [ngClass]="{'is-invalid': f.location.invaild}">
+                    <div *ngIf="submitted && f.location.invalid" class="invalid-feedback">Asset Location Required</div>
+                </div>
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input
+                            class="custom-control-input"
+                            type="checkbox"
+                            name="isActive"
+                            id="isActive"
+                            checked=""
+                            formControlName="isActive">
+                        <label for="isActive" class="custom-control-label">Is Active?</label>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button type="button" *ngIf="!isNew" class="btn btn-danger" (click)="onDelete()">Delete</button>
+                    <button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
+                    <button type="button" class="btn btn-success" [disabled]="!calForm.valid" (click)="onSubmit()">Submit</button>
+                </div>  
+            </form>
+        </div>
+    </div>
+</div>

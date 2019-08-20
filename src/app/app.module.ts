@@ -26,6 +26,10 @@ import { IssueDetailsComponent } from './Components/Issue/issue-details/issue-de
 import { IssueListComponent } from './Components/Issue/issue-list/issue-list.component';
 import { ShelterInactiveComponent } from './Components/Shelter/shelter-inactive/shelter-inactive.component';
 import { AircraftInactiveComponent } from './Components/Aircraft/aircraft-inactive/aircraft-inactive.component';
+import { CalibrationDetailsComponent } from './Components/Calibration/calibration-details/calibration-details.component';
+import { CalibrationEditComponent } from './Components/Calibration/calibration-edit/calibration-edit.component';
+import { CalibrationInactiveComponent } from './Components/Calibration/calibration-inactive/calibration-inactive.component';
+import { CalibrationListComponent } from './Components/Calibration/calibration-list/calibration-list.component';
 
 
 @NgModule({
@@ -49,6 +53,10 @@ import { AircraftInactiveComponent } from './Components/Aircraft/aircraft-inacti
     IssueListComponent,
     ShelterInactiveComponent,
     AircraftInactiveComponent,
+    CalibrationDetailsComponent,
+    CalibrationEditComponent,
+    CalibrationInactiveComponent,
+    CalibrationListComponent,
   ],
   imports: [
     BrowserModule,

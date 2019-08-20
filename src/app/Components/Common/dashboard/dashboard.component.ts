@@ -59,4 +59,14 @@ export class DashboardComponent implements OnInit {
   public avClicked(id): void {
     this.router.navigate(['aircraft/' + id + '/edit']);
   }
+
+  toggle(element: HTMLElement, icon: HTMLElement): void {
+    element.classList.toggle('d-none');
+
+    if (icon.innerText === 'expand_more') {
+      icon.innerText = 'chevron_left';
+    } else {
+      icon.innerText = 'expand_more';
+    }
+  }
 }

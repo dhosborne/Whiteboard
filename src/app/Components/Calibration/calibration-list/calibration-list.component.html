@@ -1,0 +1,66 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-auto mr-auto">
+            <h6>Calibrations</h6>
+        </div>
+        <div class="col-sm-auto"><a [routerLink]="['inactive']" routerLinkActive="router-link-active" ><small><em>Looking for inactive calibrations?</em></small></a></div>
+        <div class="col-sm-auto">
+            <a [routerLink]="['new']" routerLinkActive="router-link-active" >
+                <i class="material-icons">
+                    add_circle_outline
+                </i>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <ng-container *ngIf="calList?.length > 0; else noCalibrations">
+            <ng-container *ngIf="locations?.length > 0; else noLocations">
+                <ng-container *ngFor="let location of locations">
+                    <div class="card text-white bg-primary mb-3 avcard">
+                        <div class="card-header" (click)="toggle(body, icon)">
+                            <div class="row">
+                                <div class="col-sm-auto mr-auto">
+                                    {{location}}
+                                </div>
+                                <div class="col-auto">
+                                    <i class="material-icons" #icon>
+                                        expand_more
+                                    </i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" #body>
+                            <div class="row">
+                                <div class="col-auto mr-auto"><h6>Tools</h6></div>
+                            </div>
+                            <div class="row">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Serial#</th>
+                                            <th scope="col">Cal Duration</th>
+                                            <th scope="col">Cal Due</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let cal of calList">
+                                            <tr *ngIf="cal.location === location" (click)="calClicked(cal._id)">
+                                                <td>{{cal.name}}</td>
+                                                <td>{{cal?.serialNumber}}</td>
+                                                <td>{{cal.duration}}/Mo.</td>
+                                                <td>{{cal.date | moment: [cal.duration, 'months'] | date: 'MM/dd/yyy'}}</td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+        <ng-template #noCalibrations> <h4>No Calibrations to display.. add one</h4></ng-template>
+        <ng-template #noLocations><h4>No locations found</h4></ng-template>
+    </div>
+</div>
