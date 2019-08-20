@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Aircraft } from '../../../Classes/aircraft';
+import { Shelter } from '../../../Classes/shelter';
 import { AircraftService } from '../../../Services/aircraft.service';
-import { Router } from '@angular/router';
+import { ShelterService } from '../../../Services/shelter.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-
-const title = 'Dashboard';
-
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,29 +13,50 @@ const title = 'Dashboard';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  avList = new Array<Aircraft>();
+  aircraftList = new Array<Aircraft>();
+  shelterList = new Array<Shelter>();
 
   constructor(
-    private _aircraftService: AircraftService,
-    private _router: Router,
-    private _title: Title
+    private aircraftService: AircraftService,
+    private shelterService: ShelterService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private title: Title
   ) { }
 
   ngOnInit() {
-    this._title.setTitle(title);
+    this.setTitle();
     this.getAircraftList();
+    this.getShelterList();
+  }
+
+  private setTitle(): void {
+    this.route.data.subscribe(data => {
+      this.title.setTitle(data.title);
+    });
   }
 
   private getAircraftList() {
-    this._aircraftService.getAircrafts()
+    this.aircraftService.getAircrafts()
     .subscribe(data => {
       data.forEach(element => {
-        this.avList.push(element);
+        if (moment(element.reconDate).isSame(moment(), 'week')) {
+            this.aircraftList.push(element);
+        }
+      });
+    });
+  }
+
+  private getShelterList() {
+    this.shelterService.getShelters()
+    .subscribe(data => {
+      data.forEach(element => {
+        this.shelterList.push(element);
       });
     });
   }
 
   public avClicked(id): void {
-    this._router.navigate(['aircraft/' + id + '/edit']);
+    this.router.navigate(['aircraft/' + id + '/edit']);
   }
 }

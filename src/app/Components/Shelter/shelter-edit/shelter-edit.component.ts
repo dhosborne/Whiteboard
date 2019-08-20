@@ -3,8 +3,9 @@ import { Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
 import { ActivatedRoute, Router} from '@angular/router';
 import { ShelterService } from '../../../Services/shelter.service';
 import { NgFlashMessageService } from 'ng-flash-messages';
-import { IShelter } from 'src/app/Interfaces/shelter';
+import { IShelter } from '../../../Interfaces/shelter';
 import * as moment from 'moment';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-shelter-edit',
@@ -27,21 +28,23 @@ export class ShelterEditComponent implements OnInit {
   isNew = true;
 
   constructor(
-    private _shelterService: ShelterService,
-    private _fb: FormBuilder,
-    private _route: ActivatedRoute,
-    private _router: Router,
-    private _flash: NgFlashMessageService
+    private shelterService: ShelterService,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private flash: NgFlashMessageService,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.setTitle();
     this.shelterForm.controls.name.setValidators(Validators.required);
 
-    if(this._route.snapshot.paramMap.has('id')){
+    if (this.route.snapshot.paramMap.has('id')){
       this.isNew = false;
-      this.id = this._route.snapshot.paramMap.get('id');
+      this.id = this.route.snapshot.paramMap.get('id');
 
-      this._shelterService.getShelter(this.id)
+      this.shelterService.getShelter(this.id)
       .subscribe(data => {
         console.log(data);
         data._7Day = moment(data._7Day).format('YYYY-MM-DD');
@@ -55,7 +58,7 @@ export class ShelterEditComponent implements OnInit {
   }
 
   private createForm(model: IShelter): FormGroup {
-    return this._fb.group(model);
+    return this.fb.group(model);
   }
 
   private updateForm(model: Partial<IShelter>): void {
@@ -67,15 +70,15 @@ export class ShelterEditComponent implements OnInit {
     const formValues = this.shelterForm.value;
     console.log(formValues);
 
-    if (this._route.snapshot.paramMap.has('id')){
-      this._shelterService.updateShelter(this._route.snapshot.paramMap.get('id'),
+    if (this.route.snapshot.paramMap.has('id')){
+      this.shelterService.updateShelter(this.route.snapshot.paramMap.get('id'),
       formValues)
       .subscribe(data => {
         this.showMessage(data.message);
         this.redirect();
       });
     } else {
-      this._shelterService.createShelter(formValues)
+      this.shelterService.createShelter(formValues)
       .subscribe(data => {
         this.showMessage(data.message);
         this.redirect();
@@ -84,7 +87,7 @@ export class ShelterEditComponent implements OnInit {
   }
 
   onDelete(): void {
-    this._shelterService.deleteShelter(this._route.snapshot.paramMap.get('id'))
+    this.shelterService.deleteShelter(this.route.snapshot.paramMap.get('id'))
     .subscribe(data => {
       this.showMessage(data.message);
       this.redirect();
@@ -96,11 +99,11 @@ export class ShelterEditComponent implements OnInit {
   }
 
   private redirect(): void {
-    this._router.navigate(['shelters'], {});
+    this.router.navigate(['shelters'], {});
   }
 
   private showMessage(message): void {
-    this._flash.showFlashMessage({
+    this.flash.showFlashMessage({
         messages: [message],
         dismissible: true,
         timeout: 10000,
@@ -110,5 +113,11 @@ export class ShelterEditComponent implements OnInit {
 
   get f() {
     return this.shelterForm.controls;
+  }
+
+  private setTitle(): void {
+    this.route.data.subscribe(data => {
+      this.title.setTitle(data.title);
+    });
   }
 }

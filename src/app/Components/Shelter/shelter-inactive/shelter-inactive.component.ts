@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ShelterService } from '../../../Services/shelter.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Shelter } from '../../../Classes/shelter';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-shelter-inactive',
@@ -13,10 +14,13 @@ export class ShelterInactiveComponent implements OnInit {
 
   constructor(
     private shelterService: ShelterService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private title: Title,
   ) { }
 
   ngOnInit() {
+    this.setTitle();
     this.getInactiveShelters();
   }
 
@@ -33,4 +37,9 @@ export class ShelterInactiveComponent implements OnInit {
     this.router.navigate(['shelters/' + id + '/edit']);
   }
 
+  private setTitle(): void {
+    this.route.data.subscribe(data => {
+      this.title.setTitle(data.title);
+    });
+  }
 }

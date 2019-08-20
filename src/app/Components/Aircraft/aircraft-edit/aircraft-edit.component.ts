@@ -4,6 +4,7 @@ import { AircraftService } from '../../../Services/aircraft.service';
 import { ActivatedRoute, Router} from '@angular/router';
 import { NgFlashMessageService } from 'ng-flash-messages';
 import { IAircraft } from '../../../Interfaces/aircraft';
+import { Title } from '@angular/platform-browser';
 import * as moment from 'moment';
 
 
@@ -30,10 +31,13 @@ export class AircraftEditComponent implements OnInit {
     private aircraftService: AircraftService,
     private route: ActivatedRoute,
     private router: Router,
-    private flash: NgFlashMessageService
+    private flash: NgFlashMessageService,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.setTitle();
+
     this.aircraftForm.controls.tailNumber.setValidators(Validators.required);
 
     if (this.route.snapshot.paramMap.has('id')) {
@@ -115,5 +119,11 @@ export class AircraftEditComponent implements OnInit {
 
   get f() {
     return this.aircraftForm.controls;
+  }
+
+  private setTitle(): void {
+    this.route.data.subscribe(data => {
+      this.title.setTitle(data.title);
+    });
   }
 }

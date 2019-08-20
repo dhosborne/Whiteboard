@@ -18,7 +18,7 @@
             <ng-container *ngFor="let av of aircraftList;" >
                 <ng-container *ngIf="av.isActive">
                     <div class="card text-white bg-primary mb-3 avcard">
-                        <div class="card-header" (dblclick)="avClicked(av._id)">
+                        <div class="card-header" (dblclick)="avClicked(av._id)" (click)="toggle(body, icon)">
                             <div class="row">
                                 <div class="col-auto mr-auto">
                                     {{av.tailNumber}}
@@ -26,9 +26,14 @@
                                 <div class="col-auto">
                                     Batts Due: {{av.reconDate | moment: [28, 'days'] | date: 'MM/dd'}}
                                 </div>
+                                <div class="col-auto">
+                                    <i class="material-icons" #icon>
+                                        expand_more
+                                    </i>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" #body>
                             <div class="row">
                                 <div class="col-auto mr-auto"><legend>Issues</legend></div>
                                 <div class="col-auto">

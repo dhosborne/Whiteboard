@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IssueService } from '../../../Services/issue.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Issue } from '../../../Classes/issue';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-issue-details',
@@ -15,11 +16,14 @@ export class IssueDetailsComponent implements OnInit {
   constructor(
     private issueService: IssueService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private title: Title
   ) { }
 
   ngOnInit() {
-    if (this.route.snapshot.paramMap.has('id')){
+    this.setTitle();
+
+    if (this.route.snapshot.paramMap.has('id')) {
       this.id = this.route.snapshot.paramMap.get('id');
       this.issueService.getIssue(this.id)
       .subscribe(data => {
@@ -30,6 +34,12 @@ export class IssueDetailsComponent implements OnInit {
 
   issueEditClicked(id): void {
     this.router.navigate(['issues/' + id + '/edit']);
+  }
+
+  private setTitle(): void {
+    this.route.data.subscribe(data => {
+      this.title.setTitle(data.title);
+    });
   }
 
 }

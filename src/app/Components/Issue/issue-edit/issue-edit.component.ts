@@ -9,6 +9,7 @@ import { IssueService } from '../../../Services/issue.service';
 import { Shelter } from '../../../Classes/shelter';
 import { IIssue } from '../../../Interfaces/issue';
 import * as moment from 'moment';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-issue-edit',
@@ -43,10 +44,12 @@ export class IssueEditComponent implements OnInit {
     private router: Router,
     private flash: NgFlashMessageService,
     private fb: FormBuilder,
+    private title: Title
 
   ) { }
 
   ngOnInit() {
+    this.setTitle();
     this.loadLists();
     this.issueForm.controls.title.setValidators(Validators.required);
     this.issueForm.controls.date.setValidators(Validators.required);
@@ -160,5 +163,11 @@ export class IssueEditComponent implements OnInit {
 
   get f() {
     return this.issueForm.controls;
+  }
+
+  private setTitle(): void {
+    this.route.data.subscribe(data => {
+      this.title.setTitle(data.title);
+    });
   }
 }

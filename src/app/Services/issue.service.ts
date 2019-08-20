@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Issue } from '../Classes/issue';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class IssueService {
     headers: new HttpHeaders({
       Authorization: localStorage.getItem('LoggedInUser'),
       ContentType: 'application/x-www-form-urlencoded'
-    })
+    }),
+    params: new HttpParams({})
   };
 
   constructor(
@@ -23,8 +25,11 @@ export class IssueService {
     return this.http.get(this.endpoint, this.httpOptions);
   }
 
-  public getIssueGroup(id: string) {
-    return this.http.get(this.endpoint + 'group/' + id, this.httpOptions)
+  public getIssueGroup(asset: string) {
+    console.log(asset);
+    this.httpOptions.params.append('asset', asset);
+    console.log(this.httpOptions);
+    return this.http.get<Issue[]>(this.endpoint + 'group/', this.httpOptions);
   }
 
   public getIssue(id: string): Observable<any> {

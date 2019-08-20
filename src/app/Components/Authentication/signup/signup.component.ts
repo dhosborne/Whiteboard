@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../../../Services/login.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgFlashMessageService } from 'ng-flash-messages';
 import { ISignup } from '../../../Interfaces/signup';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-signup',
@@ -21,14 +22,17 @@ export class SignupComponent implements OnInit {
   submitted = false;
 
   constructor(
-    private _fb: FormBuilder,
-    private _loginService: LoginService,
-    private _router: Router,
-    private _flash: NgFlashMessageService
+    private fb: FormBuilder,
+    private loginService: LoginService,
+    private router: Router,
+    private flash: NgFlashMessageService,
+    private title: Title,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    let c = this.signUpForm.controls;
+    this.setTitle();
+    const c = this.signUpForm.controls;
     c.username.setValidators(Validators.required);
     c.password.setValidators(Validators.required);
     c.passConfirm.setValidators(Validators.required);
@@ -38,21 +42,21 @@ export class SignupComponent implements OnInit {
 
 
   private createForm(model: ISignup): FormGroup {
-    return this._fb.group(model);
+    return this.fb.group(model);
   }
 
   signUp(): void {
     this.submitted = true;
-    this._loginService.signup(this.signUpForm.value)
+    this.loginService.signup(this.signUpForm.value)
     .subscribe( res => {
-      this._router.navigate(['login']);
+      this.router.navigate(['login']);
     }, err => {
       this.showMessage(err.message);
     });
   }
 
   showMessage(message): void {
-    this._flash.showFlashMessage({
+    this.flash.showFlashMessage({
         messages: [message],
         dismissible: true,
         timeout: 10000,
@@ -62,5 +66,11 @@ export class SignupComponent implements OnInit {
 
   get f() {
     return this.signUpForm.controls;
+  }
+
+  private setTitle(): void {
+    this.route.data.subscribe(data => {
+      this.title.setTitle(data.title);
+    });
   }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Aircraft } from '../../../Classes/aircraft';
 import { AircraftService } from '../../../Services/aircraft.service';
-import { Router } from '@angular/router';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -15,10 +15,13 @@ export class AircraftInactiveComponent implements OnInit {
 
   constructor(
     private aircraftService: AircraftService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.setTitle();
     this.getInactiveAircraft();
   }
 
@@ -31,5 +34,11 @@ export class AircraftInactiveComponent implements OnInit {
 
   avOnClick(id): void {
     this.router.navigate(['aircraft/' + id + '/edit']);
+  }
+
+  private setTitle(): void {
+    this.route.data.subscribe(data => {
+      this.title.setTitle(data.title);
+    });
   }
 }

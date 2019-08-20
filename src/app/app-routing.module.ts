@@ -23,7 +23,7 @@ const appRoutes: Routes = [
     {path: 'login', component: LoginComponent, data: {title: 'Login'}},
     {path: 'logout', component: LogoutComponent, data: {title: 'Logout'}},
     {path: 'signup', component: SignupComponent, data: {title: 'Signup'}},
-    {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: {title: 'Component'}},
+    {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: {title: 'Welcome to White Board'}},
 
     {path: 'aircraft', component: AircraftListComponent, canActivate: [AuthGuard], data: {title: 'Aircraft List'}},
     {path: 'aircraft/new', component: AircraftEditComponent, canActivate: [AuthGuard], data: {title: 'New Aircraft'}},
@@ -31,13 +31,13 @@ const appRoutes: Routes = [
     {path: 'aircraft/:id/edit', component: AircraftEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Aircraft'}},
     {path: 'aircraft/inactive', component: AircraftInactiveComponent, canActivate: [AuthGuard], data: {title: 'Inactive Aircrafts'}},
 
-    {path: 'shelters', component: ShelterListComponent, canActivate: [AuthGuard], data: {title: 'Shelters'}},
+    {path: 'shelters', component: ShelterListComponent, canActivate: [AuthGuard], data: {title: 'Shelter List'}},
     {path: 'shelters/new', component: ShelterEditComponent, canActivate: [AuthGuard], data: {title: 'New Shelter'}},
     {path: 'shelters/:id/details', component: ShelterDetailsComponent, canActivate: [AuthGuard], data: {title: 'New Shelter'}},
     {path: 'shelters/:id/edit', component: ShelterEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Shelter'}},
     {path: 'shelters/inactive', component: ShelterInactiveComponent, canActivate: [AuthGuard], data: {title: 'Inactive Shelters'}},
 
-    {path: 'issues', component: IssueListComponent, canActivate: [AuthGuard], data: {title: 'Issues'}},
+    {path: 'issues', component: IssueListComponent, canActivate: [AuthGuard], data: {title: 'Issues List'}},
     {path: 'issues/new', component: IssueEditComponent, canActivate: [AuthGuard], data: {title: 'New Issue'}},
     {path: 'issues/:id/details', component: IssueDetailsComponent, canActivate: [AuthGuard], data: {title: 'Details'}},
     {path: 'issues/:id/edit', component: IssueEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Issue'}},

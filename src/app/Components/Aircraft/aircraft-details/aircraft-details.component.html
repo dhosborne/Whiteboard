@@ -8,5 +8,21 @@
         </div>
     </div>
     <div class="row">
+        <table class="table table-hover">
+            <thead>
+                <th scope="col">Title</th>
+                <th scope="col">Date</th>
+                <th scope="col">Completed</th>
+            </thead>
+            <tbody>
+                <tr *ngIf="issueList?.length > 0">
+                    <ng-container *ngFor="let issue of issuesList">
+                        <td>{{issue.title))</td>
+                        <td>{{issue.date}}</td>
+                        <td>{{issue.completed}}</td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

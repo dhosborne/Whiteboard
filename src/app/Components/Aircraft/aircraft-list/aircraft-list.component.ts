@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AircraftService } from '../../../Services/aircraft.service';
 import { IssueService } from '../../../Services/issue.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Aircraft } from '../../../Classes/aircraft';
 import { Issue } from '../../../Classes/issue';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-aircraft-list',
@@ -19,10 +20,13 @@ export class AircraftListComponent implements OnInit {
   constructor(
     private aircraftService: AircraftService,
     private issueService: IssueService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.setTitle();
     this.loadAircraft();
     this.loadIssues();
   }
@@ -51,7 +55,23 @@ export class AircraftListComponent implements OnInit {
     this.router.navigate(['aircraft/' + id + '/details']);
   }
 
+  toggle(element: HTMLElement, icon: HTMLElement): void {
+    element.classList.toggle('d-none');
+
+    if (icon.innerText === 'expand_more') {
+      icon.innerText = 'chevron_left';
+    } else {
+      icon.innerText = 'expand_more';
+    }
+  }
+
   issueClicked(id): void {
     this.router.navigate(['issues/' + id + '/details']);
+  }
+
+  private setTitle(): void {
+    this.route.data.subscribe(data => {
+      this.title.setTitle(data.title);
+    });
   }
 }

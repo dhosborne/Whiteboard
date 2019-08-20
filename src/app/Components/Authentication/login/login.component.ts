@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../../Services/login.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ILogin } from '../../../Interfaces/login';
 import { NgFlashMessageService } from 'ng-flash-messages';
 import { AuthService } from '../../../Services/auth.service';
+import { Title } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-login',
@@ -20,29 +22,31 @@ export class LoginComponent implements OnInit {
   submitted = false;
 
   constructor(
-    private _loginService: LoginService,
-    private _fb: FormBuilder,
-    private _router: Router,
-    private _auth: AuthService,
-    private _flash: NgFlashMessageService
-
+    private loginService: LoginService,
+    private fb: FormBuilder,
+    private router: Router,
+    private auth: AuthService,
+    private flash: NgFlashMessageService,
+    private route: ActivatedRoute,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.setTitle();
     this.loginForm.controls.username.setValidators(Validators.required);
     this.loginForm.controls.password.setValidators(Validators.required);
   }
 
   private createForm(model: ILogin): FormGroup {
-    return this._fb.group(model);
+    return this.fb.group(model);
   }
 
   logIn(): void {
-    this._loginService.login(this.loginForm.value)
+    this.loginService.login(this.loginForm.value)
     .subscribe(data => {
-      this._auth.sendToken(data.token);
-      this._auth.setUser(JSON.stringify(data.user));
-      this._router.navigate(['/']);
+      this.auth.sendToken(data.token);
+      this.auth.setUser(JSON.stringify(data.user));
+      this.router.navigate(['/']);
     }, err => {
       console.log(err);
       this.showMessage(err.message);
@@ -50,7 +54,7 @@ export class LoginComponent implements OnInit {
   }
 
   showMessage(message): void {
-    this._flash.showFlashMessage({
+    this.flash.showFlashMessage({
         messages: [message],
         dismissible: true,
         timeout: 10000,
@@ -60,5 +64,11 @@ export class LoginComponent implements OnInit {
 
   get f() {
     return this.loginForm.controls;
+  }
+
+  private setTitle(): void {
+    this.route.data.subscribe(data => {
+      this.title.setTitle(data.title);
+    });
   }
 }
