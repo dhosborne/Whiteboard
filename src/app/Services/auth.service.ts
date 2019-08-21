@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {  } from '../Classes/login'
+import { JwtHelperService } from '@auth0/angular-jwt'
+
+const jwtHelper = new JwtHelperService();
 
 @Injectable({
   providedIn: 'root'
@@ -9,24 +11,39 @@ export class AuthService {
 
   constructor(private myRoute: Router) { }
 
-  sendToken(token: string) {
-    return localStorage.setItem('LoggedInUser', token);
+  setToken(token: string) {
+    return sessionStorage.setItem('jwt', token);
   }
   getToken() {
-    return localStorage.getItem('LoggedInUser');
+    return sessionStorage.getItem('jwt');
+  }
+
+  isTokenFresh(token: string): boolean {
+    const decoded = jwtHelper.decodeToken(token);
+
+    if (Date.now() >= decoded.exp * 1000) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   isLoggedIn(): boolean {
-    return this.getToken() !== null;
-  }
+    const token = this.getToken();
 
-  setUser(user: string) {
-    localStorage.setItem('user', user);
+    if (token) {
+      if (!jwtHelper.isTokenExpired(token)) {
+        return true;
+      } else {
+        return false;
+      }
+    }  else {
+      return false;
+    }
   }
 
   logout() {
-    localStorage.removeItem('LoggedInUser');
-    localStorage.removeItem('User');
     this.myRoute.navigate(['login']);
+    sessionStorage.clear();
   }
 }

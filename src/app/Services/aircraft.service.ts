@@ -11,7 +11,7 @@ export class AircraftService {
   endpoint = 'http://10.206.1.160:3000/aircraft/';
   httpOptions = {
     headers: new HttpHeaders({
-      Authorization: localStorage.getItem('LoggedInUser'),
+      Authorization: sessionStorage.getItem('jwt'),
       ContentType: 'application/x-www-form-urlencoded'
     })
   };

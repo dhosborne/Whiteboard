@@ -10,7 +10,7 @@ export class CalibrationService {
   endpoint = 'http://10.206.1.160:3000/calibration/';
   httpOptions = {
     headers: new HttpHeaders({
-      Authorization: localStorage.getItem('LoggedInUser'),
+      Authorization: sessionStorage.getItem('jwt'),
       ContentType: 'application/x-www-form-urlencoded'
     })
   };

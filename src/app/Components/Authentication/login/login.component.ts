@@ -6,7 +6,9 @@ import { ILogin } from '../../../Interfaces/login';
 import { NgFlashMessageService } from 'ng-flash-messages';
 import { AuthService } from '../../../Services/auth.service';
 import { Title } from '@angular/platform-browser';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
+const helper = new JwtHelperService();
 
 @Component({
   selector: 'app-login',
@@ -28,7 +30,7 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private flash: NgFlashMessageService,
     private route: ActivatedRoute,
-    private title: Title
+    private title: Title,
   ) { }
 
   ngOnInit() {
@@ -44,8 +46,9 @@ export class LoginComponent implements OnInit {
   logIn(): void {
     this.loginService.login(this.loginForm.value)
     .subscribe(data => {
-      this.auth.sendToken(data.token);
-      this.auth.setUser(JSON.stringify(data.user));
+      const details = helper.decodeToken(data.token);
+      sessionStorage.setItem('user', JSON.stringify(details));
+      this.auth.setToken(data.token);
       this.router.navigate(['/']);
     }, err => {
       console.log(err);
@@ -58,7 +61,7 @@ export class LoginComponent implements OnInit {
         messages: [message],
         dismissible: true,
         timeout: 10000,
-        type: 'info'
+        type: message.success
     });
   }
 

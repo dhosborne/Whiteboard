@@ -30,6 +30,8 @@ import { CalibrationDetailsComponent } from './Components/Calibration/calibratio
 import { CalibrationEditComponent } from './Components/Calibration/calibration-edit/calibration-edit.component';
 import { CalibrationInactiveComponent } from './Components/Calibration/calibration-inactive/calibration-inactive.component';
 import { CalibrationListComponent } from './Components/Calibration/calibration-list/calibration-list.component';
+import { UavconfigEditComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-edit/uavconfig-edit.component';
+import { UavconfigDetailsComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-details/uavconfig-details.component';
 
 
 @NgModule({
@@ -57,6 +59,8 @@ import { CalibrationListComponent } from './Components/Calibration/calibration-l
     CalibrationEditComponent,
     CalibrationInactiveComponent,
     CalibrationListComponent,
+    UavconfigEditComponent,
+    UavconfigDetailsComponent,
   ],
   imports: [
     BrowserModule,

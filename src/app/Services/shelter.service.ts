@@ -11,7 +11,7 @@ export class ShelterService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      Authorization: localStorage.getItem('LoggedInUser'),
+      Authorization: sessionStorage.getItem('jwt'),
       ContentType: 'application/x-www-form-urlencoded'
     })
   };
