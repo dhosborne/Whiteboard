@@ -45,7 +45,7 @@
                                     </thead>
                                     <tbody>
                                         <ng-container *ngFor="let cal of calList">
-                                            <tr *ngIf="cal.location === location" (click)="calClicked(cal._id)">
+                                            <tr *ngIf="cal.location === location && !cal.inCal" (click)="calClicked(cal._id)">
                                                 <td>{{cal.name}}</td>
                                                 <td>{{cal?.serialNumber}}</td>
                                                 <td>{{cal.duration}}/Mo.</td>
@@ -57,6 +57,49 @@
                             </div>
                         </div>
                     </div>
+                </ng-container>
+                <ng-container *ngIf="inCal">
+                    <div class="card text-white bg-primary mb-3 avcard">
+                        <div class="card-header" (click)="toggle(body, icon)">
+                            <div class="row">
+                                <div class="col-sm-auto mr-auto">
+                                    In Calibration
+                                </div>
+                                <div class="col-auto">
+                                    <i class="material-icons" #icon>
+                                        expand_more
+                                    </i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" #body>
+                            <div class="row">
+                                <div class="col-auto mr-auto"><h6>Tools</h6></div>
+                            </div>
+                            <div class="row">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Serial#</th>
+                                            <th scope="col">Cal Duration</th>
+                                            <th scope="col">Cal Due</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let cal of calList">
+                                            <tr *ngIf="cal.inCal" (click)="calClicked(cal._id)">
+                                                <td>{{cal.name}}</td>
+                                                <td>{{cal?.serialNumber}}</td>
+                                                <td>{{cal.duration}}/Mo.</td>
+                                                <td>{{cal.date | moment: [cal.duration, 'months'] | date: 'MM/dd/yyy'}}</td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>                    
                 </ng-container>
             </ng-container>
         </ng-container>

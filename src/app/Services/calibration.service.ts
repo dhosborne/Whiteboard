@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, identity } from 'rxjs';
+import { Observable } from 'rxjs';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +39,9 @@ export class CalibrationService {
 
   public deleteCalibration(id): Observable<any> {
     return this.http.delete(this.endpoint + id, this.httpOptions);
+  }
+
+  public calculateDueDate(date, duration): string {
+    return moment(date, 'YYYY-MM-DD').add(duration, 'months').format('YYYY-MM-DD');
   }
 }

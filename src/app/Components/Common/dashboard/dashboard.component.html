@@ -1,7 +1,7 @@
 <div class="container">
-    <div class="row">
+    <div class="row" *ngIf="battsThisWeek">
         <div class="col-sm">
-            <div class="card border-secondary mb-3">
+            <div class="card bg-primary mb-3">
                 <div class="card-header" (click)="toggle(body, icon)">
                     <div class="row">
                         <div class="col-auto mr-auto">
@@ -26,6 +26,124 @@
                                 <td>{{av.reconDate | moment: [28, 'days'] | date: 'MM/dd'}}</td>
                             </tr>
                         </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="shelterInspectionsThisWeek">
+        <div class="col-sm">
+            <div class="card bg-primary mb-3">
+                <div class="card-header" (click)="toggle(body, icon)">
+                    <div class="row">
+                        <div class="col-auto mr-auto">
+                            <h6>Shelter Inspections This Week</h6>
+                        </div>
+                        <div class="col-auto">
+                            <i class="material-icons" #icon>
+                                expand_more
+                            </i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" #body>
+                    <table class="table table-hover">
+                        <thead>
+                            <th scope="col">Shelter</th>
+                            <th scope="col">7day</th>
+                            <th scope="col">28day</th>
+                            <th scope="col">84day</th>
+                            <th scope="col">168day</th>
+                            <th scope="col">Air Filters</th>
+                        </thead>
+                        <tbody>
+                            <tr class="table-default" *ngFor="let shelter of shelterList">
+                                <td scope="row">{{shelter.name}}</td>
+                                <td>{{shelter._7Day      | moment: [7, 'days']   | date: 'MM/dd'}}</td>
+                                <td>{{shelter._28Day     | moment: [28, 'days']  | date: 'MM/dd'}}</td>
+                                <td>{{shelter._84Day     | moment: [84, 'days']  | date: 'MM/dd'}}</td>
+                                <td>{{shelter._168Day    | moment: [168, 'days'] | date: 'MM/dd'}}</td>
+                                <td>{{shelter.airFilters | moment: [3, 'months'] | date: 'MM/dd'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="calThisWeek || calThisMonth || cal3Months">
+        <div class="col-sm">
+            <div class="card bg-primary mb-3">
+                <div class="card-header" (click)="toggle(body, icon)">
+                    <div class="row">
+                        <div class="col-auto mr-auto">
+                            <h6>Calibration Forcast</h6>
+                        </div>
+                        <div class="col-auto">
+                            <i class="material-icons" #icon>
+                                expand_more
+                            </i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" #body>
+                    <table class="table table-hover">
+                        <ng-container *ngIf="calThisWeek">
+                            <thead>
+                                <th>This Week</th>
+                                <th scope="col">Asset</th>
+                                <th scope="col">Serial</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Due Date</th>
+                            </thead>
+                            <tbody>
+                                <tr class="table-default" *ngFor="let cal of calThisWeekList">
+                                    <td></td>
+                                    <td scope="row">{{cal.name}}</td>
+                                    <td scope="row">{{cal?.serialNumber}}</td>
+                                    <td scope="row">{{cal.location}}</td>
+                                    <td scope="row">{{cal.date | moment: [cal.duration, 'months'] | date:'MM/dd' }}</td>
+                                </tr>
+                            </tbody>
+                            <hr>
+                        </ng-container>
+                        <ng-container *ngIf="calThisMonth">
+                            <thead>
+                                <th>This Month</th>
+                                <th scope="col">Asset</th>
+                                <th scope="col">Serial</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Due Date</th>
+                            </thead>
+                            <tbody>
+                                <tr class="table-default" *ngFor="let cal of calThisMonthList">
+                                    <td></td>
+                                    <td scope="row">{{cal.name}}</td>
+                                    <td scope="row">{{cal?.serialNumber}}</td>
+                                    <td scope="row">{{cal.location}}</td>
+                                    <td scope="row">{{cal.date | moment: [cal.duration, 'months'] | date:'MM/dd' }}</td>
+                                </tr>
+                            </tbody>
+                            <hr>
+                        </ng-container>
+                        <ng-container *ngIf="cal3Months">
+                            <thead>
+                                <th>3 Months</th>
+                                <th scope="col">Asset</th>
+                                <th scope="col">Serial</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Due Date</th>
+                            </thead>
+                            <tbody>
+                                <tr class="table-default" *ngFor="let cal of cal3MonthsList">
+                                    <td></td>
+                                    <td scope="row">{{cal.name}}</td>
+                                    <td scope="row">{{cal?.serialNumber}}</td>
+                                    <td scope="row">{{cal.location}}</td>
+                                    <td scope="row">{{cal.date | moment: [cal.duration, 'months'] | date:'MM/dd' }}</td>
+                                </tr>
+                            </tbody>
+                        </ng-container>
                     </table>
                 </div>
             </div>

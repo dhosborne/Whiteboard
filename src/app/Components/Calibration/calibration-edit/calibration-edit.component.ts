@@ -19,6 +19,7 @@ export class CalibrationEditComponent implements OnInit {
     date: '',
     duration: '',
     location: '',
+    inCal: false,
     isActive: true,
   });
 

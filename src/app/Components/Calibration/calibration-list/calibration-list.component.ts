@@ -15,6 +15,8 @@ export class CalibrationListComponent implements OnInit {
   calList = new Array<Calibration>();
   locations = new Array<string>();
 
+  inCal = false;
+
   constructor(
     private calService: CalibrationService,
     private router: Router,
@@ -33,8 +35,13 @@ export class CalibrationListComponent implements OnInit {
     .subscribe(data => {
       data.forEach(element => {
         this.calList.push(element);
-        if (this.locations.indexOf(element.loction) < 0) {
+        if (this.locations.indexOf(element.location) === -1 ) {
           this.locations.push(element.location);
+        }
+        if (!this.inCal) {
+          if (element.inCal) {
+            this.inCal = true;
+          }
         }
       });
       this.locations.sort();

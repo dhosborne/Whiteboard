@@ -23,6 +23,10 @@ var CalibrationSchema = new Schema({
         type: String,
         required: true,
     },
+    inCal: {
+        type: Boolean,
+        default: false,
+    },
     isActive: {
         type: Boolean,
         default: true,
