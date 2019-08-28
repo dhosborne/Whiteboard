@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {NgFlashMessagesModule} from 'ng-flash-messages';
-
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +34,7 @@ import { CalibrationInactiveComponent } from './Components/Calibration/calibrati
 import { CalibrationListComponent } from './Components/Calibration/calibration-list/calibration-list.component';
 import { UavconfigEditComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-edit/uavconfig-edit.component';
 import { UavconfigDetailsComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-details/uavconfig-details.component';
+import { ConfirmationDialogComponent } from './Components/Common/confirmation-dialog/confirmation-dialog.component';
 
 
 @NgModule({
@@ -61,6 +64,7 @@ import { UavconfigDetailsComponent } from './Components/Aircraft/UAVConfiguratio
     CalibrationListComponent,
     UavconfigEditComponent,
     UavconfigDetailsComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +73,13 @@ import { UavconfigDetailsComponent } from './Components/Aircraft/UAVConfiguratio
     FormsModule,
     ReactiveFormsModule,
     NgFlashMessagesModule.forRoot(),
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatButtonModule
+  ],
+  entryComponents: [
+    ConfirmationDialogComponent
   ],
   providers: [
     AuthGuard,

@@ -1,28 +1,41 @@
 <div class="container">
-    <div class="row">
-        <div class="col-auto mr-auto">
-            {{aircraft?.tailNumber}}
+    <div class="card bg-primary mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-auto mr-auto">
+                        {{aircraft?.tailNumber}}
+                </div>
+                <div class="col-auto">
+                    <i class="material-icons" (click)="onEditClick()">edit</i>
+                </div>
+            </div>
         </div>
-        <div class="col-auto">
-            <i class="material-icons" (click)="onEditClick()">edit</i>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-auto mb-auto">
+                    <a *ngIf="aircraft" [routerLink]="['/uavconfig', aircraft?._id]" >UAV Configuration</a>
+                </div> 
+            </div>
+            <hr>
+            <div class="row" *ngIf="issuesList?.length > 0">
+                <legend>Issues</legend>
+                <table class="table table-hover">
+                    <thead>
+                        <th scope="col">Title</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Completed</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let issue of issuesList">
+                            <ng-container *ngIf="!issue.completed">
+                                <td>{{issue.title}}</td>
+                                <td>{{issue.date}}</td>
+                                <td>{{issue.completed}}</td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>                
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <table class="table table-hover">
-            <thead>
-                <th scope="col">Title</th>
-                <th scope="col">Date</th>
-                <th scope="col">Completed</th>
-            </thead>
-            <tbody>
-                <tr *ngIf="issueList?.length > 0">
-                    <ng-container *ngFor="let issue of issuesList">
-                        <td>{{issue.title))</td>
-                        <td>{{issue.date}}</td>
-                        <td>{{issue.completed}}</td>
-                    </ng-container>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    </div>  
 </div>

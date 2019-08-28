@@ -30,6 +30,7 @@ exports.group = (req, res) =>{
     log('Issue group for id: ' + req.query.asset + ' requested...' );
     var token = Auth.getToken(req.headers);
     if (token) {
+        log('Auth token found...');
         Issue.find({asset: req.query.asset}, (err, group) => {
             if(err) {
                 log(err.message + '\n');

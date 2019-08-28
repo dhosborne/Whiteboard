@@ -26,6 +26,9 @@ import { CalibrationInactiveComponent } from './Components/Calibration/calibrati
 
 import { AuthGuard } from './Guards/auth.guard';
 
+import { UavconfigDetailsComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-details/uavconfig-details.component';
+import { UavconfigEditComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-edit/uavconfig-edit.component';
+
 
 
 const appRoutes: Routes = [
@@ -56,6 +59,9 @@ const appRoutes: Routes = [
     {path: 'calibration/:id/details', component: CalibrationDetailsComponent, canActivate: [AuthGuard], data: {title: 'Calibration Details'}},
     {path: 'calibration/:id/edit', component: CalibrationEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Calibration'}},
     {path: 'calibration/inactive', component: CalibrationInactiveComponent, canActivate: [AuthGuard], data: {title: 'Inactive Calibration'}},
+
+    {path: 'uavconfig/:id', component: UavconfigDetailsComponent, canActivate: [AuthGuard], data: {title: 'UAV Config Details'}},
+    {path: 'uavconfig/:id/edit', component: UavconfigEditComponent, canActivate: [AuthGuard], data: {title: 'UAV Config Edit'}},
 
 
     // redirect bad and empty paths to dashboard component

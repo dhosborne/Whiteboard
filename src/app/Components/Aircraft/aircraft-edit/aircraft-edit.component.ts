@@ -5,6 +5,8 @@ import { ActivatedRoute, Router} from '@angular/router';
 import { NgFlashMessageService } from 'ng-flash-messages';
 import { IAircraft } from '../../../Interfaces/aircraft';
 import { Title } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material';
+import { ConfirmationDialogComponent } from '../../Common/confirmation-dialog/confirmation-dialog.component';
 import * as moment from 'moment';
 
 
@@ -32,7 +34,9 @@ export class AircraftEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private flash: NgFlashMessageService,
-    private title: Title
+    private title: Title,
+    private dialog: MatDialog,
+
   ) { }
 
   ngOnInit() {
@@ -82,6 +86,8 @@ export class AircraftEditComponent implements OnInit {
     } else {
       this.aircraftService.createAircraft(formValues)
       .subscribe(data => {
+        console.log(data);
+        this.id = data.result._id;
         this.showMessage(data.message);
         this.redirect();
       });
@@ -89,10 +95,21 @@ export class AircraftEditComponent implements OnInit {
   }
 
   onDelete(): void {
-    this.aircraftService.deleteAircraft(this.route.snapshot.paramMap.get('id'))
-    .subscribe(data => {
-      this.showMessage(data.message);
-      this.redirect();
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+      data: 'Do you really want to delete this Aircraft?'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.aircraftService.deleteAircraft(this.route.snapshot.paramMap.get('id'))
+        .subscribe(data => {
+          this.showMessage(data.message);
+          this.router.navigate(['/aircraft']);
+        });
+      } else {
+        this.showMessage('Cancelled Delete!');
+      }
     });
   }
 

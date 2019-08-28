@@ -4,10 +4,4 @@ export class Aircraft implements IAircraft {
     tailNumber: string;
     reconDate: string;
     isActive: boolean;
-
-    constructor(
-        tailNumber: string,
-        reconDate: string,
-        isActive: boolean,
-    ) {}
 }

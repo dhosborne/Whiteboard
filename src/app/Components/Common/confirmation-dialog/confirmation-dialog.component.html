@@ -1,0 +1,26 @@
+<div class="background-opaque">
+    <div class="message-container">
+        <div class="row">
+            <div class="col-auto">
+               <h6>Please Confirm!</h6> 
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-auto">
+                <div mat-dialog-content>
+                    {{message}}
+                </div>                 
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-auto offset-6 self-justify-end" >
+                <div class="btn-group" role="group" mat-dialog-actions>
+                    <button class="btn btn-secondary btn-sm" (click)="onNoClick()">No</button>
+                    <button class="btn btn-secondary btn-sm" [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
+                </div>                  
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Issue } from '../Classes/issue';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,7 @@ export class IssueService {
       Authorization: sessionStorage.getItem('jwt'),
       ContentType: 'application/x-www-form-urlencoded'
     }),
-    params: new HttpParams({})
+    params: {}
   };
 
   constructor(
@@ -25,11 +24,10 @@ export class IssueService {
     return this.http.get(this.endpoint, this.httpOptions);
   }
 
-  public getIssueGroup(asset: string) {
-    console.log(asset);
-    this.httpOptions.params.append('asset', asset);
-    console.log(this.httpOptions);
-    return this.http.get<Issue[]>(this.endpoint + 'group/', this.httpOptions);
+  public getIssueGroup(asset: string): Observable<any> {
+    const params = new HttpParams().set('asset', asset);
+    this.httpOptions.params = params;
+    return this.http.get(this.endpoint + 'group/', this.httpOptions);
   }
 
   public getIssue(id: string): Observable<any> {
