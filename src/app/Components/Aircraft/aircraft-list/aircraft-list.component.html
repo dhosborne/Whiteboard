@@ -14,60 +14,60 @@
         </div>
     </div>
     <div class="row">
-        <ng-container *ngIf="aircraftList?.length > 0; else nothing;">
-            <ng-container *ngFor="let av of aircraftList;" >
-                <ng-container *ngIf="av.isActive">
-                    <div class="card text-white bg-primary mb-3 avcard">
-                        <div class="card-header" (dblclick)="avClicked(av._id)" (click)="toggle(body, icon)">
-                            <div class="row">
-                                <div class="col-auto mr-auto">
-                                    {{av.tailNumber}}
-                                </div>
-                                <div class="col-auto">
-                                    Batts Due: {{av.reconDate | moment: [28, 'days'] | date: 'MM/dd'}}
-                                </div>
-                                <div class="col-auto">
-                                    <i class="material-icons" #icon>
-                                        expand_more
-                                    </i>
-                                </div>
-                            </div>
+        <ul class="nav nav-tabs">
+            <ng-container *ngFor="let av of aircraftList">
+                <li class="nav-item" >
+                    <a class="nav-link" (click)="tabSelected(av.tailNumber)">{{av.tailNumber}}</a>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+    <div class="row">
+        <div id="tabContent" class="tab-content" *ngIf="aircraft; else nothing">
+            <div class="card text-white bg-primary mb-3 avcard">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-auto mr-auto">
+                            {{aircraft?.tailNumber}}
                         </div>
-                        <div class="card-body" #body>
-                            <div class="row">
-                                <div class="col-auto mr-auto"><legend>Issues</legend></div>
-                                <div class="col-auto">
-                                    <a [routerLink]="['/issues/new']" routerLinkActive="router-link-active" >
-                                        <i class="material-icons">add</i>New
-                                    </a>
-                                </div>
-                            </div>
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Tile</th>
-                                        <th>Date</th>
-                                        <th>Completed</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <ng-container *ngFor="let issue of issuesList">
-                                        <tr *ngIf="issue.asset === av.tailNumber && !issue.completed" (dblclick)="issueClicked(issue._id)">
-                                            <td>{{issue.title}}</td>
-                                            <td>{{issue.date}}</td>
-                                            <td>{{issue.completed}}</td>
-                                        </tr>                                    
-                                    </ng-container>
-                                </tbody>
-                            </table>
+                        <div class="col-auto">
+                            Batts Due: {{aircraft?.reconDate | moment: [28, 'days'] | date: 'MM/dd'}}
+                        </div>
+                    </div>                    
+                </div>
+
+                <div class="card-body" #body>
+                    <div class="row">
+                        <div class="col-auto mr-auto"><legend>Issues</legend></div>
+                        <div class="col-auto">
+                            <a [routerLink]="['/issues/new']" routerLinkActive="router-link-active" >
+                                <i class="material-icons">add</i>New
+                            </a>
                         </div>
                     </div>
-                </ng-container>
-            </ng-container>            
-        </ng-container>
-
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Tile</th>
+                                <th>Date</th>
+                                <th>Completed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let issue of issuesList">
+                                <tr *ngIf="!issue.completed" (dblclick)="issueClicked(issue._id)">
+                                    <td>{{issue.title}}</td>
+                                    <td>{{issue.date}}</td>
+                                    <td>{{issue.completed}}</td>
+                                </tr>                                    
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         <ng-template #nothing>
-            <div class="col-auto mr-auto"><h4>No aircraft to display... add one</h4></div>
+            <h6><em>Select a tab to display aircraft info</em></h6>
         </ng-template>
     </div>
 </div>

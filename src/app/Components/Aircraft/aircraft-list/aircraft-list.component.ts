@@ -15,7 +15,10 @@ import { Title } from '@angular/platform-browser';
 export class AircraftListComponent implements OnInit {
 
   aircraftList = new Array<Aircraft>();
+  aircraft: Aircraft;
+
   issuesList = new Array<Issue>();
+  tailSelected: string;
 
   constructor(
     private aircraftService: AircraftService,
@@ -27,51 +30,54 @@ export class AircraftListComponent implements OnInit {
 
   ngOnInit() {
     this.setTitle();
-    this.loadAircraft();
-    this.loadIssues();
+    this.loadAircrafts();
   }
 
-  private loadAircraft(): void {
-    this.aircraftList.length = 0;
-    this.aircraftService.getAircrafts()
-    .subscribe(data => {
-      data.forEach((element) => {
-        this.aircraftList.push(element);
+    private loadAircrafts(): void {
+      this.aircraftList.length = 0;
+
+      this.aircraftService.getAircrafts()
+      .subscribe(data => {
+        data.forEach((aircraft: Aircraft) => {
+          if (this.aircraftList.indexOf(aircraft) === -1) {
+            this.aircraftList.push(aircraft);
+          }
+        });
       });
-    });
-  }
-
-  private loadIssues(): void {
-    this.issuesList.length = 0;
-    this.issueService.getIssues()
-    .subscribe(data => {
-      data.forEach(element => {
-        this.issuesList.push(element);
-      });
-    });
-  }
-
-  avClicked(id): void {
-    this.router.navigate(['aircraft/' + id + '/details']);
-  }
-
-  toggle(element: HTMLElement, icon: HTMLElement): void {
-    element.classList.toggle('d-none');
-
-    if (icon.innerText === 'expand_more') {
-      icon.innerText = 'chevron_left';
-    } else {
-      icon.innerText = 'expand_more';
     }
-  }
+
+    private loadTab(tail: string): void {
+      this.issuesList.length = 0;
+
+      if (tail !== '') {
+        this.aircraftList.forEach(element => {
+          if (element.tailNumber === tail) {
+            this.aircraft = element;
+            this.issueService.getIssueGroup(tail)
+            .subscribe(data => {
+              data.forEach((issue: Issue) => {
+                this.issuesList.push(issue);
+              });
+            });
+          }
+        });
+      }
+    }
 
   issueClicked(id): void {
     this.router.navigate(['issues/' + id + '/details']);
   }
 
+  inActiveClicked(): void {
+    this.router.navigate(['aircraft/inactive']);
+  }
   private setTitle(): void {
     this.route.data.subscribe(data => {
       this.title.setTitle(data.title);
     });
+  }
+
+  tabSelected(tail: string): void {
+    this.loadTab(tail);
   }
 }

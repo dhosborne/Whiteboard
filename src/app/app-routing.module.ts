@@ -39,6 +39,7 @@ const appRoutes: Routes = [
 
     {path: 'aircraft', component: AircraftListComponent, canActivate: [AuthGuard], data: {title: 'Aircraft List'}},
     {path: 'aircraft/new', component: AircraftEditComponent, canActivate: [AuthGuard], data: {title: 'New Aircraft'}},
+    {path: 'aircraft/:id', component: AircraftListComponent, canActivate: [AuthGuard], data: {title: 'Aircraft List'}},
     {path: 'aircraft/:id/details', component: AircraftDetailsComponent, canActivate: [AuthGuard], data: {title: 'Aircraft Details'}},
     {path: 'aircraft/:id/edit', component: AircraftEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Aircraft'}},
     {path: 'aircraft/inactive', component: AircraftInactiveComponent, canActivate: [AuthGuard], data: {title: 'Inactive Aircrafts'}},

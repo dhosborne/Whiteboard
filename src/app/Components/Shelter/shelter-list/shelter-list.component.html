@@ -3,90 +3,88 @@
         <div class="col-sm-auto mr-auto">
             <h4>Shelters</h4>
         </div>
-        <div class="col-sm-auto"><a [routerLink]="['inactive']" routerLinkActive="router-link-active"><small><em>Looking for inactive shelters?</em></small></a></div>
+        <div class="col-sm-auto"><a (click)="inActiveClicked()"><small><em>Looking for inactive shelters?</em></small></a></div>
         <div class="col-sm-auto">
-            <a [routerLink]="['new']" routerLinkActive="router-link-active" >
+            <a [routerLink]="['/shelter/new']" routerLinkActive="router-link-active" >
                <i class="material-icons">add_circle_outline</i>New 
             </a>
         </div>
     </div>
     <div class="row">
-        <ng-container *ngIf="shelterList?.length > 0; else nothing">
+        <ul class="nav nav-tabs">
             <ng-container *ngFor="let shelter of shelterList">
-                <div class="card text-white bg-primary mb-3 avcard">
-                    <div class="card-header" (click)="toggle(body, chevron)">
-                        <div class="row">
-                            <div class="col-auto mr-auto">
-                                {{shelter.name}}
-                            </div>
-                            <div class="col-auto">
-                                <i class="material-icons" #chevron>
-                                    expand_more
-                                </i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body" #body>
-                        <legend>Inspections</legend>
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">MGCS</th>
-                                    <th scope="col"> 7-Day</th>
-                                    <th scope="col"> 28-Day</th>
-                                    <th scope="col"> 84-Day</th>
-                                    <th scope="col"> 168-Day</th>
-                                    <th scope="col"> Air Filters</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr (dblclick)="shelterClicked(shelter._id)">
-                                    <td>{{shelter.name}}</td>
-                                    <td>{{shelter._7Day      | moment: [7, 'days']   | date: 'MM/dd'}}</td>
-                                    <td>{{shelter._28Day     | moment: [28, 'days']  | date: 'MM/dd'}}</td>
-                                    <td>{{shelter._84Day     | moment: [84, 'days']  | date: 'MM/dd'}}</td>
-                                    <td>{{shelter._168Day    | moment: [168, 'days'] | date: 'MM/dd'}}</td>
-                                    <td>{{shelter.airFilters | moment: [3, 'months'] | date: 'MM/dd'}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="row">
-                            <div class="col-auto mr-auto">
-                                <legend (click)="goToIssues()">Issues</legend>                                
-                            </div>
-                            <div class="col-auto">
-                                <a [routerLink]="['/issues/new']" routerLinkActive="router-link-active" >
-                                    <i class="material-icons">add</i>
-                                </a>
-                            </div>
-                        </div>                        
-                        
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Completed</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let issue of issuesList" (dblclick)="issueClicked(issue._id)">
-                                    <ng-container *ngIf="issue.asset === shelter.name && !issue.completed">
-                                        <td>{{issue.title }}</td>
-                                        <td>{{issue.date | date: 'MM/dd/yyyy' }}</td>
-                                        <td>{{issue.completed}}</td>                                       
-                                    </ng-container>
-                                </tr>
-                            </tbody>
-                        </table>                            
+                <li class="nav-item">
+                    <a class="nav-link" (click)="tabSelected(shelter.name)">{{shelter?.name}}</a>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+    <div class="row">
+        <div id="tabContent" class="tab-content" *ngIf="shelter; else nothing">
+            <div class="card text-white bg-primary mb-3 avcard">
+                <div class="card-header">
+                    <div class="col-auto mr-auto">
+                        {{shelter.name}}
                     </div>
                 </div>
-            </ng-container>
-        </ng-container>
-        <ng-template #nothing>
-            <div class="col-auto mr-auto">
-                <h4>No shelters to display... add one</h4>
+                <div class="card-body" #body>
+                    <legend>Inspections</legend>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">MGCS</th>
+                                <th scope="col"> 7-Day</th>
+                                <th scope="col"> 28-Day</th>
+                                <th scope="col"> 84-Day</th>
+                                <th scope="col"> 168-Day</th>
+                                <th scope="col"> Air Filters</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr (dblclick)="shelterClicked(shelter._id)">
+                                <td>{{shelter.name}}</td>
+                                <td>{{shelter._7Day      | moment: [7, 'days']   | date: 'MM/dd'}}</td>
+                                <td>{{shelter._28Day     | moment: [28, 'days']  | date: 'MM/dd'}}</td>
+                                <td>{{shelter._84Day     | moment: [84, 'days']  | date: 'MM/dd'}}</td>
+                                <td>{{shelter._168Day    | moment: [168, 'days'] | date: 'MM/dd'}}</td>
+                                <td>{{shelter.airFilters | moment: [3, 'months'] | date: 'MM/dd'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-auto mr-auto">
+                            <legend (click)="goToIssues()">Issues</legend>                                
+                        </div>
+                        <div class="col-auto">
+                            <a [routerLink]="['/issues/new']" routerLinkActive="router-link-active" >
+                                <i class="material-icons">add</i>
+                            </a>
+                        </div>
+                    </div>                        
+                    
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Completed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let issue of issuesList" (dblclick)="issueClicked(issue._id)">
+                                <ng-container *ngIf="!issue.completed">
+                                    <td>{{issue.title }}</td>
+                                    <td>{{issue.date | date: 'MM/dd/yyyy' }}</td>
+                                    <td>{{issue.completed}}</td>                                       
+                                </ng-container>
+                            </tr>
+                        </tbody>
+                    </table>                            
+                </div>
             </div>
+        </div>
+        <ng-template #nothing>
+            <h6><em>Select a tab to display shelter info</em></h6>
         </ng-template>
     </div>
 </div>

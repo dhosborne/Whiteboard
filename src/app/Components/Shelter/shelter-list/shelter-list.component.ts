@@ -14,6 +14,8 @@ import { Title } from '@angular/platform-browser';
 export class ShelterListComponent implements OnInit {
 
   shelterList = new Array<Shelter>();
+  shelter: Shelter;
+  nameSelected: string;
   issuesList = new Array<Issue>();
 
   constructor(
@@ -27,31 +29,39 @@ export class ShelterListComponent implements OnInit {
   ngOnInit() {
     this.setTitle();
     this.getShelterList();
-    this.getIssueList();
   }
 
 
   private getShelterList(): void {
+    this.shelterList.length = 0;
+
     this.shelterService.getShelters()
     .subscribe(data => {
-      data.forEach(element => {
-        this.shelterList.push(element);
+      data.forEach((shelter: Shelter) => {
+        if (this.shelterList.indexOf(shelter) === -1) {
+          this.shelterList.push(shelter);
+        }
       });
     });
   }
 
-  private getIssueList(): void {
-    this.issueService.getIssues()
-    .subscribe(data => {
-      data.forEach(element => {
-        this.issuesList.push(element);
+  private loadTab(name: string): void {
+    this.issuesList.length = 0;
+    if (this.nameSelected !== '') {
+      this.shelterList.forEach((element: Shelter) => {
+        if (element.name === name) {
+          this.shelter = element;
+          this.issueService.getIssueGroup(name)
+          .subscribe(data => {
+            data.forEach((issue: Issue) => {
+              this.issuesList.push(issue);
+            });
+          });
+        }
       });
-    });
+    }
   }
 
-  shelterClicked(id): void {
-    this.router.navigate(['shelters/' + id + '/edit']);
-  }
 
   issueClicked(id): void {
     this.router.navigate(['issues/' + id + '/details']);
@@ -61,17 +71,8 @@ export class ShelterListComponent implements OnInit {
     this.router.navigate(['shelters/inactive']);
   }
 
-  toggle(element: HTMLElement, icon: HTMLElement): void {
-    element.classList.toggle('d-none');
-    if (icon.innerText === 'expand_more') {
-      icon.innerText = 'chevron_left';
-    } else {
-      icon.innerText = 'expand_more';
-    }
-  }
-
-  goToIssues(): void {
-    this.router.navigate(['/issues']);
+  tabSelected(name: string): void {
+    this.loadTab(name);
   }
 
   private setTitle(): void {

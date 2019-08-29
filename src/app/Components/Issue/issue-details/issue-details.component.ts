@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IssueService } from '../../../Services/issue.service';
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Issue } from '../../../Classes/issue';
 import { Title } from '@angular/platform-browser';
@@ -17,6 +18,7 @@ export class IssueDetailsComponent implements OnInit {
     private issueService: IssueService,
     private route: ActivatedRoute,
     private router: Router,
+    private location: Location,
     private title: Title
   ) { }
 
@@ -42,4 +44,7 @@ export class IssueDetailsComponent implements OnInit {
     });
   }
 
+  goBack(): void {
+    this.location.back();
+  }
 }

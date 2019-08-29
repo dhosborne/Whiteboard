@@ -6,7 +6,8 @@ var Schema = mongoose.Schema;
 var AircraftSchema = new Schema ({
     tailNumber: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     reconDate: {
         type: String
