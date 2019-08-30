@@ -90,7 +90,7 @@ export class CalibrationEditComponent implements OnInit {
   }
 
   redirect(): void {
-    this.router.navigate(['calibration']);
+    this.router.navigate(['calibrations']);
   }
 
   private createForm(model: ICalibration): FormGroup {

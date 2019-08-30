@@ -1,17 +1,31 @@
 <div class="container">
     <div class="row">
-        <div class="col-auto mr-auto">
-            <legend><em>Inactive Aircraft</em></legend>
+            <div class="col-auto ">
+                <a [routerLink]="['/aircrafts']">
+                    <i class="material-icons">
+                        chevron_left
+                    </i>
+                </a>
+            </div>
+        <div class="col-auto">
+            <h6><em>Inactive aircraft list</em></h6>
         </div>  
     </div>
     <div class="row">
-        <div class="col-auto">
+        <div class="col-auto" *ngIf="aircraftList?.length > 0; else nothing">
             <ul class="list-group" *ngFor="let av of aircraftList">
                 <li class="list-group-item d-flex justify-content-beteween align-items-center" (dblclick)="avOnClick(av._id)">
                     {{av.tailNumber}}
                 </li>
             </ul>
         </div>
+<ng-template #nothing>
+    <div class="row">
+        <div class="col-auto mr-auto">
+            <h6>No inactive aircraft found</h6>
+        </div>
+    </div>
+</ng-template>
     </div>
 </div>
     

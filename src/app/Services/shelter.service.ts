@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { configurations } from 'src/environments/configurations';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,9 @@ export class ShelterService {
 
   public deleteShelter(id: string): Observable<any> {
     return this.http.delete(this.endpoint + id, this.httpOptions);
+  }
+
+  public calculateDueDate(date, duration): string {
+    return moment(date, 'YYYY-MM-DD').add(duration, 'days').format('YYYY-MM-DD');
   }
 }

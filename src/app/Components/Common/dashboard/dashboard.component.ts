@@ -8,7 +8,7 @@ import { CalibrationService } from '../../../Services/calibration.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import * as moment from 'moment';
-import { nextTick } from 'q';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +17,8 @@ import { nextTick } from 'q';
 })
 export class DashboardComponent implements OnInit {
   aircraftList = new Array<Aircraft>();
-  shelterList = new Array<Shelter>();
+  shelterList = new Array<object>();
+
   calThisWeekList = new Array<Calibration>();
   calThisMonthList = new Array<Calibration>();
   cal3MonthsList = new Array<Calibration>();
@@ -86,59 +87,65 @@ export class DashboardComponent implements OnInit {
   private getAircraftList() {
     this.aircraftService.getAircrafts()
     .subscribe(data => {
-      data.forEach(element => {
-        if (moment(element.reconDate).isSame(moment(), 'week')) {
-          if (!this.battsThisWeek) {
-            this.battsThisWeek = true;
-          }
+      data.forEach((element: Aircraft) => {
+        const due = this.shelterService.calculateDueDate(element.reconDate, 28);
+
+        if (moment(due).isSame(moment.now(), 'week')) {
           this.aircraftList.push(element);
         }
-      });
+     });
     });
   }
 
   private getShelterList() {
     this.shelterService.getShelters()
     .subscribe(data => {
-      data.forEach(element => {
-        this.shelterList.push(element);
+      data.forEach((element: Shelter) => {
+        const _7dayDue = this.shelterService.calculateDueDate(element._7Day, 7);
+        const _28dayDue = this.shelterService.calculateDueDate(element._28Day, 28);
+        const _84dayDue = this.shelterService.calculateDueDate(element._84Day, 84);
+        const _168dayDue = this.shelterService.calculateDueDate(element._168Day, 168);
+        const airFilters = this.shelterService.calculateDueDate(element.airFilters, 90);
 
-        if (moment(element._7Day).isSame(moment(), 'week')) {
-          if (!this.shelterInspectionsThisWeek) {
-            this.shelterInspectionsThisWeek = true;
-          }
+        const list = {
+          _id: element._id,
+          name: element.name,
+          inspectionsCount: 0,
+        };
+
+        if (moment(_7dayDue).isSame(moment.now(), 'week')) {
+          list.inspectionsCount++;
         }
-        if (moment(element._28Day).isSame(moment(), 'week')) {
-          if (!this.shelterInspectionsThisWeek) {
-            this.shelterInspectionsThisWeek = true;
-          }
+        if (moment(_28dayDue).isSame(moment.now(), 'week')) {
+          list.inspectionsCount++;
         }
-        if (moment(element._64Day).isSame(moment(), 'week')) {
-          if (!this.shelterInspectionsThisWeek) {
-            this.shelterInspectionsThisWeek = true;
-          }
+        if (moment(_84dayDue).isSame(moment.now(), 'week')) {
+          list.inspectionsCount++;
         }
-        if (moment(element._168Day).isSame(moment(), 'week')) {
-          if (!this.shelterInspectionsThisWeek) {
-            this.shelterInspectionsThisWeek = true;
-          }
+        if (moment(_168dayDue).isSame(moment.now(), 'week')) {
+          list.inspectionsCount++;
         }
-        if (moment(element._7Day).isSame(moment(), 'week')) {
-          if (!this.shelterInspectionsThisWeek) {
-            this.shelterInspectionsThisWeek = true;
-          }
+        if (moment(airFilters).isSame(moment.now(), 'week')) {
+          list.inspectionsCount++;
         }
-        if (moment(element.airFilters).isSame(moment(), 'week')) {
-          if (!this.shelterInspectionsThisWeek) {
-            this.shelterInspectionsThisWeek = true;
-          }
+
+        console.log('list: ', list);
+        if (list.inspectionsCount > 0 ) {
+          this.shelterList.push(list);
         }
+
       });
     });
   }
 
   public avClicked(id): void {
-    this.router.navigate(['aircraft/' + id + '/edit']);
+    this.router.navigate(['aircrafts/' + id + '/edit']);
+  }
+  public calClicked(id): void {
+    this.router.navigate(['calibrations/' + id + '/edit'])
+  }
+  public shelterClicked(id): void {
+    this.router.navigate(['shelters/' + id + '/edit']);
   }
 
   toggle(element: HTMLElement, icon: HTMLElement): void {

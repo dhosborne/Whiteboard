@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
+import { Location } from '@angular/common';
+import { Validators, FormBuilder, FormGroup} from '@angular/forms';
 import { ActivatedRoute, Router} from '@angular/router';
 import { ShelterService } from '../../../Services/shelter.service';
 import { NgFlashMessageService } from 'ng-flash-messages';
@@ -20,7 +21,7 @@ export class ShelterEditComponent implements OnInit {
     _84Day: '',
     _168Day: '',
     airFilters: '',
-    isActive: false
+    isActive: true
   });
 
   id: string;
@@ -33,7 +34,8 @@ export class ShelterEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private flash: NgFlashMessageService,
-    private title: Title
+    private title: Title,
+    private location: Location,
   ) { }
 
   ngOnInit() {
@@ -95,7 +97,7 @@ export class ShelterEditComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.redirect();
+    this.location.back();
   }
 
   private redirect(): void {

@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row" *ngIf="battsThisWeek">
+    <div class="row" *ngIf="aircraftList?.length > 0">
         <div class="col-sm">
             <div class="card bg-primary mb-3">
                 <div class="card-header" (click)="toggle(body, icon)">
@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    <div class="row" *ngIf="shelterInspectionsThisWeek">
+    <div class="row" *ngIf="shelterList?.length > 0">
         <div class="col-sm">
             <div class="card bg-primary mb-3">
                 <div class="card-header" (click)="toggle(body, icon)">
@@ -47,26 +47,13 @@
                     </div>
                 </div>
                 <div class="card-body" #body>
-                    <table class="table table-hover">
-                        <thead>
-                            <th scope="col">Shelter</th>
-                            <th scope="col">7day</th>
-                            <th scope="col">28day</th>
-                            <th scope="col">84day</th>
-                            <th scope="col">168day</th>
-                            <th scope="col">Air Filters</th>
-                        </thead>
-                        <tbody>
-                            <tr class="table-default" *ngFor="let shelter of shelterList">
-                                <td scope="row">{{shelter.name}}</td>
-                                <td>{{shelter._7Day      | moment: [7, 'days']   | date: 'MM/dd'}}</td>
-                                <td>{{shelter._28Day     | moment: [28, 'days']  | date: 'MM/dd'}}</td>
-                                <td>{{shelter._84Day     | moment: [84, 'days']  | date: 'MM/dd'}}</td>
-                                <td>{{shelter._168Day    | moment: [168, 'days'] | date: 'MM/dd'}}</td>
-                                <td>{{shelter.airFilters | moment: [3, 'months'] | date: 'MM/dd'}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <ul class="list-group" *ngFor="let shelter of shelterList" >
+                        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                            (dblclick)="shelterClicked(shelter._id)">
+                            {{shelter.name}}
+                            <span class="badge badge-primary badge-pill">{{shelter.inspectionsCount}}</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

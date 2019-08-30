@@ -1,6 +1,7 @@
 import { IShelter } from '../Interfaces/shelter';
 
 export class Shelter implements IShelter {
+    _id: string;
     name: string;
     _7Day: string;
     _28Day: string;

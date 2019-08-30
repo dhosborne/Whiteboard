@@ -1,4 +1,5 @@
 export interface IShelter {
+    _id: string;
     name: string;
     _7Day: string;
     _28Day: string;

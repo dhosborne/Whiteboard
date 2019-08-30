@@ -69,7 +69,7 @@ export class AircraftListComponent implements OnInit {
   }
 
   inActiveClicked(): void {
-    this.router.navigate(['aircraft/inactive']);
+    this.router.navigate(['aircrafts/inactive']);
   }
   private setTitle(): void {
     this.route.data.subscribe(data => {

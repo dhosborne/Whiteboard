@@ -3,7 +3,14 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-auto mr-auto">
-                        {{aircraft?.tailNumber}}
+                    <a [routerLink]="['/aircrafts']" routerLinkActive="router-link-active" >
+                        <i class="material-icons">
+                            chevron_left
+                        </i>
+                    </a>
+                </div>
+                <div class="col-auto">
+                    {{aircraft?.tailNumber}}
                 </div>
                 <div class="col-auto">
                     <i class="material-icons" (click)="onEditClick()">edit</i>

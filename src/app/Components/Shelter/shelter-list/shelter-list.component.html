@@ -1,12 +1,16 @@
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-sm-auto mr-auto">
+        <div class="col-auto mr-auto">
             <h4>Shelters</h4>
         </div>
-        <div class="col-sm-auto"><a (click)="inActiveClicked()"><small><em>Looking for inactive shelters?</em></small></a></div>
-        <div class="col-sm-auto">
-            <a [routerLink]="['/shelter/new']" routerLinkActive="router-link-active" >
-               <i class="material-icons">add_circle_outline</i>New 
+        <div class="col-auto">
+            <a (click)="inActiveClicked()">
+                <small><em>Looking for inactive shelters?</em></small>
+            </a>
+        </div>
+        <div class="col-auto">
+            <a [routerLink]="['/shelters/new']" routerLinkActive="router-link-active" >
+               <i class="material-icons">add_circle_outline</i> 
             </a>
         </div>
     </div>
@@ -23,8 +27,10 @@
         <div id="tabContent" class="tab-content" *ngIf="shelter; else nothing">
             <div class="card text-white bg-primary mb-3 avcard">
                 <div class="card-header">
-                    <div class="col-auto mr-auto">
-                        {{shelter.name}}
+                    <div class="row">
+                        <div class="col-auto mr-auto">
+                            {{shelter.name}}
+                        </div>                        
                     </div>
                 </div>
                 <div class="card-body" #body>

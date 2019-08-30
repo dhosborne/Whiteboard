@@ -3,7 +3,6 @@ import { CalibrationService} from '../../../Services/calibration.service';
 import { Calibration } from '../../../Classes/calibration';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import * as momemnt from 'moment';
 
 
 @Component({
@@ -13,9 +12,10 @@ import * as momemnt from 'moment';
 })
 export class CalibrationListComponent implements OnInit {
   calList = new Array<Calibration>();
-  locations = new Array<string>();
+  currentSet = new Array<Calibration>();
 
-  inCal = false;
+  locations = new Array<string>();
+  selectedLocation: string;
 
   constructor(
     private calService: CalibrationService,
@@ -31,37 +31,39 @@ export class CalibrationListComponent implements OnInit {
 
   private loadCalLists(): void {
     this.calList.length = 0;
+
     this.calService.getCalibrations()
-    .subscribe(data => {
-      data.forEach(element => {
-        this.calList.push(element);
-        if (this.locations.indexOf(element.location) === -1 ) {
-          this.locations.push(element.location);
-        }
-        if (!this.inCal) {
-          if (element.inCal) {
-            this.inCal = true;
+      .subscribe(data => {
+        data.forEach(tool => {
+          if (this.locations.indexOf(tool.location) === -1) {
+            this.locations.push(tool.location);
           }
+
+          if (this.calList.indexOf(tool) === -1) {
+            this.calList.push(tool);
+          }
+        });
+      });
+  }
+
+  tabSelected(location: string): void {
+    this.currentSet.length = 0;
+    if ( this.selectedLocation !== '') {
+      this.calList.forEach((tool: Calibration) => {
+        if (tool.location === location) {
+          this.currentSet.push(tool);
         }
       });
-      this.locations.sort();
-    });
-  }
-
-  calClicked(id): void {
-    this.router.navigate(['calibration/' + id + '/edit']);
-  }
-
-  toggle(element: HTMLElement, icon: HTMLElement): void {
-    element.classList.toggle('d-none');
-
-    if (icon.innerText === 'expand_more') {
-      icon.innerText = 'chevron_left';
-    } else {
-      icon.innerText = 'expand_more';
     }
   }
 
+  calClicked(id): void {
+    this.router.navigate(['calibrations/' + id + '/edit']);
+  }
+
+  inActiveClicked(): void {
+    this.router.navigate(['/calibrations/inactive']);
+  }
   private setTitle(): void {
     this.route.data.subscribe(data => {
       this.title.setTitle(data.title);

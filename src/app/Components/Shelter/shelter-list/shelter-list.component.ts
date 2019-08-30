@@ -62,6 +62,9 @@ export class ShelterListComponent implements OnInit {
     }
   }
 
+  shelterClicked(id: string): void {
+    this.router.navigate(['shelters/' + id + '/edit']);
+  }
 
   issueClicked(id): void {
     this.router.navigate(['issues/' + id + '/details']);

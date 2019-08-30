@@ -3,13 +3,12 @@
         <div class="col-sm-auto mr-auto">
             <h4>Aircrafts</h4>
         </div>
-        <div class="col-sm-auto"><a [routerLink]="['inactive']" routerLinkActive="router-link-active" ><small><em>Looking for an inactive aircraft?</em></small></a></div>
+        <div class="col-sm-auto"><a [routerLink]="['/aircrafts/inactive']" ><small><em>Looking for an inactive aircraft?</em></small></a></div>
         <div class="col-sm-auto">
-            <a [routerLink]="['new']">
+            <a [routerLink]="['/aircrafts/new']">
                 <i class="material-icons">
                     add_circle_outline
                 </i>
-                New
             </a>
         </div>
     </div>

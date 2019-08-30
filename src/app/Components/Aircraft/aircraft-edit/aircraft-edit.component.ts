@@ -105,7 +105,7 @@ export class AircraftEditComponent implements OnInit {
         this.aircraftService.deleteAircraft(this.route.snapshot.paramMap.get('id'))
         .subscribe(data => {
           this.showMessage(data.message);
-          this.router.navigate(['/aircraft']);
+          this.router.navigate(['/aircrafts']);
         });
       } else {
         this.showMessage('Cancelled Delete!');
@@ -115,14 +115,14 @@ export class AircraftEditComponent implements OnInit {
 
   onCancel(): void {
     if (this.isNew) {
-      this.router.navigate(['/aircraft']);
+      this.router.navigate(['/aircrafts']);
     } else {
       this.redirect();
     }
   }
 
   redirect(): void {
-    this.router.navigate(['aircraft/' + this.id + '/details'], {});
+    this.router.navigate(['aircrafts/' + this.id + '/details'], {});
   }
 
   private showMessage(message): void {

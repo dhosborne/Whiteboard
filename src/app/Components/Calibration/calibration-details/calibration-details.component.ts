@@ -42,6 +42,6 @@ export class CalibrationDetailsComponent implements OnInit {
   }
 
   onEditClick(): void {
-    this.router.navigate(['/calibration/' + this.id + '/edit']);
+    this.router.navigate(['/calibrations/' + this.id + '/edit']);
   }
 }

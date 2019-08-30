@@ -76,7 +76,7 @@ import { ConfirmationDialogComponent } from './Components/Common/confirmation-di
     BrowserModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   entryComponents: [
     ConfirmationDialogComponent
