@@ -117,27 +117,29 @@ exports.update = (req, res) => {
 }
 
 exports.login = (req, res) => {
+    log('User \"' + req.body.username + '\" logging in...' );
     User.findOne({username: req.body.username}, (err, user) => {
         if (err) {
-            throw err;
-        }
-
-        if (!user) {
-            res.status(401).send({success: false, 
-                message: 'Authentication failed, username incorrect'});
+            log(err.message + '\n');
         } else {
-            user.comparePassword(req.body.password, (err, isMatch) => {
-                if (isMatch && !err) {
-                    var token = jwt.sign(user.toJSON(), config.secret, {
-                        expiresIn: '1d' // expires in 1 day
-                    });
-                    payload = {id: user.id, 'username': user.username, 'firstName': user.firstName, 'lastName': user.lastName};
-                    res.json({success: true, token: 'JWT ' + token, user: payload}); 
-                } else {
-                    res.status(401).send({success: false, 
-                        message:'Authentication failed, password incorrect'})
-                }
-            });
+            if (!user) {
+                res.status(401).send({success: false, 
+                    message: 'Authentication failed, username incorrect'});
+            } else {
+                user.comparePassword(req.body.password, (err, isMatch) => {
+                    if (isMatch && !err) {
+                        var token = jwt.sign(user.toJSON(), config.secret, {
+                            expiresIn: '1d' // expires in 1 day
+                        });
+                        log('success! ');
+                        payload = {id: user.id, 'username': user.username, 'firstName': user.firstName, 'lastName': user.lastName};
+                        res.json({success: true, token: 'JWT ' + token, user: payload}); 
+                    } else {
+                        res.status(401).send({success: false, 
+                            message:'Authentication failed, password incorrect'})
+                    }
+                });
+            }            
         }
     });
 }

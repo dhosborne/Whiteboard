@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Validators, FormBuilder, FormGroup} from '@angular/forms';
 import { ActivatedRoute, Router} from '@angular/router';
 import { NgFlashMessageService } from 'ng-flash-messages';
@@ -10,6 +11,8 @@ import { Shelter } from '../../../Classes/shelter';
 import { IIssue } from '../../../Interfaces/issue';
 import * as moment from 'moment';
 import { Title } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material';
+import { ConfirmationDialogComponent } from '../../Common/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-issue-edit',
@@ -44,7 +47,9 @@ export class IssueEditComponent implements OnInit {
     private router: Router,
     private flash: NgFlashMessageService,
     private fb: FormBuilder,
-    private title: Title
+    private title: Title,
+    private confirm: MatDialog,
+    private location: Location,
 
   ) { }
 
@@ -86,14 +91,15 @@ export class IssueEditComponent implements OnInit {
         if (data) {
           data.date = moment(data.date).format('YYYY-MM-DD');
           this.updateForm(data);
-          this.redirect();
+          this.redirect(data.result._id);
         }
       });
     } else {
       this.issueService.createIssue(formValues)
       .subscribe(data => {
+        console.log(data);
         this.showMessage(data.message);
-        this.redirect();
+        this.redirect(data.result._id);
       });
     }
   }
@@ -101,6 +107,7 @@ export class IssueEditComponent implements OnInit {
   private loadLists(): void {
     this.loadAircraft();
     this.loadShelters();
+    this.assetList.sort();
     this.assetList.push('---', 'OTHER');
   }
 
@@ -133,19 +140,27 @@ export class IssueEditComponent implements OnInit {
   }
 
   onDelete(): void {
-    this.issueService.deleteIssue(this.route.snapshot.paramMap.get('id'))
-    .subscribe(data => {
-      this.showMessage(data.message);
-      this.router.navigate(['/issues']); // issue deleted, go back to list
+    const dialogRef = this.confirm.open(ConfirmationDialogComponent, {
+      width: '350px',
+      data: 'Do you really want to delete this issue?'
+    });
+
+    dialogRef.afterClosed()
+    .subscribe(result => {
+      if (result) {
+        this.issueService.deleteIssue(this.route.snapshot.paramMap.get('id'))
+        .subscribe(data => {
+          this.showMessage(data.message);
+          this.router.navigate(['/issues']); // issue deleted, go back to list
+        });
+      } else {
+        this.showMessage('Cancelled Delete!');
+      }
     });
   }
 
   onCancel(): void {
-    if (!this.isNew) {
-      this.redirect();
-    } else {
-      this.router.navigate(['/issues']);
-    }
+    this.location.back();
   }
 
   private showMessage(message): void {
@@ -157,8 +172,8 @@ export class IssueEditComponent implements OnInit {
     });
   }
 
-  redirect(): void {
-    this.router.navigate(['issues/' + this.id + '/details'], {});
+  redirect(id: string): void {
+    this.router.navigate(['issues/' + id + '/details'], {});
   }
 
   get f() {

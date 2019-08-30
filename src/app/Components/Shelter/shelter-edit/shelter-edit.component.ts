@@ -15,6 +15,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class ShelterEditComponent implements OnInit {
   shelterForm: FormGroup = this.createForm({
+    _id: '',
     name: '',
     _7Day: '',
     _28Day: '',
