@@ -11,6 +11,8 @@ import { Title } from '@angular/platform-browser';
 })
 export class IssueListComponent implements OnInit {
   issuesList = Array<Issue>();
+  currentSet = Array<Issue>();
+  header: string;
 
   constructor(
     private issueService: IssueService,
@@ -25,10 +27,33 @@ export class IssueListComponent implements OnInit {
   }
 
   private getIssues(): void {
+    this.issuesList.length = 0;
+
     this.issueService.getIssues()
     .subscribe(data => {
-      this.issuesList = data;
+      data.forEach(issue => {
+        if (this.issuesList.indexOf(issue) === -1) {
+          this.issuesList.push(issue);
+        }
+      });
     });
+  }
+
+  loadTab(status: string): void {
+    let state = false;
+    if (status === 'closed') {
+      state = true;
+    }
+
+    this.currentSet.length = 0;
+    this.issuesList.forEach(issue => {
+      if (this.currentSet.indexOf(issue) === -1) {
+        if (issue.completed === state) {
+          this.currentSet.push(issue);
+        }
+      }
+    });
+
   }
 
   issueClicked(id): void {
@@ -39,15 +64,5 @@ export class IssueListComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.title.setTitle(data.title);
     });
-  }
-
-  toggle(element: HTMLElement, icon: HTMLElement): void {
-    element.classList.toggle('d-none');
-
-    if (icon.innerText === 'expand_more') {
-      icon.innerText = 'chevron_left';
-    } else {
-      icon.innerText = 'expand_more';
-    }
   }
 }

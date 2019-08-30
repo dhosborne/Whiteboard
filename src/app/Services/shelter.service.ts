@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { configurations } from 'src/environments/configurations';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShelterService {
 
-  endpoint = 'http://10.206.1.160:3000/shelter/';
+  endpoint = configurations.backend + '/shelter/';
 
   httpOptions = {
     headers: new HttpHeaders({

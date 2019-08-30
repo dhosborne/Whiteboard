@@ -1,87 +1,58 @@
 <div class="container">
     <div class="row">
-        <div class="col-auto mr-auto">
+        <div class="col-sm-auto mr-auto">
             <h4>Issues</h4>
         </div>
-        <div class="col-auto">
-            <a [routerLink]="['new']">
+        <div class="col-sm-auto">
+            <a [routerLink]="['/issues/new']">
                 <i class="material-icons">
                     add_circle_outline
                 </i>
-                New
             </a>
         </div>
     </div>
     <div class="row">
-        <div class="card text-white bg-primary mb-3 avcard">
-            <div class="card-header" (click)="toggle(open, icon1)">
-                <div class="row">
-                    <div class="col-auto mr-auto">
-                        <h6>Open issues</h6>
-                    </div>
-                    <div class="col-auto">
-                        <i class="material-icons" #icon1>
-                            expand_more
-                        </i>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body" #open>
-                <table class="table table-hover">
-                    <thead>
-                        <th scope="col">Asset</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Completed</th>
-                    </thead>
-                    <tbody>
-                        <tr class="table-default" *ngFor="let issue of issuesList" (dblclick)="issueClicked(issue._id)">
-                            <ng-container *ngIf="!issue.completed">
-                                <td scope="row">{{issue.asset}}</td>
-                                <td>{{issue.date | date: 'MM/dd'}}</td>
-                                <td>{{issue.title}}</td>
-                                <td>{{issue.completed}}</td>                        
-                            </ng-container>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item" >
+                <a class="nav-link" (click)="loadTab('open')">Open</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click)="loadTab('closed')">Closed</a>
+            </li>
+        </ul>
     </div>
     <div class="row">
-        <div class="card text-white bg-primary mb-3 avcard">
-            <div class="card-header" (click)="toggle(closed, icon2)">
-                <div class="row">
-                    <div class="col-auto mr-auto">
-                        <h6>Closed issues</h6>
-                    </div>
-                    <div class="col-auto">
-                        <i class="material-icons" #icon2>
-                            expand_more
-                        </i>
+        <div id="tabContent" class="tab-content" *ngIf="currentSet?.length > 0; else nothing">
+            <div class="card text-white bg-primary mb-3 avcard">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-auto mr-auto">
+                            {{header}}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-body" #closed>
-                <table class="table table-hover">
-                    <thead>
-                        <th scope="col">Asset</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Completed</th>
-                    </thead>
-                    <tbody>
-                        <tr class="table-default" *ngFor="let issue of issuesList" (dblclick)="issueClicked(issue._id)">
-                            <ng-container *ngIf="issue.completed">
+                <div class="card-body" #body>
+                    <table class="table table-hover">
+                        <thead>
+                            <th scope="col">Asset</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Completed</th>
+                        </thead>
+                        <tbody>
+                            <tr class="table-default" *ngFor="let issue of currentSet" (dblclick)="issueClicked(issue._id)">
                                 <td scope="row">{{issue.asset}}</td>
                                 <td>{{issue.date | date: 'MM/dd'}}</td>
                                 <td>{{issue.title}}</td>
                                 <td>{{issue.completed}}</td>                        
-                            </ng-container>
-                        </tr>
-                    </tbody>
-                </table>
+                            </tr>
+                        </tbody>
+                    </table>                    
+                </div>
             </div>
-        </div>        
+        </div>
+        <ng-template #nothing>
+            <h6><em>Select a tab to display issues</em></h6>
+        </ng-template>
     </div>
 </div>

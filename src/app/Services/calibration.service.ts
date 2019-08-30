@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
+import { configurations } from 'src/environments/configurations';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalibrationService {
 
-  endpoint = 'http://10.206.1.160:3000/calibration/';
+  endpoint = configurations.backend + '/calibration/';
   httpOptions = {
     headers: new HttpHeaders({
       Authorization: sessionStorage.getItem('jwt'),

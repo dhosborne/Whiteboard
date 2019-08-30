@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { configurations } from 'src/environments/configurations';
 
 
 
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AircraftService {
-  endpoint = 'http://10.206.1.160:3000/aircraft/';
+  endpoint = configurations.backend + '/aircraft/';
   httpOptions = {
     headers: new HttpHeaders({
       Authorization: sessionStorage.getItem('jwt'),

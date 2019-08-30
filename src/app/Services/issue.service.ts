@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { configurations } from 'src/environments/configurations';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IssueService {
-  endpoint = 'http://10.206.1.160:3000/issue/';
+  endpoint = configurations.backend + '/issue/';
 
   httpOptions = {
     headers: new HttpHeaders({
