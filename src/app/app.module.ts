@@ -35,6 +35,7 @@ import { CalibrationListComponent } from './Components/Calibration/calibration-l
 import { UavconfigEditComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-edit/uavconfig-edit.component';
 import { UavconfigDetailsComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-details/uavconfig-details.component';
 import { ConfirmationDialogComponent } from './Components/Common/confirmation-dialog/confirmation-dialog.component';
+import { SpinnerComponent } from './Components/Common/spinner/spinner.component';
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { ConfirmationDialogComponent } from './Components/Common/confirmation-di
     UavconfigEditComponent,
     UavconfigDetailsComponent,
     ConfirmationDialogComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,

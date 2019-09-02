@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { AircraftService } from '../../../Services/aircraft.service';
 import { IssueService } from '../../../Services/issue.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -12,7 +12,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./aircraft-list.component.css']
 })
 
-export class AircraftListComponent implements OnInit {
+export class AircraftListComponent implements OnInit, OnChanges {
 
   aircraftList = new Array<Aircraft>();
   aircraft: Aircraft;
@@ -33,37 +33,44 @@ export class AircraftListComponent implements OnInit {
     this.loadAircrafts();
   }
 
-    private loadAircrafts(): void {
-      this.aircraftList.length = 0;
+  ngOnChanges() {
+    console.log('on Changes fired');
+  }
 
-      this.aircraftService.getAircrafts()
-      .subscribe(data => {
-        data.forEach((aircraft: Aircraft) => {
-          if (this.aircraftList.indexOf(aircraft) === -1) {
-            this.aircraftList.push(aircraft);
-          }
-        });
+  private loadAircrafts(): void {
+    this.aircraftList.length = 0;
+
+    this.aircraftService.getAircrafts()
+    .subscribe(data => {
+      data.forEach((aircraft: Aircraft) => {
+        if (this.aircraftList.indexOf(aircraft) === -1) {
+          this.aircraftList.push(aircraft);
+        }
+      });
+    });
+  }
+
+  private loadTab(tail: string): void {
+    this.issuesList.length = 0;
+
+    if (tail !== '') {
+      this.aircraftList.forEach(element => {
+        if (element.tailNumber === tail) {
+          this.aircraft = element;
+          this.issueService.getIssueGroup(tail)
+          .subscribe(data => {
+            data.forEach((issue: Issue) => {
+              this.issuesList.push(issue);
+            });
+          });
+        }
       });
     }
-
-    private loadTab(tail: string): void {
-      this.issuesList.length = 0;
-
-      if (tail !== '') {
-        this.aircraftList.forEach(element => {
-          if (element.tailNumber === tail) {
-            this.aircraft = element;
-            this.issueService.getIssueGroup(tail)
-            .subscribe(data => {
-              data.forEach((issue: Issue) => {
-                this.issuesList.push(issue);
-              });
-            });
-          }
-        });
-      }
-    }
-
+  }
+  
+  aircraftClicked(id: string):void {
+    this.router.navigate(['aircrafts/' + id + '/edit']);
+  }
   issueClicked(id): void {
     this.router.navigate(['issues/' + id + '/details']);
   }
