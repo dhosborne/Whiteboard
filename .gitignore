@@ -48,3 +48,6 @@ Thumbs.db
 
 #secrets
 Backend/config/database.js
+
+#production server configs
+src/environments/configurations.ts
