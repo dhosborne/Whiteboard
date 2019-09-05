@@ -41,8 +41,11 @@ export class AircraftEditComponent implements OnInit {
 
   ngOnInit() {
     this.setTitle();
-
-    this.aircraftForm.controls.tailNumber.setValidators(Validators.required);
+    this.aircraftForm.controls.tailNumber.setValidators([
+      Validators.required,
+      Validators.pattern('^(CBP)([0-9]{3})$')
+    ]);
+    this.aircraftForm.controls.reconDate.setValidators([Validators.required]);
 
     if (this.route.snapshot.paramMap.has('id')) {
       // an id was in the url, so this is not a new tail
@@ -135,6 +138,7 @@ export class AircraftEditComponent implements OnInit {
   }
 
   get f() {
+    console.log(this.aircraftForm.controls);
     return this.aircraftForm.controls;
   }
 

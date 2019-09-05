@@ -28,6 +28,7 @@ export class ShelterEditComponent implements OnInit {
   id: string;
   submitted = false;
   isNew = true;
+  name: string;
 
   constructor(
     private shelterService: ShelterService,
@@ -41,15 +42,19 @@ export class ShelterEditComponent implements OnInit {
 
   ngOnInit() {
     this.setTitle();
-    this.shelterForm.controls.name.setValidators(Validators.required);
 
-    if (this.route.snapshot.paramMap.has('id')){
+    this.shelterForm.controls.name.setValidators([
+      Validators.required,
+      Validators.pattern('^(MGCS)([0-9]{4})$')
+    ]);
+
+    if (this.route.snapshot.paramMap.has('id')) {
       this.isNew = false;
       this.id = this.route.snapshot.paramMap.get('id');
 
       this.shelterService.getShelter(this.id)
       .subscribe(data => {
-        console.log(data);
+        this.name = data.name;
         data._7Day = moment(data._7Day).format('YYYY-MM-DD');
         data._28Day = moment(data._28Day).format('YYYY-MM-DD');
         data._84Day = moment(data._84Day).format('YYYY-MM-DD');

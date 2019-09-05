@@ -1,6 +1,9 @@
-<div class="container">
+<div class="container card-edit">
     <div class="card text-white bg-primary mb-3">
-        <div class="card-header"></div>
+        <div class="card-header">
+            <ng-container *ngIf="isNew; else edit"><h4>New Shelter</h4></ng-container>
+            <ng-template #edit><h4>Edit - {{name}}</h4></ng-template>
+        </div>
         <div class="card-body">
             <form [formGroup]="shelterForm" novalidate>
                 <div class="form-group">
@@ -10,11 +13,17 @@
                         type="text" 
                         class="form-control"
                         formControlName="name"
-                        [ngClass]="{'is-invalid':submitted && f.name.invalid}">
+                        [ngClass]="{
+                            'is-invalid': f.name.invalid && (f.name.touched || f.name.dirty),
+                            'is-valid': f.name.valid && (f.name.touched || f.name.dirty)}">
                     <div
-                        *ngIf="submitted && f.name.invalid" 
-                        class="invalid-feedback">
-                        Shelter name required
+                        class="form-control-feedback"
+                        *ngIf="f.name.errors && (f.name.errors.required && f.name.touched)">
+                        <small><em class="required">Shelter Name Required</em></small>
+                    </div>
+                    <div class="form-control-feedback"
+                        *ngIf="f.name.errors && (f.name.errors.pattern && f.name.dirty)">
+                        <small><em class="required">Shelter name must formatted like (ex. "MGCS4001")</em></small>
                     </div>
                 </div>
                 <fieldset>

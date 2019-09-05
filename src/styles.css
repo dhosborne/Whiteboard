@@ -5,12 +5,19 @@
 .container {
   padding: 1em;
   min-width: 50rem;
+  margin: 0 auto;
 }
 
-.card {
-  min-width: 40rem;
-  max-width: auto;
-  padding: 0;
+
+.card-list {
+  min-width: 500px;
+  max-width: 1080px;
+}
+
+.card-edit {
+  min-width: 320px;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .lds-spinner {

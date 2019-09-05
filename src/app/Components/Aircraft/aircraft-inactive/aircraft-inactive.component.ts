@@ -33,7 +33,7 @@ export class AircraftInactiveComponent implements OnInit {
   }
 
   avOnClick(id): void {
-    this.router.navigate(['aircraft/' + id + '/edit']);
+    this.router.navigate(['aircrafts/' + id + '/edit']);
   }
 
   private setTitle(): void {

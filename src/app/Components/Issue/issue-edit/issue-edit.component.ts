@@ -24,6 +24,8 @@ export class IssueEditComponent implements OnInit {
   shelterList = new Array<Shelter>();
   aircraftList = new Array<Aircraft>();
   assetList = new Array<string>();
+  username = sessionStorage.user.firstname;
+
 
 
   id: string;
@@ -60,6 +62,7 @@ export class IssueEditComponent implements OnInit {
     this.issueForm.controls.date.setValidators(Validators.required);
     this.issueForm.controls.asset.setValidators(Validators.required);
     this.issueForm.controls.createdBy.setValidators(Validators.required);
+    this.issueForm.controls.createdBy.patchValue(this.username);
 
     if (this.route.snapshot.paramMap.has('id')) {
       this.isNew = false;

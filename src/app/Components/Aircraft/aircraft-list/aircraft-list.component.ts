@@ -67,7 +67,7 @@ export class AircraftListComponent implements OnInit, OnChanges {
       });
     }
   }
-  
+
   aircraftClicked(id: string):void {
     this.router.navigate(['aircrafts/' + id + '/edit']);
   }
