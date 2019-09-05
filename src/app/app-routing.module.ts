@@ -8,7 +8,7 @@ import { DashboardComponent } from './Components/Common/dashboard/dashboard.comp
 import { AircraftListComponent } from './Components/Aircraft/aircraft-list/aircraft-list.component';
 import { AircraftDetailsComponent } from './Components/Aircraft/aircraft-details/aircraft-details.component';
 import { AircraftEditComponent } from './Components/Aircraft/aircraft-edit/aircraft-edit.component';
-import { AircraftInactiveComponent } from './Components/Aircraft/aircraft-inactive/aircraft-inactive.component'
+import { AircraftInactiveComponent } from './Components/Aircraft/aircraft-inactive/aircraft-inactive.component';
 
 import { ShelterListComponent } from './Components/Shelter/shelter-list/shelter-list.component';
 import { ShelterEditComponent } from './Components/Shelter/shelter-edit/shelter-edit.component';
@@ -55,12 +55,12 @@ const appRoutes: Routes = [
     {path: 'issues/:id/details', component: IssueDetailsComponent, canActivate: [AuthGuard], data: {title: 'Details'}},
     {path: 'issues/:id/edit', component: IssueEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Issue'}},
 
-    {path: 'calibrations', component: CalibrationListComponent, canActivate: [AuthGuard], data: {title: 'Calibration List'}},
+    {path: 'calibrations', component: CalibrationListComponent, canActivate: [AuthGuard], data: {title: 'Calibrations List'}},
     {path: 'calibrations/new', component: CalibrationEditComponent, canActivate: [AuthGuard], data: {title: 'New Calibration'}},
     {path: 'calibrations/inactive', component: CalibrationInactiveComponent,
-      canActivate: [AuthGuard], data: {title: 'Inactive Calibration'}},
+      canActivate: [AuthGuard], data: {title: 'Inactive Calibrations'}},
     {path: 'calibrations/:id/details', component: CalibrationDetailsComponent,
-      canActivate: [AuthGuard], data: {title: 'Calibration Details'}},
+      canActivate: [AuthGuard], data: {title: 'Calibrations Details'}},
     {path: 'calibrations/:id/edit', component: CalibrationEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Calibration'}},
 
     {path: 'uavconfig/:id', component: UavconfigDetailsComponent, canActivate: [AuthGuard], data: {title: 'UAV Config Details'}},

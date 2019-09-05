@@ -56,7 +56,16 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  showMessage(message): void {
+  keypressed(event): void {
+    console.log('Key press enven fired', event);
+    const ENTER_KEY_CODE = 13;
+    if (event.key === 'Enter' || event.keyCode === ENTER_KEY_CODE) {
+      event.stopPropagation();
+      this.logIn();
+    }
+  }
+
+  private showMessage(message): void {
     this.flash.showFlashMessage({
         messages: [message],
         dismissible: true,
