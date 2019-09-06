@@ -13,6 +13,7 @@ import * as moment from 'moment';
 import { Title } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../../Common/confirmation-dialog/confirmation-dialog.component';
+import { User } from 'src/app/Classes/user';
 
 @Component({
   selector: 'app-issue-edit',
@@ -24,8 +25,7 @@ export class IssueEditComponent implements OnInit {
   shelterList = new Array<Shelter>();
   aircraftList = new Array<Aircraft>();
   assetList = new Array<string>();
-  username = sessionStorage.user.firstname;
-
+  user: User;
 
 
   id: string;
@@ -58,11 +58,15 @@ export class IssueEditComponent implements OnInit {
   ngOnInit() {
     this.setTitle();
     this.loadLists();
+
+    const sessionVar = JSON.parse(sessionStorage.getItem('user'));
+    this.user = new User(sessionVar._id, sessionVar.firstName, sessionVar.lastName);
+
     this.issueForm.controls.title.setValidators(Validators.required);
     this.issueForm.controls.date.setValidators(Validators.required);
     this.issueForm.controls.asset.setValidators(Validators.required);
     this.issueForm.controls.createdBy.setValidators(Validators.required);
-    this.issueForm.controls.createdBy.patchValue(this.username);
+    this.issueForm.controls.createdBy.patchValue(this.user.fullName());
 
     if (this.route.snapshot.paramMap.has('id')) {
       this.isNew = false;
@@ -111,7 +115,7 @@ export class IssueEditComponent implements OnInit {
     this.loadAircraft();
     this.loadShelters();
     this.assetList.sort();
-    this.assetList.push('---', 'OTHER');
+    this.assetList.push('OTHER');
   }
 
   private loadShelters(): void {
