@@ -1,21 +1,21 @@
 <div class="container">
-    <div class="row" *ngIf="aircraftList?.length > 0">
+    <div class="row">
         <div class="col-sm">
             <div class="card bg-primary mb-3">
-                <div class="card-header" (click)="toggle(body, icon)">
+                <div class="card-header" (click)="toggle(body1, icon1)">
                     <div class="row">
                         <div class="col-auto mr-auto">
                             <h6>Batteries Due This Week</h6>
                         </div>
                         <div class="col-auto">
-                            <i class="material-icons" #icon>
+                            <i class="material-icons" #icon1>
                                 expand_more
                             </i>
                         </div>                        
                     </div>
                 </div>
-                <div class="card-body" #body>
-                    <table class="table table-hover">
+                <div class="card-body" #body1>
+                    <table class="table table-hover" *ngIf="battsThisWeek; else noAircraft">
                         <thead>
                             <th scope="col">Tail</th>
                             <th scope="col">Due Date</th>
@@ -27,54 +27,62 @@
                             </tr>
                         </tbody>
                     </table>
+                    <ng-template #noAircraft>
+                        <small><em>No batteries due</em></small>
+                    </ng-template>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row" *ngIf="shelterList?.length > 0">
+    <div class="row">
         <div class="col-sm">
             <div class="card bg-primary mb-3">
-                <div class="card-header" (click)="toggle(body, icon)">
+                <div class="card-header" (click)="toggle(body2, icon2)">
                     <div class="row">
                         <div class="col-auto mr-auto">
                             <h6>Shelter Inspections This Week</h6>
                         </div>
                         <div class="col-auto">
-                            <i class="material-icons" #icon>
+                            <i class="material-icons" #icon2>
                                 expand_more
                             </i>
                         </div>
                     </div>
                 </div>
-                <div class="card-body" #body>
-                    <ul class="list-group" *ngFor="let shelter of shelterList" >
-                        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                            (dblclick)="shelterClicked(shelter._id)">
-                            {{shelter.name}}
-                            <span class="badge badge-primary badge-pill">{{shelter.inspectionsCount}}</span>
-                        </li>
-                    </ul>
+                <div class="card-body" #body2>
+                    <ng-container *ngIf="shelterInspectionsThisWeek; else noInspections">
+                        <ul class="list-group" *ngFor="let shelter of shelterList" >
+                            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                                (dblclick)="shelterClicked(shelter._id)">
+                                {{shelter.name}}
+                                <span class="badge badge-primary badge-pill">{{shelter.inspectionsCount}}</span>
+                            </li>
+                        </ul>
+                    </ng-container>
+                    <ng-template #noInspections>
+                        <small><em>No inspections due</em></small>
+                    </ng-template>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row" *ngIf="calThisWeek || calThisMonth || cal3Months">
+    <div class="row" >
         <div class="col-sm">
             <div class="card bg-primary mb-3">
-                <div class="card-header" (click)="toggle(body, icon)">
+                <div class="card-header" (click)="toggle(body3, icon3)">
                     <div class="row">
                         <div class="col-auto mr-auto">
                             <h6>Calibration Forcast</h6>
                         </div>
                         <div class="col-auto">
-                            <i class="material-icons" #icon>
+                            <i class="material-icons" #icon3>
                                 expand_more
                             </i>
                         </div>
                     </div>
                 </div>
-                <div class="card-body" #body>
-                    <table class="table table-hover">
+                <div class="card-body" #body3>
+                    <table class="table table-hover" *ngIf="calThisWeek || calThisMonth || cal3Months; else noCal">
                         <ng-container *ngIf="calThisWeek">
                             <thead>
                                 <th>This Week</th>
@@ -132,8 +140,12 @@
                             </tbody>
                         </ng-container>
                     </table>
+                    <ng-template #noCal>
+                        <small><em>No cal due</em></small>
+                    </ng-template>
                 </div>
             </div>
         </div>
     </div>
+
 </div>

@@ -129,12 +129,15 @@ export class DashboardComponent implements OnInit {
           list.inspectionsCount++;
         }
 
-        console.log('list: ', list);
         if (list.inspectionsCount > 0 ) {
           this.shelterList.push(list);
         }
 
       });
+
+      if (this.shelterList.length > 0) {
+        this.shelterInspectionsThisWeek = true;
+      }
     });
   }
 
