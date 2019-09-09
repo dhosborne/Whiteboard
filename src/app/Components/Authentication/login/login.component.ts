@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
   }
 
   keypressed(event): void {
-    console.log('Key press enven fired', event);
     const ENTER_KEY_CODE = 13;
     if (event.key === 'Enter' || event.keyCode === ENTER_KEY_CODE) {
       event.stopPropagation();

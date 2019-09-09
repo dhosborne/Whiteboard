@@ -47,6 +47,7 @@ export class AircraftListComponent implements OnInit, OnChanges {
           this.aircraftList.push(aircraft);
         }
       });
+      this.loadTab(this.aircraftList[0].tailNumber);
     });
   }
 

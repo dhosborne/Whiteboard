@@ -43,6 +43,7 @@ export class CalibrationListComponent implements OnInit {
             this.calList.push(tool);
           }
         });
+        this.tabSelected(this.locations[0]);
       });
   }
 

@@ -42,6 +42,7 @@ export class ShelterListComponent implements OnInit {
           this.shelterList.push(shelter);
         }
       });
+      this.loadTab(this.shelterList[0].name);
     });
   }
 
