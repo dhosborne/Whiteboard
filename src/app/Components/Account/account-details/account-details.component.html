@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="card bg-primary mb-3">
+        <div class="card-header" (dblclick)="editClick(account._id)">
+            <h6>Account Details - {{account?.firstName}}</h6>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                    <th scope="row"> First Name</th>
+                    <td>{{account?.firstName}}</td>
+                </tr>
+                <tr>
+                    <th scope="row"> Last Name</th>
+                    <td>{{account?.lastName}}</td>
+                </tr>
+                <tr>
+                    <th scope="row"> Email</th>
+                    <td>{{account?.email}}</td>
+                </tr>
+                <tr>
+                    <th scope="row"> Employee Number</th>
+                    <td>{{account?.employeeNumber}}</td>
+                </tr>
+                <tr>
+                    <th scope="row"> Passport Expires</th>
+                    <td>{{account?.passportExpires}}</td>
+                </tr>
+                <tr>
+                    <th scope="row"> Shirt Size</th>
+                    <td>{{account?.shirtSize}}</td>
+                </tr>
+                <tr>
+                    <th scope="row"> Jacket Size</th>
+                    <td>{{account?.jacketSize}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<pre>{{account | json}}</pre>

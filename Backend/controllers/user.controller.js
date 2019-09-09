@@ -23,11 +23,11 @@ exports.list = (req, res) => {
 }
 
 exports.getUser = (req, res) => {
-    log('User details for id: ' + req.params.id + ' requeted...');
+    log('User details for id: ' + req.params.id + ' requested...');
     var token = Auth.getToken(req.headers);
     if (token) {
         if(mongoose.Types.ObjectId.isValid(req.params.id)) {
-            User.findbyId({_id: req.params.id}, (err, user) => {
+            User.findById({_id: req.params.id}, (err, user) => {
                 if(err) {
                     res.json({status:404, success: false, message:'User does not exist'});
                 } else {

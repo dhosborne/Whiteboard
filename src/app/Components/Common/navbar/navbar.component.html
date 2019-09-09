@@ -30,12 +30,11 @@
         </ul>
         <ul class="user navbar-nav">
             <li>
-                <a class="nav-link" [routerLink]="['account']" routerLinkActive="router-link-active" >
+                <a class="nav-link" [routerLink]="['/account/', user._id]" routerLinkActive="router-link-active" >
                     <i class="material-icons ">
                     account_circle
-                    </i>
-                </a>
-
+                    </i>{{user.firstName}}
+                </a>              
             </li>
             <li>
                 <a [routerLink]="['/logout']" routerLinkActive="router-link-active"  class="nav-link">

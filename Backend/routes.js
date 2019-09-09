@@ -80,6 +80,11 @@ module.exports = (app) => {
     app.route('/signup')
         .post(User.signUp)
         .patch(User.update);
+    
+    app.route('/account/:id')
+        .get(User.getUser, passport.authenticate('jwt', {session: false}))
+        .patch(User.update, passport.authenticate('jwt', {session: false}));
+
 
     // Admin functions
     app.route('/users')

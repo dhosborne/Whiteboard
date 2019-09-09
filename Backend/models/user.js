@@ -14,10 +14,34 @@ const UserSchema = new Schema({
         required: true
     },
     firstName: {
-        type: String
+        type: String,
+        require: true
     },
     lastName: {
-        type: String
+        type: String,
+        required: true,
+    },
+    employeeNumber: {
+        type: String,
+        required: true,
+        default: null
+    },
+    email: {
+        type: String,
+        required: true,
+        default: null
+    },
+    shirtSize: {
+        type: String,
+        default: null
+    },
+    jacketSize: {
+        type: String,
+        default: null
+    },
+    passportExpires: {
+        type: String,
+        default: null
     }
 }, {collection: 'Users'});
 

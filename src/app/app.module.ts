@@ -36,6 +36,8 @@ import { UavconfigEditComponent } from './Components/Aircraft/UAVConfiguration/u
 import { UavconfigDetailsComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-details/uavconfig-details.component';
 import { ConfirmationDialogComponent } from './Components/Common/confirmation-dialog/confirmation-dialog.component';
 import { SpinnerComponent } from './Components/Common/spinner/spinner.component';
+import { AccountEditComponent } from './Components/Account/account-edit/account-edit.component';
+import { AccountDetailsComponent } from './Components/Account/account-details/account-details.component';
 
 
 @NgModule({
@@ -67,6 +69,8 @@ import { SpinnerComponent } from './Components/Common/spinner/spinner.component'
     UavconfigDetailsComponent,
     ConfirmationDialogComponent,
     SpinnerComponent,
+    AccountEditComponent,
+    AccountDetailsComponent,
   ],
   imports: [
     BrowserModule,

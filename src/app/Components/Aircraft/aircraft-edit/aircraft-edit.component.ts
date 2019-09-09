@@ -138,7 +138,6 @@ export class AircraftEditComponent implements OnInit {
   }
 
   get f() {
-    console.log(this.aircraftForm.controls);
     return this.aircraftForm.controls;
   }
 

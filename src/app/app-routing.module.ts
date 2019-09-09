@@ -5,6 +5,9 @@ import { LogoutComponent } from './Components/Authentication/logout/logout.compo
 import { SignupComponent } from './Components/Authentication/signup/signup.component';
 import { DashboardComponent } from './Components/Common/dashboard/dashboard.component';
 
+import { AccountDetailsComponent } from './Components/Account/account-details/account-details.component';
+import { AccountEditComponent } from './Components/Account/account-edit/account-edit.component';
+
 import { AircraftListComponent } from './Components/Aircraft/aircraft-list/aircraft-list.component';
 import { AircraftDetailsComponent } from './Components/Aircraft/aircraft-details/aircraft-details.component';
 import { AircraftEditComponent } from './Components/Aircraft/aircraft-edit/aircraft-edit.component';
@@ -36,6 +39,9 @@ const appRoutes: Routes = [
     {path: 'logout', component: LogoutComponent, data: {title: 'Logout'}},
     {path: 'signup', component: SignupComponent, data: {title: 'Signup'}},
     {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: {title: 'Welcome to White Board'}},
+
+    {path: 'account/:id', component: AccountDetailsComponent, canActivate: [AuthGuard], data: {title: 'Account Details'}},
+    {path: 'account/:id/edit', component: AccountEditComponent, canActivate: [AuthGuard]},
 
     {path: 'aircrafts', component: AircraftListComponent, canActivate: [AuthGuard], data: {title: 'Aircraft List'}},
     {path: 'aircrafts/new', component: AircraftEditComponent, canActivate: [AuthGuard], data: {title: 'New Aircraft'}},
