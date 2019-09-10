@@ -16,7 +16,12 @@
         <ul class="nav nav-tabs">
             <ng-container *ngFor="let av of aircraftList">
                 <li class="nav-item" >
-                    <a class="nav-link" (click)="tabSelected(av.tailNumber)">{{av.tailNumber}}</a>
+                    <a class="nav-link"
+                        [ngClass]="{
+                            'active': av.tailNumber === tailSelected,
+                            '': av.tailNumber !== tailSelected
+                        }"
+                    (click)="tabSelected(av.tailNumber)">{{av.tailNumber}}</a>
                 </li>
             </ng-container>
         </ul>

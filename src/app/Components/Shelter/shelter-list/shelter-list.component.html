@@ -18,7 +18,12 @@
         <ul class="nav nav-tabs">
             <ng-container *ngFor="let shelter of shelterList">
                 <li class="nav-item">
-                    <a class="nav-link" (click)="tabSelected(shelter.name)">{{shelter?.name}}</a>
+                    <a class="nav-link" 
+                        (click)="tabSelected(shelter.name)"
+                        [ngClass]="{'active': shelter.name === nameSelected,
+                                    '': shelter.name !== nameSelected
+                                    }"
+                    >{{shelter?.name}}</a>
                 </li>
             </ng-container>
         </ul>

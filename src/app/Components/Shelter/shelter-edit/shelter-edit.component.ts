@@ -75,10 +75,11 @@ export class ShelterEditComponent implements OnInit {
 
   onSubmit() {
     this.submitted = false;
+    this.shelterForm.removeControl('_id');
     const formValues = this.shelterForm.value;
     console.log(formValues);
 
-    if (this.route.snapshot.paramMap.has('id')){
+    if (this.route.snapshot.paramMap.has('id')) {
       this.shelterService.updateShelter(this.route.snapshot.paramMap.get('id'),
       formValues)
       .subscribe(data => {

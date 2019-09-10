@@ -48,7 +48,8 @@ export class ShelterListComponent implements OnInit {
 
   private loadTab(name: string): void {
     this.issuesList.length = 0;
-    if (this.nameSelected !== '') {
+    if (name !== '') {
+      this.nameSelected = name;
       this.shelterList.forEach((element: Shelter) => {
         if (element.name === name) {
           this.shelter = element;

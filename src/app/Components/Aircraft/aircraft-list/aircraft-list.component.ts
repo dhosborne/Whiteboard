@@ -53,8 +53,8 @@ export class AircraftListComponent implements OnInit, OnChanges {
 
   private loadTab(tail: string): void {
     this.issuesList.length = 0;
-
     if (tail !== '') {
+      this.tailSelected = tail;
       this.aircraftList.forEach(element => {
         if (element.tailNumber === tail) {
           this.aircraft = element;
@@ -69,7 +69,7 @@ export class AircraftListComponent implements OnInit, OnChanges {
     }
   }
 
-  aircraftClicked(id: string):void {
+  aircraftClicked(id: string): void {
     this.router.navigate(['aircrafts/' + id + '/edit']);
   }
   issueClicked(id): void {

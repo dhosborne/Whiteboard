@@ -43,11 +43,14 @@ export class CalibrationListComponent implements OnInit {
             this.calList.push(tool);
           }
         });
+        this.locations.sort();
+        this.calList.sort();
         this.tabSelected(this.locations[0]);
       });
   }
 
   tabSelected(location: string): void {
+    this.selectedLocation = location;
     this.currentSet.length = 0;
     if ( this.selectedLocation !== '') {
       this.calList.forEach((tool: Calibration) => {
