@@ -25,7 +25,6 @@ export class AccountDetailsComponent implements OnInit {
       this.accountService.getAccount(id)
       .subscribe((account: User) => {
         this.account = account['user'];
-        console.log(this.account)
       });
     }
   }

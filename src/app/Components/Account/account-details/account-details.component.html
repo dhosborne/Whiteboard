@@ -1,5 +1,5 @@
-<div class="container">
-    <div class="card bg-primary mb-3">
+<div class="container card-list">
+    <div class="card bg-primary mb-3 card-list">
         <div class="card-header" (dblclick)="editClick(account._id)">
             <h6>Account Details - {{account?.firstName}}</h6>
         </div>
@@ -39,6 +39,3 @@
         </table>
     </div>
 </div>
-
-
-<pre>{{account | json}}</pre>

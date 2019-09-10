@@ -24,6 +24,7 @@ export class IssueListComponent implements OnInit {
   ngOnInit() {
     this.getIssues();
     this.setTitle();
+    this.loadTab('open');
   }
 
   private getIssues(): void {
@@ -40,9 +41,13 @@ export class IssueListComponent implements OnInit {
   }
 
   loadTab(status: string): void {
-    let state = false;
+    let state;
+    this.header = status;
+
     if (status === 'closed') {
       state = true;
+    } else {
+      state = false;
     }
 
     this.currentSet.length = 0;

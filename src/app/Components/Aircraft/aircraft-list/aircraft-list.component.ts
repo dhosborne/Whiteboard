@@ -12,7 +12,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./aircraft-list.component.css']
 })
 
-export class AircraftListComponent implements OnInit, OnChanges {
+export class AircraftListComponent implements OnInit {
 
   aircraftList = new Array<Aircraft>();
   aircraft: Aircraft;
@@ -33,9 +33,6 @@ export class AircraftListComponent implements OnInit, OnChanges {
     this.loadAircrafts();
   }
 
-  ngOnChanges() {
-    console.log('on Changes fired');
-  }
 
   private loadAircrafts(): void {
     this.aircraftList.length = 0;

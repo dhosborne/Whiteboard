@@ -14,10 +14,10 @@
     <div class="row">
         <ul class="nav nav-tabs">
             <li class="nav-item" >
-                <a class="nav-link" (click)="loadTab('open')">Open</a>
+                <a class="nav-link" [ngClass]="{'active': header === 'open', '': header !== 'closed'}" (click)="loadTab('open')">Open</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" (click)="loadTab('closed')">Closed</a>
+                <a class="nav-link" [ngClass]="{'active': header === 'closed', '': header !== 'open'}" (click)="loadTab('closed')">Closed</a>
             </li>
         </ul>
     </div>
