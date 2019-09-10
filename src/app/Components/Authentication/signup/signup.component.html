@@ -1,57 +1,129 @@
-<div class="card border-light mb-3" style="max-width: 20rem;">
-    <div class="card-body">
-      <h4 class="card-title">Register</h4>
-      <form [formGroup]="signUpForm">
-          <div class="form-group">
-              <label for="username">Username <span class="required">*</span></label>
-              <input
-                id="username"
-                type="text"
-                class="form-control"
-                formControlName="username">
-                <div *ngIf="submitted && f.username.invalid" class="invalid-feedback">Username required</div>
-          </div>
-          <div class="form-group">
-              <label for="password">Password <span class="required">*</span></label>
-              <input
-                id="password"
-                type="password"
-                class="form-control"
-                formControlName="password"
-              >
-              <div *ngIf="submitted && f.password.invalid" class="invalid-feedback">Password required</div>
-          </div>
-          <div class="form-group">
-            <label for="passConfirm">Confirm Password <span class="required">*</span></label>
-            <input
-              id="passConfirm"
-              type="password"
-              class="form-control"
-              formControlName="passConfirm" >
-            <div *ngIf="submitted && f.passConfirm.invalid" class="invalid-feedback">Password required</div>
-            
-            <div class="form-group">
-                <label for="firstName">First Name <span class="required">*</span></label>
+<div class="container card-edit">
+    <div class="card border-light mb-3" style="max-width: 20rem;">
+        <div class="card-body">
+          <h4 class="card-title">Register</h4>
+          <form [formGroup]="signUpForm">
+              <div class="form-group">
+                  <label for="username">Username <span class="required">*</span></label>
+                  <input
+                    id="username"
+                    type="text"
+                    class="form-control"
+                    formControlName="username"
+                    [ngClass]="{
+                      'is-valid': f.username.valid && (f.username.touched || f.username.dirty),
+                      'is-invalid': f.username.invalid && (f.username.touched || f.username.dirty)}">
+                  <div class="form-group-feedback"
+                    *ngIf="f.username.errors && (f.username.errors.required && f.username.touched)">
+                    <small><em class="required">Username is required</em></small>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="password">Password <span class="required">*</span></label>
+                  <input
+                    id="password"
+                    type="password"
+                    class="form-control"
+                    formControlName="password"
+                    [ngClass]="{
+                      'is-valid': f.password.valid && (f.password.touched || f.password.dirty),
+                      'is-invalid': f.password.invalid && (f.password.touched || f.password.dirty)}">
+                  <div class="form-group-feedback"
+                      *ngIf="f.password.errors && (f.password.errors.required && f.password.touched)">
+                    <small><em class="required">Password is required</em></small>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="passConfirm">Confirm Password <span class="required">*</span></label>
                 <input
-                  id="firstName"
+                  id="passConfirm"
+                  type="password"
+                  class="form-control"
+                  formControlName="passConfirm"
+                  [ngClass]="{
+                    'is-valid': f.passConfirm.valid && (f.passConfirm.touched || f.passConfirm.dirty),
+                    'is-invalid': (f.passConfirm.invalid || signUpForm.errors) && (f.passConfirm.touched || f.passConfirm.dirty)}">
+                <div class="form-group-feedback"
+                  *ngIf="f.passConfirm.errors && (f.passConfirm.errors.required && f.passConfirm.touched)">
+                  <small><em class="required">Confirmation is required</em></small>
+                </div>
+                <div class="form-group-feedback"
+                  *ngIf="signUpForm.errors && (signUpForm.errors.notSame && f.passConfirm.touched)">
+                  <small><em class="required">Passwords must match</em></small>
+                </div>
+              </div>
+              <div class="form-group">
+                  <label for="firstName">First Name <span class="required">*</span></label>
+                  <input
+                    id="firstName"
+                    type="text"
+                    class="form-control"
+                    formControlName="firstName"
+                    [ngClass]="{
+                      'is-valid': f.firstName.valid && (f.firstName.touched || f.firstName.dirty),
+                      'is-invalid': f.firstName.invalid && (f.firstName.touched || f.firstName.dirty)}">
+                  <div class="form-group-feedback"
+                      *ngIf="f.firstName.errors && (f.firstName.errors.required && f.firstName.touched)">
+                    <small><em class="required">First name is required</em></small>
+                  </div> 
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name <span class="required">*</span></label>
+                <input
+                  id="lastName"
                   type="text"
                   class="form-control"
-                  formControlName="firstName">
-                <div *ngIf="submitted && f.firstName.invalid" class="invalid-feedback">First name required</div>
-            </div>
-          <div class="form-group">
-            <label for="lastName">Last Name <span class="required">*</span></label>
-            <input
-              id="lastName"
-              type="text"
-              class="form-control"
-              formControlName="lastName">
-          <div *ngIf="submitted && f.lastName.invalid" class="invalid-feedback">Last name required</div>
-          </div>
-        </div>
-          <div class="btn-group">
-              <button type="button" class="btn btn-default" [disabled]="!signUpForm.valid" (click)="signUp()">Register</button>
-          </div>
-      </form>
+                  formControlName="lastName"
+                  [ngClass]="{
+                    'is-valid': f.lastName.valid && (f.lastName.touched || f.lastName.dirty),
+                    'is-invalid': f.lastName.invalid && (f.lastName.touched || f.lastName.dirty)}">
+                <div class="form-group-feedback"
+                    *ngIf="f.lastName.errors && (f.lastName.errors.required && f.lastName.touched)">
+                  <small><em class="required">Last name is required</em></small>
+                </div>    
+              </div>
+              <div class="form-group">
+                <label for="email">Email<span class="required">*</span></label>
+                <input
+                  id="email"
+                  type="email"
+                  class="form-control"
+                  formControlName="email"
+                  [ngClass]="{
+                    'is-valid': f.email.valid && (f.email.touched || f.email.dirty),
+                    'is-invalid': f.email.invalid && (f.email.touched || f.email.dirty)}">
+                <div class="form-control-feedback"
+                  *ngIf="f.email.errors && (f.email.touched || f.email.dirty)">
+                  <small><em class="required">
+                    <p *ngIf="f.email.errors.required">Email Required</p>
+                    <p *ngIf="f.email.errors.pattern">Not a valid email</p>
+                    <p *ngIf="f.email.errors.domain">Must be a valid GA email</p>                    
+                  </em></small>
+
+                </div>            
+              </div>
+              <div class="form-group">
+                <label for="employeeNumber">Employee Number<span class="required">*</span></label>
+                <input
+                  id="employeeNumber"
+                  type="text"
+                  class="form-control"
+                  formControlName="employeeNumber"
+                  [ngClass]="{
+                    'is-valid': f.employeeNumber.valid && (f.employeeNumber.touched || f.employeeNumber.dirty),
+                    'is-invalid': f.employeeNumber.invalid && (f.employeeNumber.touched || f.employeeNumber.dirty)}">
+                <div class="form-group-feedback"
+                    *ngIf="f.employeeNumber.errors && (f.employeeNumber.errors.required && f.employeeNumber.touched)">
+                  <small><em class="required">Employee number is required</em></small>
+                </div>                 
+              </div>
+              <div class="btn-group">
+                  <button type="button" class="btn btn-default" [disabled]="!signUpForm.valid" (click)="signUp()">Register</button>
+              </div>
+          </form>
+
+        </div>          
+        <pre>Email errors: {{f.email.errors | json}}</pre>
+        <pre>Form errors {{signUpForm.errors | json}}</pre>
     </div>
 </div>

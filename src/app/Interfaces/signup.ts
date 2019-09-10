@@ -4,4 +4,6 @@ export interface ISignup {
     passConfirm: string;
     firstName: string;
     lastName: string;
+    email: string;
+    employeeNumber: string;
 }

@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.setTitle();
+    this.purgeSession();
     this.loginForm.controls.username.setValidators(Validators.required);
     this.loginForm.controls.password.setValidators(Validators.required);
   }
@@ -81,5 +82,9 @@ export class LoginComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.title.setTitle(data.title);
     });
+  }
+
+  private purgeSession(): void {
+    sessionStorage.clear();
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { LoginService } from '../../../Services/login.service';
+import { ValidationService } from '../../../Services/validation.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgFlashMessageService } from 'ng-flash-messages';
 import { ISignup } from '../../../Interfaces/signup';
@@ -12,14 +13,34 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  signUpForm: FormGroup = this.createForm({
-    username: '',
-    password: '',
-    passConfirm: '',
-    firstName: '',
-    lastName: ''
-  });
-  submitted = false;
+  signUpForm = this.fb.group({
+    username: ['', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(25)]
+    ],
+    password: ['', [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.maxLength(25)]
+    ],
+    passConfirm: ['', [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.maxLength(25)]
+    ],
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    email: ['', [
+      Validators.required,
+      Validators.pattern(this.vs.validEmailPattern), // matches first.last@
+      this.vs.emailDomainValidator] // matches only approved domains
+    ],
+    employeeNumber: ['', [
+      Validators.required,
+      Validators.minLength(8)]
+    ]
+  }, {validators: [this.vs.checkPasswords]});
 
   constructor(
     private fb: FormBuilder,
@@ -27,27 +48,18 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private flash: NgFlashMessageService,
     private title: Title,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private vs: ValidationService,
   ) { }
 
   ngOnInit() {
     this.setTitle();
-    const c = this.signUpForm.controls;
-    c.username.setValidators(Validators.required);
-    c.password.setValidators(Validators.required);
-    c.passConfirm.setValidators(Validators.required);
-    c.firstName.setValidators(Validators.required);
-    c.lastName.setValidators(Validators.required);
-  }
-
-
-  private createForm(model: ISignup): FormGroup {
-    return this.fb.group(model);
   }
 
   signUp(): void {
-    this.submitted = true;
-    this.loginService.signup(this.signUpForm.value)
+    const formValues = this.signUpForm.value;
+
+    this.loginService.signup(formValues)
     .subscribe( res => {
       this.router.navigate(['login']);
     }, err => {

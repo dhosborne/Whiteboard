@@ -60,7 +60,7 @@ export class IssueEditComponent implements OnInit {
     this.loadLists();
 
     const sessionVar = JSON.parse(sessionStorage.getItem('user'));
-    this.user = new User(sessionVar._id, sessionVar.firstName, sessionVar.lastName);
+    this.user = new User(sessionVar._id, sessionVar.firstName, sessionVar.lastName, null, null);
 
     this.issueForm.controls.title.setValidators(Validators.required);
     this.issueForm.controls.date.setValidators(Validators.required);

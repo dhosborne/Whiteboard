@@ -82,12 +82,7 @@ exports.signUp = (req, res) => {
     if (!req.body.username || !req.body.password) {
         res.json({success: false, message: 'Please check username or password!'});
     } else {
-        var newUser = new User({
-            username: req.body.username,
-            password: req.body.password,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName
-        });
+        const newUser = new User(req.body);
         newUser.save((err) => {
             if (err) {
                 console.log(err);

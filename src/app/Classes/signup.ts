@@ -6,6 +6,8 @@ export class Signup implements ISignup {
     passConfirm: string;
     firstName: string;
     lastName: string;
+    email: string;
+    employeeNumber: string;
 
 
     constructor(
@@ -13,6 +15,8 @@ export class Signup implements ISignup {
         password: string,
         passConfirm: string,
         firstName: string,
-        lastName: string
+        lastName: string,
+        email: string,
+        employeeNumber: string
     ) {}
 }
