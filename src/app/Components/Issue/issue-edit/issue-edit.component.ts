@@ -33,6 +33,7 @@ export class IssueEditComponent implements OnInit {
   isNew = true;
 
   issueForm: FormGroup = this.createForm({
+    _id: '',
     title: '',
     date: '',
     description: '',

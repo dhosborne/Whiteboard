@@ -17,6 +17,7 @@ import * as moment from 'moment';
 })
 export class AircraftEditComponent implements OnInit {
   aircraftForm: FormGroup = this.createForm({
+    _id: '',
     tailNumber: '',
     reconDate: '',
     isActive: true

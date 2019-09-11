@@ -51,3 +51,4 @@ Backend/config/database.js
 
 #production server config
 src/environments/configurations.ts
+dist/

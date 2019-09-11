@@ -1,6 +1,7 @@
 import {IIssue} from '../Interfaces/issue';
 
 export class Issue implements IIssue {
+    _id: string;
     title: string;
     date: string;
     description: string;

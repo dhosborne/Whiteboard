@@ -28,9 +28,8 @@ export class AircraftDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.setTitle();
-    this.id = this.route.snapshot.paramMap.get('id');
 
-    this.aircraftService.getAircraft(this.id)
+    this.aircraftService.getAircraft(this.route.snapshot.paramMap.get('id'))
     .subscribe(data => {
       this.aircraft = data;
 
