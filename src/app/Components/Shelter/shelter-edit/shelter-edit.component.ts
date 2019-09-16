@@ -7,6 +7,7 @@ import { NgFlashMessageService } from 'ng-flash-messages';
 import { IShelter } from '../../../Interfaces/shelter';
 import * as moment from 'moment';
 import { Title } from '@angular/platform-browser';
+import { CommonService } from 'src/app/Services/common.service';
 
 @Component({
   selector: 'app-shelter-edit',
@@ -38,10 +39,13 @@ export class ShelterEditComponent implements OnInit {
     private flash: NgFlashMessageService,
     private title: Title,
     private location: Location,
+    private common: CommonService
   ) { }
 
   ngOnInit() {
-    this.setTitle();
+    this.route.data.subscribe(data => {
+      this.common.setPageTitle(data.title);
+    });
 
     this.shelterForm.controls.name.setValidators([
       Validators.required,
@@ -77,29 +81,35 @@ export class ShelterEditComponent implements OnInit {
     this.submitted = false;
     this.shelterForm.removeControl('_id');
     const formValues = this.shelterForm.value;
-    console.log(formValues);
 
     if (this.route.snapshot.paramMap.has('id')) {
       this.shelterService.updateShelter(this.route.snapshot.paramMap.get('id'),
       formValues)
       .subscribe(data => {
-        this.showMessage(data.message);
+        this.common.showMessage(data.message, data.alert);
         this.redirect();
       });
     } else {
       this.shelterService.createShelter(formValues)
       .subscribe(data => {
-        this.showMessage(data.message);
+        this.common.showMessage(data.message, data.alert);
         this.redirect();
       });
     }
   }
 
   onDelete(): void {
-    this.shelterService.deleteShelter(this.route.snapshot.paramMap.get('id'))
-    .subscribe(data => {
-      this.showMessage(data.message);
-      this.redirect();
+    this.common.verifyDialogResult('Do you really want to delete this shelter?')
+    .subscribe(result => {
+      if (result) {
+        this.shelterService.deleteShelter(this.route.snapshot.paramMap.get('id'))
+        .subscribe(data => {
+          this.common.showMessage(data.message, data.alert);
+          this.redirect();
+        });
+      } else {
+        this.common.showMessage('Shelter NOT deleted', 'info');
+      }
     });
   }
 
@@ -111,22 +121,7 @@ export class ShelterEditComponent implements OnInit {
     this.router.navigate(['shelters'], {});
   }
 
-  private showMessage(message): void {
-    this.flash.showFlashMessage({
-        messages: [message],
-        dismissible: true,
-        timeout: 10000,
-        type: 'info'
-    });
-  }
-
   get f() {
     return this.shelterForm.controls;
-  }
-
-  private setTitle(): void {
-    this.route.data.subscribe(data => {
-      this.title.setTitle(data.title);
-    });
   }
 }

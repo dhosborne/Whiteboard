@@ -14,7 +14,7 @@ exports.list = (req, res) => {
         .exec((err, issues) => {
             if (err) {
                 log(err.message + '\n')
-                res.status(500).send({success:false, message:err.message});
+                res.json({status:500, success:false, alert: 'danger', message:err.message});
             } else {
                 log('sent\n')
                 res.json(issues);
@@ -22,7 +22,7 @@ exports.list = (req, res) => {
         });
     } else {
         log('Unauthorized Request Denied\n');
-        return res.status(403).send({success: false, message:'Unauthorized Request'});
+        return res.json({status: 403, success: false, alert:'danger', message:'Unauthorized Request'});
     }
 };
 
@@ -34,7 +34,7 @@ exports.group = (req, res) =>{
         Issue.find({asset: req.query.asset}, (err, group) => {
             if(err) {
                 log(err.message + '\n');
-                res.status(500).send({success:false, message:err.message});
+                res.json({status:500, success:false, alert: 'danger', message:err.message});
             } else {
                 log('sent\n');
                 res.json(group);
@@ -42,7 +42,7 @@ exports.group = (req, res) =>{
         })        
     } else {
         log('Unauthorized Request Denied\n');
-        res.status(403).send({success: false, message: 'Unauthorized request'});
+        return res.json({status: 403, success: false, alert:'danger', message:'Unauthorized Request'});
     }
 
 }
@@ -57,16 +57,16 @@ exports.create = (req, res) => {
         issue.save((err, result) => {
             if(err) {
                 log(err.message + '\n')
-                res.status(500).send({success:false, message:err.message});
+                res.json({status:500, success:false, alert: 'danger', message:err.message});
             } else {
                 log('sent\n')
-                res.json({stats:200, success:true,  
+                res.json({stats:200, success:true, alert: 'success', 
                     message: 'Issue Created', result});
             }
         });
     } else {
         log('Unauthorized Request Denied\n');
-        res.status(403).send({success: false, message: 'Unauthorized request'});
+        return res.json({status: 403, success: false, alert:'danger', message:'Unauthorized Request'});
     }
 };
 
@@ -78,7 +78,7 @@ exports.read = (req, res) => {
         Issue.findById(req.params.id, (err, issue) => {
             if(err) {
                 log(err.message + '\n');
-                res.status(500).send({success:false, message:err.message});
+                res.json({status:500, success:false, alert: 'danger', message:err.message});
             } else {
                 log('sent\n');
                 res.json(issue);
@@ -86,7 +86,7 @@ exports.read = (req, res) => {
         });
     } else {
         log('Unauthorized Request Denied\n');
-        res.status(403).send({success: false, message: 'Unauthorized request'});       
+        return res.json({status: 403, success: false, alert:'danger', message:'Unauthorized Request'});
     }   
 };
 
@@ -100,15 +100,15 @@ exports.update = (req, res) => {
         Issue.findByIdAndUpdate({_id: req.params.id}, {$set: req.body}, (err, result) => {
             if(err) {
                 log(err.message + '\n');
-                res.status(500).send({success:false, message:err.message});
+                res.json({status:500, success:false, alert: 'danger', message:err.message});
             } else {
                 log('sent\n');
-                res.json({status: 200, success:true, message: 'Issue Updated', result});
+                res.json({status: 200, success:true, alert: 'success', message: 'Issue Updated', result});
             }
         });
     } else {
         log('Unauthorized Request Denied\n');
-        res.status(403).send({success: false, message: 'Unauthorized request'});         
+        return res.json({status: 403, success: false, alert:'danger', message:'Unauthorized Request'});    
     }
 };
 
@@ -121,22 +121,22 @@ exports.delete = (req, res) => {
             Issue.deleteOne({_id: req.params.id}, (err, result) => {
                 if (err) {
                     log(err.message + '\n');
-                    res.status(500).send({success:false, message:err.message});
+                    res.json({status:500, success:false, alert: 'danger', message:err.message});
                 } else {
                     log('Issue id: ' + req.params.id + ' deleted\n')
-                    res.json({ status:200, success: true, 
+                    res.json({ status:200, success: true, alert: 'success', 
                             message:'Issue Deleted', result})
                 }
             })
         } else {
             log('id invalid\n')
-            res.json({status:500, success:false, 
+            res.json({status:500, success:false, alert: 'danger',
                         message: req.params.id + ' is not valid id'
                     });
         }
     } else {
         log('Unauthorized Request Denied\n');
-        res.status(403).send({success: false, message: 'Unauthorized request'}); 
+        return res.json({status: 403, success: false, alert:'danger', message:'Unauthorized Request'});
     }
 }
 

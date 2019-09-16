@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from '../../../Services/common.service';
 import { CalibrationService } from '../../../Services/calibration.service';
 import { ICalibration } from '../../../Interfaces/calibration';
 import * as moment from 'moment';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgFlashMessageService } from 'ng-flash-messages';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-calibration-edit',
@@ -28,16 +27,17 @@ export class CalibrationEditComponent implements OnInit {
   submitted = false;
 
   constructor(
+    private common: CommonService,
     private fb: FormBuilder,
     private calService: CalibrationService,
     private route: ActivatedRoute,
-    private router: Router,
-    private flash: NgFlashMessageService,
-    private title: Title
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.setTitle();
+    this.route.data.subscribe(data => {
+      this.common.setPageTitle(data.title);
+    });
 
     if (this.route.snapshot.paramMap.has('id')) {
       this.isNew = false;
@@ -46,7 +46,7 @@ export class CalibrationEditComponent implements OnInit {
       this.calService.getCalibration(this.id)
       .subscribe(data => {
         data.date = moment(data.date).format('YYYY-MM-DD');
-        this.updateFrom(data);
+        this.updateForm(data);
       });
     }
   }
@@ -62,14 +62,16 @@ export class CalibrationEditComponent implements OnInit {
 
     if (this.id) {
       this.calService.updateCalibration(this.id, formValues)
-      .subscribe(data =>{
-        this.showMessage(data.message);
+      .subscribe(data => {
+        // this.showMessage(data.message);
+        this.common.showMessage(data.message, data.alert);
         this.redirect();
       });
     } else {
       this.calService.createCalibration(formValues)
       .subscribe(data => {
-        this.showMessage(data.message);
+        // this.showMessage(data.message);
+        this.common.showMessage(data.message, data.alert);
         this.redirect();
       });
     }
@@ -77,10 +79,18 @@ export class CalibrationEditComponent implements OnInit {
 
   onDelete(): void {
     if (this.id) {
-      this.calService.deleteCalibration(this.id)
-      .subscribe(data => {
-        this.showMessage(data.message);
-        this.redirect();
+      this.common.verifyDialogResult('Do you really want to delete this cal item?')
+      .subscribe(result => {
+        console.log('result in component: ', result);
+        if (result) {
+          this.calService.deleteCalibration(this.id)
+          .subscribe(data => {
+            this.common.showMessage(data.message, data.alert);
+            this.redirect();
+          });
+        } else {
+          this.common.showMessage('Item NOT deleted', 'info');
+        }
       });
     }
   }
@@ -97,27 +107,12 @@ export class CalibrationEditComponent implements OnInit {
     return this.fb.group(model);
   }
 
-  private updateFrom(model: Partial<ICalibration>): void {
+  private updateForm(model: Partial<ICalibration>): void {
     this.calForm.patchValue(model);
-  }
-
-  private showMessage(message): void {
-    this.flash.showFlashMessage({
-      messages: [message],
-      dismissible: true,
-      timeout: 10000,
-      type: 'info'
-    });
   }
 
   get f() {
     return this.calForm.controls;
-  }
-
-  private setTitle(): void {
-    this.route.data.subscribe(data => {
-      this.title.setTitle(data.title);
-    })
   }
 
 }

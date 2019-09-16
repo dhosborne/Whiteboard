@@ -2,17 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Validators, FormBuilder, FormGroup} from '@angular/forms';
 import { ActivatedRoute, Router} from '@angular/router';
-import { NgFlashMessageService } from 'ng-flash-messages';
 import { Aircraft } from '../../../Classes/aircraft';
 import { AircraftService } from '../../../Services/aircraft.service';
 import { ShelterService } from '../../../Services/shelter.service';
 import { IssueService } from '../../../Services/issue.service';
+import { CommonService } from '../../../Services/common.service';
 import { Shelter } from '../../../Classes/shelter';
 import { IIssue } from '../../../Interfaces/issue';
 import * as moment from 'moment';
-import { Title } from '@angular/platform-browser';
-import { MatDialog } from '@angular/material';
-import { ConfirmationDialogComponent } from '../../Common/confirmation-dialog/confirmation-dialog.component';
 import { User } from 'src/app/Classes/user';
 
 @Component({
@@ -48,16 +45,17 @@ export class IssueEditComponent implements OnInit {
     private issueService: IssueService,
     private route: ActivatedRoute,
     private router: Router,
-    private flash: NgFlashMessageService,
     private fb: FormBuilder,
-    private title: Title,
-    private confirm: MatDialog,
     private location: Location,
+    private common: CommonService
 
   ) { }
 
   ngOnInit() {
-    this.setTitle();
+    this.route.data.subscribe(data => {
+      this.common.setPageTitle(data.title);
+    });
+
     this.loadLists();
 
     const sessionVar = JSON.parse(sessionStorage.getItem('user'));
@@ -91,6 +89,7 @@ export class IssueEditComponent implements OnInit {
       return;
     }
 
+    this.issueForm.removeControl('_id');
     const formValues = this.issueForm.value;
 
     if ( this.route.snapshot.paramMap.has('id')) {
@@ -106,7 +105,7 @@ export class IssueEditComponent implements OnInit {
       this.issueService.createIssue(formValues)
       .subscribe(data => {
         console.log(data);
-        this.showMessage(data.message);
+        this.common.showMessage(data.message, data.alert);
         this.redirect(data.result._id);
       });
     }
@@ -148,36 +147,23 @@ export class IssueEditComponent implements OnInit {
   }
 
   onDelete(): void {
-    const dialogRef = this.confirm.open(ConfirmationDialogComponent, {
-      width: '350px',
-      data: 'Do you really want to delete this issue?'
-    });
 
-    dialogRef.afterClosed()
+    this.common.verifyDialogResult('Do you really want to delete this issue?')
     .subscribe(result => {
-      if (result) {
-        this.issueService.deleteIssue(this.route.snapshot.paramMap.get('id'))
-        .subscribe(data => {
-          this.showMessage(data.message);
-          this.router.navigate(['/issues']); // issue deleted, go back to list
-        });
-      } else {
-        this.showMessage('Cancelled Delete!');
-      }
-    });
+        if (result) {
+          this.issueService.deleteIssue(this.route.snapshot.paramMap.get('id'))
+          .subscribe(data => {
+            this.common.showMessage(data.message, data.alert);
+            this.router.navigate(['/issues']); // issue deleted, go back to list
+          });
+        } else {
+          this.common.showMessage('Cancelled Delete!', 'info');
+        }
+      });
   }
 
   onCancel(): void {
     this.location.back();
-  }
-
-  private showMessage(message): void {
-    this.flash.showFlashMessage({
-      messages: [message],
-      dismissible: true,
-      timeout: 10000,
-      type: 'info'
-    });
   }
 
   redirect(id: string): void {
@@ -186,11 +172,5 @@ export class IssueEditComponent implements OnInit {
 
   get f() {
     return this.issueForm.controls;
-  }
-
-  private setTitle(): void {
-    this.route.data.subscribe(data => {
-      this.title.setTitle(data.title);
-    });
   }
 }

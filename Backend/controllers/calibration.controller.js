@@ -13,7 +13,11 @@ exports.list = (req, res) => {
         .exec((err, calibrations) => {
             if (err) {
                 log(err.message + '\n');
-                res.json({status:500, success:false, message:err.message});
+                res.json({
+                    status:500, 
+                    success:false, 
+                    alert: 'danger', 
+                    message:err.message});
             } else {
                 log('sent\n');
                 res.json(calibrations);
@@ -21,7 +25,11 @@ exports.list = (req, res) => {
         });
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({
+            status:401, 
+            success: false,
+            alert: 'danger', 
+            message:'Unauthorized Request'});
     }
 }
 
@@ -35,15 +43,27 @@ exports.listInactive = (req, res) => {
         .exec((err, calibrations) => {
             if (err) {
                 log(err.message + '\n');
-                res.json({status:500, success:false, message:err.message});
+                res.json({
+                    status:500, 
+                    success:false,
+                    alert: 'danger', 
+                    message:err.message});
             } else {
                 log('sent\n');
-                res.json(calibrations);
+                res.json({
+                    status: 200,
+                    success: true, 
+                    calibrations,
+                });
             }
         });
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({
+            status:401, 
+            success: false,
+            alert: 'danger', 
+            message:'Unauthorized Request'});
     }
 }
 
@@ -57,15 +77,28 @@ exports.create = (req, res) => {
         cal.save((err, result) => {
             if (err) {
                 log(err.message + '\n');
-                res.json({status:500, success:false, message:err.message});
+                res.json({
+                    status:500, 
+                    success:false,
+                    alert: 'danger',
+                    message:err.message});
             } else {
                 log('sent\n');
-                res.json({status:201, success: true, message: 'Calibration created', result});
+                res.json({
+                    status:201, 
+                    success: true,
+                    alert: 'success',
+                    message: 'Calibration created', 
+                    result});
             }
         });
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({
+            status:401, 
+            success: false,
+            alert: 'danger',
+            message:'Unauthorized Request'});
     }
 }
 
@@ -79,7 +112,11 @@ exports.read = (req, res) => {
             Calibration.findById(req.params.id, (err, result) => {
                 if (err) {
                     log(err.message + '\n');
-                    res.json({status:500, success:false, message:err.message});
+                    res.json({
+                        status:500, 
+                        success:false,
+                        alert: 'danger',
+                        message:err.message});
                 } else {
                     log('sent\n');
                     res.json(result);
@@ -87,12 +124,20 @@ exports.read = (req, res) => {
             });            
         } else {
             log(err.message + '\n');
-            res.json({status:400, success:false, message: 'Calibration id: ' + req.params.id + ' is not a valid id'});            
+            res.json({
+                status:400, 
+                success:false,
+                alert: 'danger',
+                message: 'Calibration id: ' + req.params.id + ' is not a valid id'});            
         }
 
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({
+            status:401, 
+            success: false,
+            alert: 'danger',
+            message:'Unauthorized Request'});
     }
 }
 
@@ -106,20 +151,36 @@ exports.update = (req, res) => {
                 (err, result) =>{
                     if (err) {
                         log(err.message + '\n');
-                        res.json({status:500, success:false, message:err.message});
+                        res.json({
+                            status:500, 
+                            success:false,
+                            alert: 'danger',
+                            message:err.message});
                     } else {
                         log('sent\n');
-                        res.json({status:200, success: true, message: 'Calibration updated', result})
+                        res.json({
+                            status:200, 
+                            success: true,
+                            alert: 'success',
+                            message: 'Calibration updated', result})
                     }
                 });            
         } else {
             log(err.message + '\n');
-            res.json({status:400, success:false, message: 'Calibration id: ' + req.params.id + ' is not a valid id'});            
+            res.json({
+                status:400, 
+                success:false,
+                alert: 'danger',
+                message: 'Calibration id: ' + req.params.id + ' is not a valid id'});            
         }
 
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({
+            status:401, 
+            success: false,
+            alert: 'danger',
+            message:'Unauthorized Request'});
     }
 }
 
@@ -132,19 +193,37 @@ exports.delete = (req, res) => {
             Calibration.deleteOne({_id: req.params.id}, (err, result) => {
                 if (err) {
                     log(err.message + '\n');
-                    res.json({status:500, success:false, message:err.message});
+                    res.json({
+                        status:500, 
+                        success:false,
+                        alert: 'danger',
+                        message:err.message
+                    });
                 } else {
                     log('sent\n');
-                    res.json({status:200, success:true, message: 'Calibration deleted succesfully', result});
+                    res.json({
+                        status:200, 
+                        success:true,
+                        alert: 'success', 
+                        message: 'Calibration deleted succesfully', 
+                        result});
                 }
             })
         } else {
             log(err.message +'\n');
-            res.json({status: 500, success:false, message: req.params.id + ' is not a valid id'});
+            res.json({
+                status: 500, 
+                success:false,
+                alert: 'danger',
+                message: req.params.id + ' is not a valid id'});
         }
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({
+            status:401, 
+            success: false,
+            alert: 'danger',
+            message:'Unauthorized Request'});
     }
 }
 function log(text) {

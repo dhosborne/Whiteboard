@@ -15,9 +15,9 @@ exports.list = (req, res) => {
     .sort({username: 1})
     .exec((err, users) => {
         if (err) {
-            res.status(401).send({success: false, message:'Could not retrieve user list'});
+            res.json({ status: 401, success: false, alert: 'danger', alert: 'danger', message:'Could not retrieve user list'});
         } else {
-            res.json({success: true, users});
+            res.json({status:200, success: false, alert: 'success', users});
         }
     });
 }
@@ -29,7 +29,7 @@ exports.getUser = (req, res) => {
         if(mongoose.Types.ObjectId.isValid(req.params.id)) {
             User.findById({_id: req.params.id}, (err, user) => {
                 if(err) {
-                    res.json({status:404, success: false, message:'User does not exist'});
+                    res.json({status:404, success: false, alert: 'danger', message:'User does not exist'});
                 } else {
                     res.json({user});
                 }
@@ -41,21 +41,21 @@ exports.getUser = (req, res) => {
 
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});        
+        return res.json({status:401, success: false, alert: 'danger', message:'Unauthorized Request'});        
     }
 
 }
 
 exports.createUser = (req, res) => {
     if (!req.body.username || !req.body.password) {
-        res.json({success:400, success: false, message: 'Please check username or password!'});
+        res.json({success:400, success: false, alert: 'danger', message: 'Please check username or password!'});
     } else {
         var newUser = new User(req.body);
         newUser.save((err) => {
             if (err) {
-                return res.json({status: 409, success: false, message: 'Username already exists'});
+                return res.json({status: 409, success: false, alert: 'danger', message: 'Username already exists'});
             } else {
-                res.json({success: true, message: 'User creation successful'});
+                res.json({success: false, alert: 'success', message: 'User creation successful'});
             }
         });
     }    
@@ -67,11 +67,11 @@ exports.deleteUser = (req, res) => {
             if (err) {req
                 res.send(err);
             } else {
-                res.json({status: 200, success: false, message: 'User Deleted Succesfully'});
+                res.json({status: 200, success: false, alert: 'danger', message: 'User Deleted Succesfully'});
             }
         });
     } else {
-        res.status(401).send({success: false, message:'No user with id ' + req.params.id + ' was found'});
+        res.status(401).send({success: false, alert: 'danger', message:'No user with id ' + req.params.id + ' was found'});
     }
 }
 
@@ -80,15 +80,15 @@ exports.deleteUser = (req, res) => {
  */
 exports.signUp = (req, res) => {
     if (!req.body.username || !req.body.password) {
-        res.json({success: false, message: 'Please check username or password!'});
+        res.json({success: false, alert: 'danger', message: 'Please check username or password!'});
     } else {
         const newUser = new User(req.body);
         newUser.save((err) => {
             if (err) {
                 console.log(err);
-                return res.json({status:200, success: false, message: 'Username already exists'});
+                return res.json({status:200, success: false, alert: 'danger', message: 'Username already exists'});
             } else {
-                res.json({success: true, message: 'User creation successful'});
+                res.json({success: false, alert: 'success', message: 'User creation successful'});
             }
         });
     }
@@ -103,11 +103,11 @@ exports.update = (req, res) => {
                 res.send(err);
             } else {
                 console.log(result);
-                res.json({status:200, success: true, message: 'User updated successfully', result});
+                res.json({status:200, success: false, alert: 'success', message: 'User updated successfully', result});
             }
         });
     } else {
-        res.status(403).send({success: false, message: 'Unauthorized request'});
+        res.status(403).send({success: false, alert: 'danger', message: 'Unauthorized request'});
     }
 }
 
@@ -118,7 +118,7 @@ exports.login = (req, res) => {
             log(err.message + '\n');
         } else {
             if (!user) {
-                res.status(401).send({success: false, 
+                res.status(401).send({success: false, alert: 'danger', 
                     message: 'Authentication failed, username incorrect'});
             } else {
                 user.comparePassword(req.body.password, (err, isMatch) => {
@@ -128,9 +128,9 @@ exports.login = (req, res) => {
                         });
                         log('success! ');
                         payload = {id: user.id, 'username': user.username, 'firstName': user.firstName, 'lastName': user.lastName};
-                        res.json({success: true, token: 'JWT ' + token, user: payload}); 
+                        res.json({success: false, alert: 'success', token: 'JWT ' + token, user: payload}); 
                     } else {
-                        res.status(401).send({success: false, 
+                        res.status(401).send({success: false, alert: 'danger', 
                             message:'Authentication failed, password incorrect'})
                     }
                 });

@@ -13,7 +13,7 @@ exports.list = (req, res) => {
         .exec((err, configs) => {
             if (err) {
                 log(err.message + '\n');
-                res.json({status:500, success:false, message:err.message});
+                res.json({status:500, success:false, alert: 'danger',  message:err.message});
             } else {
                 log('sent\n');
                 res.json(configs);
@@ -21,7 +21,7 @@ exports.list = (req, res) => {
         });        
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({status:401, success: false, alert: 'danger',  message:'Unauthorized Request'});
     }
 
 };
@@ -35,15 +35,15 @@ exports.create = (req, res) => {
         uavconfig.save((err, config) => {
             if(err) {
                 log(err.message + '\n');
-                res.json({status:500, success:false, message:err.message});
+                res.json({status:500, success:false, alert: 'danger',  message:err.message});
             } else {
                 log('sent\n');
-                res.json({status:201, success:true,  message: 'Configuration Successfully Added', config});
+                res.json({status:201, success: true, alert: 'success',   message: 'Configuration Successfully Added', config});
             }
         });
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({status:401, success: false, alert: 'danger',  message:'Unauthorized Request'});
     }
 
 };
@@ -57,7 +57,7 @@ exports.read = (req, res) => {
             Config.findById(req.params.id, (err, config) => {
                 if (err) {
                     log(err.message + '\n')
-                    res.json({status:500, success:false, message:err.message});
+                    res.json({status:500, success:false, alert: 'danger',  message:err.message});
                 } else {
                     log('sent\n');
                     res.json(config);           
@@ -70,7 +70,7 @@ exports.read = (req, res) => {
          
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({status:401, success: false, alert: 'danger',  message:'Unauthorized Request'});
     }
      
 };
@@ -84,10 +84,10 @@ exports.update = (req, res) => {
             Config.findByIdAndUpdate({_id: req.params.id}, {$set: req.body}, (err, result) => {
                 if (err) {
                     log(err.message + '\n');
-                    res.json({status:500, success:false, message:err.message});
+                    res.json({status:500, success:false, alert: 'danger',  message:err.message});
                 } else {
                     log('sent\n');
-                    res.json({status:200, success:true, message: 'UAV Confg updated', result});
+                    res.json({status:200, success: true, alert: 'success', message: 'UAV Confg updated', result});
                 }
             });
         } else {
@@ -97,7 +97,7 @@ exports.update = (req, res) => {
 
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({status:401, success: false, alert: 'danger',  message:'Unauthorized Request'});
     }
 };
 
@@ -111,19 +111,19 @@ exports.delete = (req, res) =>{
             Config.deleteOne({_id: req.params.id}, (err, result) => {
                 if (err) {
                     log(err.message + '\n');
-                    res.json({status:500, success:false, message:err.message});
+                    res.json({status:500, success:false, alert: 'danger',  message:err.message});
                 } else {
                     log('sent\n');
-                    res.json({status:200, success:true, message: 'UAV Configuration Deleted Successfully'});
+                    res.json({status:200, success: true, alert: 'success',, message: 'UAV Configuration Deleted Successfully'});
                 }
             })
         } else {
             log(err.message + '\n');
-            res.json({status:400, success:false, message: 'UAVConfig id: ' + req.params.id + ' is not a valid id'});
+            res.json({status:400, success:false, alert: 'danger', message: 'UAVConfig id: ' + req.params.id + ' is not a valid id'});
         }        
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});        
+        return res.json({status:401, success: false, alert: 'danger',  message:'Unauthorized Request'});        
     }
 
 }

@@ -14,7 +14,7 @@ exports.listActive = (req, res) => {
         .exec((err, shelters) => {
             if (err) {
                 log(err.message + '\n')
-                res.json({status:500, success:false, message:err.message});
+                res.json({status:500, success:false, alert: 'danger', message:err.message});
             } else {
                 log('sent\n')
                 res.json(shelters);
@@ -22,7 +22,7 @@ exports.listActive = (req, res) => {
         });
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({status:401, success: false, alert: 'danger', message:'Unauthorized Request'});
     }
 };
 exports.listInactive = (req, res) => {
@@ -36,7 +36,7 @@ exports.listInactive = (req, res) => {
         .exec((err, shelters) => {
             if (err) {
                 log(err.message + '\n')
-                res.json({status:500, success:false, message:err.message});
+                res.json({status:500, success:false, alert: 'danger', message:err.message});
             } else {
                 log('sent\n')
                 res.json(shelters);
@@ -44,7 +44,7 @@ exports.listInactive = (req, res) => {
         });
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({status:401, success: false, alert: 'danger', message:'Unauthorized Request'});
     }
 };
 
@@ -58,16 +58,16 @@ exports.create = (req, res) => {
         shelter.save((err, result) => {
             if(err) {
                 log(err.message + '\n')
-                res.json({status:500, success:false, message:err.message});
+                rres.json({status:500, success:false, alert: 'danger', message:err.message});
             } else {
                 log('sent\n')
-                res.json({status:201, success:true,  
+                res.json({status:201, success:true,  alert: 'success',
                     message: 'Shelter Created', result});
             }
         });
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({status:401, success: false, alert: 'danger', message:'Unauthorized Request'});
     }
 };
 
@@ -80,7 +80,7 @@ exports.read = (req, res) => {
             Shelter.findById(req.params.id, (err, shelter) => {
                 if(err) {
                     log(err.message + '\n');
-                    res.json({status:500, success:false, message:err.message});
+                    res.json({status:500, success:false, alert: 'danger', message:err.message});
                 } else {
                     log('sent\n');
                     res.json(shelter);
@@ -93,7 +93,7 @@ exports.read = (req, res) => {
 
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({status:401, success: false, alert: 'danger', message:'Unauthorized Request'});
     }   
 };
 
@@ -109,10 +109,10 @@ exports.update = (req, res) => {
             Shelter.findByIdAndUpdate({_id: req.params.id}, {$set: req.body}, (err, result) => {
                 if(err) {
                     log(err.message + '\n');
-                    res.json({status:500, success:false, message:err.message});
+                    res.json({status:500, success:false, alert: 'danger', message:err.message});
                 } else {
                     log('sent\n');
-                    res.json({status: 200,success:true, message: 'Shelter Updated', result});
+                    res.json({status: 200,success:true, alert: 'success', message: 'Shelter Updated', result});
                 }
             });
         } else {
@@ -122,7 +122,7 @@ exports.update = (req, res) => {
 
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({status:401, success: false, alert: 'danger', message:'Unauthorized Request'});
     }
 };
 
@@ -135,22 +135,22 @@ exports.delete = (req, res) => {
             Shelter.deleteOne({_id: req.params.id}, (err, result) => {
                 if (err) {
                     log(err.message + '\n');
-                    res.json({status:500, success:false, message:err.message});
+                    res.json({status:500, success:false, alert: 'danger', message:err.message});
                 } else {
                     log('Shelter id: ' + req.params.id + ' deleted\n')
-                    res.json({status:200, success: true, 
+                    res.json({status:200, success: true, alert: 'success',
                             message:'Shelter Deleted', result})
                 }
             })
         } else {
             log(err.message +'\n');
-            res.json({status:400, success:false, 
+            res.json({status:400, success:false, alert: 'danger',
                         message: req.params.id + ' is not valid id'
                     });
         }
     } else {
         log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, message:'Unauthorized Request'});
+        return res.json({status:401, success: false, alert: 'danger', message:'Unauthorized Request'});
     }
 }
 

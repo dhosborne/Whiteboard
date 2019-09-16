@@ -2,11 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup} from '@angular/forms';
 import { AircraftService } from '../../../Services/aircraft.service';
 import { ActivatedRoute, Router} from '@angular/router';
-import { NgFlashMessageService } from 'ng-flash-messages';
 import { IAircraft } from '../../../Interfaces/aircraft';
-import { Title } from '@angular/platform-browser';
-import { MatDialog } from '@angular/material';
-import { ConfirmationDialogComponent } from '../../Common/confirmation-dialog/confirmation-dialog.component';
+import { CommonService } from '../../../Services/common.service';
 import * as moment from 'moment';
 
 
@@ -34,14 +31,15 @@ export class AircraftEditComponent implements OnInit {
     private aircraftService: AircraftService,
     private route: ActivatedRoute,
     private router: Router,
-    private flash: NgFlashMessageService,
-    private title: Title,
-    private dialog: MatDialog,
+    private common: CommonService,
 
   ) { }
 
   ngOnInit() {
-    this.setTitle();
+    this.route.data.subscribe(data => {
+      this.common.setPageTitle(data.title);
+    });
+
     this.aircraftForm.controls.tailNumber.setValidators([
       Validators.required,
       Validators.pattern('^(CBP)([0-9]{3})$')
@@ -78,41 +76,37 @@ export class AircraftEditComponent implements OnInit {
       return;
     }
 
+    this.aircraftForm.removeControl('_id');
     const formValues = this.aircraftForm.value;
 
     if (this.route.snapshot.paramMap.has('id')) {
       this.aircraftService.updateAircraft(this.route.snapshot.paramMap.get('id'),
       formValues)
       .subscribe(data => {
-        this.showMessage(data.message);
+        this.common.showMessage(data.message, data.alert);
         this.redirect();
       });
     } else {
       this.aircraftService.createAircraft(formValues)
       .subscribe(data => {
-        console.log(data);
-        this.id = data.result._id;
-        this.showMessage(data.message);
+        this.common.showMessage(data.message, data.alert);
         this.redirect();
       });
     }
   }
 
   onDelete(): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '350px',
-      data: 'Do you really want to delete this Aircraft?'
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.common.verifyDialogResult('Do you really want to delete this Aircraft?')
+    .subscribe(result => {
       if (result) {
         this.aircraftService.deleteAircraft(this.route.snapshot.paramMap.get('id'))
         .subscribe(data => {
-          this.showMessage(data.message);
+          this.common.showMessage(data.message, data.alert);
           this.router.navigate(['/aircrafts']);
         });
       } else {
-        this.showMessage('Cancelled Delete!');
+        this.common.showMessage('Cancelled Delete!', 'info');
       }
     });
   }
@@ -126,25 +120,10 @@ export class AircraftEditComponent implements OnInit {
   }
 
   redirect(): void {
-    this.router.navigate(['aircrafts/' + this.id + '/details'], {});
-  }
-
-  private showMessage(message): void {
-    this.flash.showFlashMessage({
-        messages: [message],
-        dismissible: true,
-        timeout: 10000,
-        type: 'info'
-    });
+    this.router.navigate(['aircrafts/'], {});
   }
 
   get f() {
     return this.aircraftForm.controls;
-  }
-
-  private setTitle(): void {
-    this.route.data.subscribe(data => {
-      this.title.setTitle(data.title);
-    });
   }
 }
