@@ -114,7 +114,7 @@ exports.delete = (req, res) =>{
                     res.json({status:500, success:false, alert: 'danger',  message:err.message});
                 } else {
                     log('sent\n');
-                    res.json({status:200, success: true, alert: 'success',, message: 'UAV Configuration Deleted Successfully'});
+                    res.json({status:200, success: true, alert: 'success', message: 'UAV Configuration Deleted Successfully'});
                 }
             })
         } else {
