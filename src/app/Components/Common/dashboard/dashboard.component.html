@@ -1,4 +1,4 @@
-<div class="container card-list">
+<div class="container">
     <div class="row">
         <div class="col-sm">
             <div class="card bg-primary mb-3 card-list">
@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="card-body" #body1>
-                    <table class="table table-hover" *ngIf="battsThisWeek; else noAircraft">
+                    <table class="table table-hover" *ngIf="aircraftList?.length > 0; else noAircraft">
                         <thead>
                             <th scope="col">Tail</th>
                             <th scope="col">Due Date</th>

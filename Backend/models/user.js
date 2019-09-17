@@ -29,7 +29,8 @@ const UserSchema = new Schema({
     email: {
         type: String,
         required: true,
-        default: null
+        default: null,
+        unique: true
     },
     shirtSize: {
         type: String,
@@ -42,7 +43,24 @@ const UserSchema = new Schema({
     passportExpires: {
         type: String,
         default: null
+    },
+    position: {
+        type: String,
+        required: true,
+        enum: ['Mechanic', 'Avionics', 'New Hire'],
+        default: 'New Hire',
+        
+    },
+    duties: {
+        type: [String]
+    },
+    role: {
+        type: String,
+        required: true,
+        default: 'User',
+        enum: ['User', 'Admin']
     }
+
 }, {collection: 'Users'});
 
 UserSchema.pre('save', function (next) {

@@ -23,7 +23,6 @@ export class DashboardComponent implements OnInit {
   calThisMonthList = new Array<Calibration>();
   cal3MonthsList = new Array<Calibration>();
 
-  battsThisWeek = false;
   shelterInspectionsThisWeek = false;
   calThisWeek = false;
   calThisMonth = false;
