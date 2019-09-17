@@ -20,14 +20,10 @@ mongoose.connect(config.database, {
 app.use(passport.initialize());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-const allowedOrigins = [
-    'http://localhost',
-    'http://localhost',
-    'http://10.206.1.160',
-    'http://10.206.1.186'
-];
 
 app.use(cors());
+
+app.use(morgan('combined'));
 
 var routes = (require('./routes'));
 routes(app);

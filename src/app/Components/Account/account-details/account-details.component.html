@@ -1,11 +1,18 @@
 <div class="container card-list">
     <div class="card bg-primary mb-3 card-list">
-        <div class="card-header" (dblclick)="editClick(account._id)">
-            <h6>Account Details - {{account?.firstName}}</h6>
+        <div class="card-header" >
+            <div class="row">
+                <div class="col-auto mr-auto">
+                    <h6>Account Details - {{account?.firstName}}</h6>
+                </div>
+                <div class="col-auto">
+                    <small><em><a [routerLink]="['/passwordchange']">Change Password?</a></em></small>
+                </div>                
+            </div>
         </div>
     </div>
     <div class="card-body">
-        <table class="table table-hover">
+        <table class="table table-hover" (dblclick)="editClick(account._id)">
             <tbody>
                 <tr>
                     <th scope="row"> First Name</th>

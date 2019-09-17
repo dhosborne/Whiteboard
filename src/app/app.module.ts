@@ -39,6 +39,7 @@ import { SpinnerComponent } from './Components/Common/spinner/spinner.component'
 import { AccountEditComponent } from './Components/Account/account-edit/account-edit.component';
 import { AccountDetailsComponent } from './Components/Account/account-details/account-details.component';
 import { AdminDashboardComponent } from './Components/Admin/admin-dashboard/admin-dashboard.component';
+import { PasswordChangeComponent } from './Components/Authentication/password-change/password-change.component';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import { AdminDashboardComponent } from './Components/Admin/admin-dashboard/admi
     AccountEditComponent,
     AccountDetailsComponent,
     AdminDashboardComponent,
+    PasswordChangeComponent,
   ],
   imports: [
     BrowserModule,

@@ -22,4 +22,8 @@ export class LoginService {
     public signup(signup): Observable<any> {
         return this.http.post(this.endpoint + '/signup', signup);
     }
+
+    public changePassword(password): Observable<any> {
+        return this.http.post(this.endpoint + '/passwordchange', password);
+    }
 }

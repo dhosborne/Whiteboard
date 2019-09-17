@@ -4,10 +4,8 @@ const mongoose = require('mongoose');
 const Auth = require('./auth.controller');
 
 exports.listActive = (req, res) => {
-    log('Aircraft List Requested...');
     var token = Auth.getToken(req.headers);
     if (token ) {
-        log('Auth token found...')
         Aircraft.find({isActive: true})
         .sort({tailNumber: 1})
         .exec((err, aircrafts) => {

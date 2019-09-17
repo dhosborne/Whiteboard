@@ -76,6 +76,9 @@ module.exports = (app) => {
     // user functions
     app.route('/login')
         .post(User.login);
+    
+    app.route('/passwordchange')
+        .post(User.passwordChange);
 
     app.route('/signup')
         .post(User.signUp)

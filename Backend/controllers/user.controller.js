@@ -111,6 +111,34 @@ exports.update = (req, res) => {
     }
 }
 
+exports.passwordChange = (req, res) => {
+    log('User ' + req.body.email + ' password change requested');
+    User.findOne({email: req.body.email}, function(err, user) {
+        if (err) {
+            log(err.message + '\n');
+        } else {
+            if (!user) {
+                res.json({status:401, alert:'info', message:'no user with supplied email!'});
+            } else {
+                user.comparePassword(req.body.oldPass, (err, isMatch) => {
+                    if(isMatch && !err) {
+                        user.password = req.body.newPass;
+                        user.save({}, (err, result) => {
+                            if (err) {
+                                res.json({status:500, success:false, alert:'danger', message:err.message})
+                            } else {
+                                res.json({status:201, success:true, alert:'success', message:'Password change successful'});
+                            }
+                        });
+                    } else {
+                        res.json({status: 401, success:false, alert:'danger', message:'please check your old password`'});
+                    }
+                });
+            }
+        }
+    });
+}
+
 exports.login = (req, res) => {
     log('User \"' + req.body.username + '\" logging in...' );
     User.findOne({username: req.body.username}, (err, user) => {

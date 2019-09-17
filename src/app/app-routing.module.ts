@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './Components/Authentication/login/login.component';
 import { LogoutComponent } from './Components/Authentication/logout/logout.component';
 import { SignupComponent } from './Components/Authentication/signup/signup.component';
+import { PasswordChangeComponent } from './Components/Authentication/password-change/password-change.component';
 import { DashboardComponent } from './Components/Common/dashboard/dashboard.component';
 
 import { AccountDetailsComponent } from './Components/Account/account-details/account-details.component';
@@ -40,8 +41,10 @@ const appRoutes: Routes = [
     {path: 'login', component: LoginComponent, data: {title: 'Login'}},
     {path: 'logout', component: LogoutComponent, data: {title: 'Logout'}},
     {path: 'signup', component: SignupComponent, data: {title: 'Signup'}},
-    {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: {title: 'Welcome to White Board'}},
+    {path: 'passwordchange', component: PasswordChangeComponent, data: {title: 'Change password'}},
 
+
+    {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: {title: 'Welcome to White Board'}},
     {path: 'admin', component: AdminDashboardComponent, canActivate: [AuthGuard], data: {title: 'Admin Dash'}},
 
     {path: 'account/:id', component: AccountDetailsComponent, canActivate: [AuthGuard], data: {title: 'Account Details'}},
