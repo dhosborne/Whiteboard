@@ -27,6 +27,8 @@ import { CalibrationDetailsComponent } from './Components/Calibration/calibratio
 import { CalibrationEditComponent } from './Components/Calibration/calibration-edit/calibration-edit.component';
 import { CalibrationInactiveComponent } from './Components/Calibration/calibration-inactive/calibration-inactive.component';
 
+import { AdminDashboardComponent } from './Components/Admin/admin-dashboard/admin-dashboard.component';
+
 import { AuthGuard } from './Guards/auth.guard';
 
 import { UavconfigDetailsComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-details/uavconfig-details.component';
@@ -39,6 +41,8 @@ const appRoutes: Routes = [
     {path: 'logout', component: LogoutComponent, data: {title: 'Logout'}},
     {path: 'signup', component: SignupComponent, data: {title: 'Signup'}},
     {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: {title: 'Welcome to White Board'}},
+
+    {path: 'admin', component: AdminDashboardComponent, canActivate: [AuthGuard], data: {title: 'Admin Dash'}},
 
     {path: 'account/:id', component: AccountDetailsComponent, canActivate: [AuthGuard], data: {title: 'Account Details'}},
     {path: 'account/:id/edit', component: AccountEditComponent, canActivate: [AuthGuard]},

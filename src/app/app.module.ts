@@ -38,6 +38,7 @@ import { ConfirmationDialogComponent } from './Components/Common/confirmation-di
 import { SpinnerComponent } from './Components/Common/spinner/spinner.component';
 import { AccountEditComponent } from './Components/Account/account-edit/account-edit.component';
 import { AccountDetailsComponent } from './Components/Account/account-details/account-details.component';
+import { AdminDashboardComponent } from './Components/Admin/admin-dashboard/admin-dashboard.component';
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import { AccountDetailsComponent } from './Components/Account/account-details/ac
     SpinnerComponent,
     AccountEditComponent,
     AccountDetailsComponent,
+    AdminDashboardComponent,
   ],
   imports: [
     BrowserModule,
