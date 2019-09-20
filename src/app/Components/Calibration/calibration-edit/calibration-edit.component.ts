@@ -18,6 +18,7 @@ export class CalibrationEditComponent implements OnInit {
     date: '',
     duration: '',
     location: '',
+    notes: '',
     inCal: false,
     isActive: true,
   });

@@ -50,19 +50,20 @@
                                         <th scope="col">Cal Duration</th>
                                         <th scope="col">Cal Due</th>
                                         <th scope="col">In Cal?</th>
+                                        <th scope="col">Notes</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <ng-container *ngFor="let cal of currentSet">
-                                        <tr (click)="calClicked(cal._id)"
-                                        [ngClass]="{
-                                            'table-active': !cal.inCal,
-                                            '': cal.inCal}">
+                                        <tr (click)="calClicked(cal._id)">
                                             <th scope="row">{{cal.name}}</th>
                                             <td>{{cal?.serialNumber}}</td>
                                             <td>{{cal.duration}}/Mo.</td>
                                             <td>{{cal.date | moment: [cal.duration, 'months'] | date: 'MM/dd/yyy'}}</td>
-                                            <td>{{cal?.inCal}}</td>
+                                            <!-- <td>{{cal?.inCal}}</td> -->
+                                            <td *ngIf="cal?.inCal">Yes</td>
+                                            <td *ngIf="!cal.inCal">No</td>
+                                            <td>{{cal.notes}}</td>
                                         </tr>
                                     </ng-container>
                                 </tbody>

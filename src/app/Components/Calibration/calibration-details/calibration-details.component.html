@@ -1,1 +1,52 @@
-<p>calibration-details works!</p>
+<div class="container">
+    <div class="card text-white bg-primary mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-auto mr-auto"><h4>{{tool?.name}}</h4></div>
+                <div class="col-auto"
+                    *ngIf="tool?.isActive">This tool is <strong>Active</strong>
+                </div>
+                <div class="col-auto"
+                    *ngIf="!tool?.isActive">This tool is <strong>InActive</strong>
+                </div>
+                <div class="col-auto">
+                    <i class="material-icons" (click)="onEditClick(tool._id)">edit</i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-auto"><h6>Serial: {{tool?.serialNumber}}</h6></div>
+  
+                <div class="col-auto"><h6>In Cal?: <span *ngIf="tool?.inCal">Yes</span><span *ngIf="!tool?.inCal">No</span></h6></div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-auto">Located in: {{tool?.location}}</div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3"><h6>Calibrated on: {{tool?.date | date: 'MM/dd/yyyy'}}</h6></div>
+                <div class="col-sm-3"><h6>Cal Duration: {{tool?.duration}} /Mo.</h6></div>
+                <ng-container *ngIf="tool?.date && tool?.duration; else missing">
+                    <div class="col-sm-3"><h6>Cal Due: {{tool?.date | moment: [tool.duration, 'months'] | date: 'MM/dd/yyyy'}}</h6></div>
+                </ng-container>
+                <ng-template #missing>
+                    <div class="col-sm-3"><h6>Cal Due: <em>calibration data missing</em></h6></div>
+                </ng-template>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-auto">Notes:</div>
+            </div>
+            <div class="row">
+                <ng-container *ngIf="tool?.notes; else noNotes">
+                    <div class="col-auto"><p>{{tool?.notes}}</p></div>    
+                </ng-container>
+                <ng-template #noNotes>
+                    <div class="col-auto"><small><em>No notes entered</em></small></div>
+                </ng-template>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>

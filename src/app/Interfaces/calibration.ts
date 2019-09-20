@@ -4,6 +4,7 @@ export interface ICalibration {
     date: string;
     duration: string;
     location: string;
+    notes: string;
     inCal: boolean;
     isActive: boolean;
 }

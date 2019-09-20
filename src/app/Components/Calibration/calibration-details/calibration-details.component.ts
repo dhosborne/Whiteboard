@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Calibration } from '../../../Classes/calibration';
 import { CalibrationService } from '../../../Services/calibration.service';
+import { CommonService} from '../../../Services/common.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -11,35 +12,32 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./calibration-details.component.css']
 })
 export class CalibrationDetailsComponent implements OnInit {
-  calibration: Calibration;
+  tool: Calibration;
   id: string;
 
   constructor(
     private route: ActivatedRoute,
     private calibrationService: CalibrationService,
     private router: Router,
-    private title: Title
+    private common: CommonService
   ) { }
 
   ngOnInit() {
-  }
-
-  private getCalibration(): void {
-    if (this.route.snapshot.paramMap.has('id')) {
-      this.id = this.route.snapshot.paramMap.get('id');
-
-      this.calibrationService.getCalibration(this.id)
-      .subscribe(data => {
-        this.calibration = data;
-      });
-    }
-  }
-
-  private setTitle(): void {
+    // set title of page
     this.route.data.subscribe(data => {
-      this.title.setTitle(data.title);
+      this.common.setPageTitle(data.title);
     });
+
+    // if id exists in route, get tool
+    if (this.route.snapshot.paramMap.has('id')) {
+        this.id = this.route.snapshot.paramMap.get('id');
+
+        this.calibrationService.getCalibration(this.id).subscribe((tool: Calibration) => {
+          this.tool = tool;
+        });
+      }
   }
+
 
   onEditClick(): void {
     this.router.navigate(['/calibrations/' + this.id + '/edit']);

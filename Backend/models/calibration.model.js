@@ -23,6 +23,9 @@ var CalibrationSchema = new Schema({
         type: String,
         required: true,
     },
+    notes: {
+        type: String
+    },
     inCal: {
         type: Boolean,
         default: false,

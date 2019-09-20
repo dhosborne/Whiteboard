@@ -37,6 +37,7 @@
                             <th scope="col">Asset</th>
                             <th scope="col">Date</th>
                             <th scope="col">Title</th>
+                            <th scope="col">Description</th>
                             <th scope="col">Completed</th>
                         </thead>
                         <tbody>
@@ -44,6 +45,7 @@
                                 <td scope="row">{{issue.asset}}</td>
                                 <td>{{issue.date | date: 'MM/dd'}}</td>
                                 <td>{{issue.title}}</td>
+                                <td>{{issue.description | slice: 0:25}}</td>
                                 <td>{{issue.completed}}</td>                        
                             </tr>
                         </tbody>

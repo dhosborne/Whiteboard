@@ -62,7 +62,7 @@ export class CalibrationListComponent implements OnInit {
   }
 
   calClicked(id): void {
-    this.router.navigate(['calibrations/' + id + '/edit']);
+    this.router.navigate(['calibrations/' + id + '/details']);
   }
 
   inActiveClicked(): void {
