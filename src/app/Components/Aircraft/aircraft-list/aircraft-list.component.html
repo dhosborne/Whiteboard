@@ -35,7 +35,9 @@
                             {{aircraft?.tailNumber}}
                         </div>
                         <div class="col-auto">
-                            Batts Due: {{aircraft?.reconDate | moment: [28, 'days'] | date: 'MM/dd'}}
+                            <p [ngClass]="{'required': common.checkIsDueDays(aircraft?.reconDate, '28')}">
+                                Batts Due: {{aircraft?.reconDate | moment: [28, 'days'] | date: 'MM/dd'}}
+                            </p>
                         </div>
                     </div>                    
                 </div>
@@ -62,7 +64,7 @@
                             <ng-container *ngFor="let issue of issuesList">
                                 <tr *ngIf="!issue.completed" (dblclick)="issueClicked(issue._id)">
                                     <td>{{issue.title}}</td>
-                                    <td>{{issue.date}}</td>
+                                    <td>{{issue.date | date: 'MM/dd/yy'}}</td>
                                     <td>{{issue.description | slice: 0:75}}</td>
                                     <td>{{issue.createdBy}}</td>
                                 </tr>                                    

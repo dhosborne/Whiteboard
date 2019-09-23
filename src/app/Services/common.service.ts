@@ -4,6 +4,9 @@ import { Title } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../Components/Common/confirmation-dialog/confirmation-dialog.component';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +56,9 @@ export class CommonService {
     });
 
     return dialogRef.afterClosed();
+  }
+
+  public checkIsDueDays(date: string, duration: string): boolean {
+    return moment(date, 'YYYY-MM-DD').add(duration, 'days').isSameOrBefore(moment.now());
   }
 }

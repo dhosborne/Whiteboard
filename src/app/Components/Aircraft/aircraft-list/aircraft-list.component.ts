@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { AircraftService } from '../../../Services/aircraft.service';
 import { IssueService } from '../../../Services/issue.service';
+import { CommonService } from '../../../Services/common.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Aircraft } from '../../../Classes/aircraft';
 import { Issue } from '../../../Classes/issue';
@@ -25,7 +26,8 @@ export class AircraftListComponent implements OnInit {
     private issueService: IssueService,
     private router: Router,
     private route: ActivatedRoute,
-    private title: Title
+    private title: Title,
+    private common: CommonService
   ) { }
 
   ngOnInit() {

@@ -61,6 +61,10 @@ export class CalibrationListComponent implements OnInit {
     }
   }
 
+  calibrationDue(date, months): boolean {
+    return this.calService.calDue(date, months);
+  }
+
   calClicked(id): void {
     this.router.navigate(['calibrations/' + id + '/details']);
   }
