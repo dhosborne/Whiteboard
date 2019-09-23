@@ -41,6 +41,7 @@ import { AccountDetailsComponent } from './Components/Account/account-details/ac
 import { AdminDashboardComponent } from './Components/Admin/admin-dashboard/admin-dashboard.component';
 import { PasswordChangeComponent } from './Components/Authentication/password-change/password-change.component';
 import { CalibrationResolver } from './Resolvers/calibration.resolver';
+import { IssuesResolver } from './Resolvers/issues.resolver';
 
 
 @NgModule({
@@ -95,7 +96,8 @@ import { CalibrationResolver } from './Resolvers/calibration.resolver';
   providers: [
     AuthGuard,
     LoginService,
-    CalibrationResolver
+    CalibrationResolver,
+    IssuesResolver
   ],
   bootstrap: [AppComponent]
 })

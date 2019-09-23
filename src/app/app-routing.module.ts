@@ -22,7 +22,7 @@ import { ShelterInactiveComponent } from './Components/Shelter/shelter-inactive/
 import { IssueDetailsComponent } from './Components/Issue/issue-details/issue-details.component';
 import { IssueEditComponent } from './Components/Issue/issue-edit/issue-edit.component';
 import { IssueListComponent } from './Components/Issue/issue-list/issue-list.component';
-
+import { IssuesResolver } from './Resolvers/issues.resolver';
 import { CalibrationListComponent } from './Components/Calibration/calibration-list/calibration-list.component';
 import { CalibrationDetailsComponent } from './Components/Calibration/calibration-details/calibration-details.component';
 import { CalibrationEditComponent } from './Components/Calibration/calibration-edit/calibration-edit.component';
@@ -64,12 +64,16 @@ const appRoutes: Routes = [
     {path: 'shelters/:id/details', component: ShelterDetailsComponent, canActivate: [AuthGuard], data: {title: 'New Shelter'}},
     {path: 'shelters/:id/edit', component: ShelterEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Shelter'}},
 
-    {path: 'issues', component: IssueListComponent, canActivate: [AuthGuard], data: {title: 'Issues List'}},
+    {path: 'issues', 
+      component: IssueListComponent,
+      resolve: {issues: IssuesResolver},
+      canActivate: [AuthGuard],
+      data: {title: 'Issues List'}},
     {path: 'issues/new', component: IssueEditComponent, canActivate: [AuthGuard], data: {title: 'New Issue'}},
     {path: 'issues/:id/details', component: IssueDetailsComponent, canActivate: [AuthGuard], data: {title: 'Details'}},
     {path: 'issues/:id/edit', component: IssueEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Issue'}},
 
-    {path: 'calibrations', 
+    {path: 'calibrations',
       component: CalibrationListComponent,
       resolve: { calList: CalibrationResolver},
       canActivate: [AuthGuard],
