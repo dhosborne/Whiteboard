@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CalibrationService} from '../../../Services/calibration.service';
+import { CommonService } from '../../../Services/common.service';
 import { Calibration } from '../../../Classes/calibration';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -11,6 +11,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./calibration-list.component.css']
 })
 export class CalibrationListComponent implements OnInit {
+  data: any;
   calList = new Array<Calibration>();
   currentSet = new Array<Calibration>();
 
@@ -18,35 +19,33 @@ export class CalibrationListComponent implements OnInit {
   selectedLocation: string;
 
   constructor(
-    private calService: CalibrationService,
     private router: Router,
     private route: ActivatedRoute,
-    private title: Title,
+    private common: CommonService
   ) { }
 
   ngOnInit() {
-    this.setTitle();
+    this.data = this.route.snapshot.data;
     this.loadCalLists();
+    this.common.setPageTitle(this.data.title);
   }
 
   private loadCalLists(): void {
     this.calList.length = 0;
 
-    this.calService.getCalibrations()
-      .subscribe(data => {
-        data.forEach(tool => {
-          if (this.locations.indexOf(tool.location) === -1) {
-            this.locations.push(tool.location);
-          }
+    this.data.calList.forEach(tool => {
+      if (this.locations.indexOf(tool.location) === -1) {
+        this.locations.push(tool.location);
+      }
 
-          if (this.calList.indexOf(tool) === -1) {
-            this.calList.push(tool);
-          }
-        });
-        this.locations.sort();
-        this.calList.sort();
-        this.tabSelected(this.locations[0]);
-      });
+      if (this.calList.indexOf(tool) === -1) {
+        this.calList.push(tool);
+      }
+    });
+
+    this.locations.sort();
+    this.calList.sort();
+    this.tabSelected(this.locations[0]);
   }
 
   tabSelected(location: string): void {
@@ -67,10 +66,5 @@ export class CalibrationListComponent implements OnInit {
 
   inActiveClicked(): void {
     this.router.navigate(['/calibrations/inactive']);
-  }
-  private setTitle(): void {
-    this.route.data.subscribe(data => {
-      this.title.setTitle(data.title);
-    });
   }
 }

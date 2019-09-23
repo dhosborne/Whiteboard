@@ -27,6 +27,7 @@ import { CalibrationListComponent } from './Components/Calibration/calibration-l
 import { CalibrationDetailsComponent } from './Components/Calibration/calibration-details/calibration-details.component';
 import { CalibrationEditComponent } from './Components/Calibration/calibration-edit/calibration-edit.component';
 import { CalibrationInactiveComponent } from './Components/Calibration/calibration-inactive/calibration-inactive.component';
+import { CalibrationResolver } from './Resolvers/calibration.resolver';
 
 import { AdminDashboardComponent } from './Components/Admin/admin-dashboard/admin-dashboard.component';
 
@@ -68,7 +69,12 @@ const appRoutes: Routes = [
     {path: 'issues/:id/details', component: IssueDetailsComponent, canActivate: [AuthGuard], data: {title: 'Details'}},
     {path: 'issues/:id/edit', component: IssueEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Issue'}},
 
-    {path: 'calibrations', component: CalibrationListComponent, canActivate: [AuthGuard], data: {title: 'Calibrations List'}},
+    {path: 'calibrations', 
+      component: CalibrationListComponent,
+      resolve: { calList: CalibrationResolver},
+      canActivate: [AuthGuard],
+      data: {title: 'Calibrations List'}
+    },
     {path: 'calibrations/new', component: CalibrationEditComponent, canActivate: [AuthGuard], data: {title: 'New Calibration'}},
     {path: 'calibrations/inactive', component: CalibrationInactiveComponent,
       canActivate: [AuthGuard], data: {title: 'Inactive Calibrations'}},

@@ -40,6 +40,7 @@ import { AccountEditComponent } from './Components/Account/account-edit/account-
 import { AccountDetailsComponent } from './Components/Account/account-details/account-details.component';
 import { AdminDashboardComponent } from './Components/Admin/admin-dashboard/admin-dashboard.component';
 import { PasswordChangeComponent } from './Components/Authentication/password-change/password-change.component';
+import { CalibrationResolver } from './Resolvers/calibration.resolver';
 
 
 @NgModule({
@@ -93,7 +94,8 @@ import { PasswordChangeComponent } from './Components/Authentication/password-ch
   ],
   providers: [
     AuthGuard,
-    LoginService
+    LoginService,
+    CalibrationResolver
   ],
   bootstrap: [AppComponent]
 })
