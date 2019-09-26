@@ -38,7 +38,7 @@ export class SignupComponent implements OnInit {
     ],
     employeeNumber: ['', [
       Validators.required,
-      Validators.minLength(8)]
+      Validators.minLength(6)]
     ]
   }, {validators: [this.vs.checkPasswords]});
 
