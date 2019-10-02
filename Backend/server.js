@@ -9,13 +9,37 @@ const passport = require('passport');
 const config = require('./config/database');
 
 mongoose.Promise = require('bluebird');
-mongoose.connect(config.database, {
-    promiseLibrary: require('bluebird'), 
-    useNewUrlParser: true, 
-    useCreateIndex: true
-})
-.then(() => { console.log('connection successful')})
-.catch((err) => {console.error(err)});
+var options = {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    family: 4,
+    promiseLibrary: require('bluebird'),
+    user: config.username,
+    pass: config.password,
+};
+
+mongoose.connect(config.URI, options)
+.catch((error) => {console.error(error)});
+
+mongoose.connection.on('connected', () => {
+    console.log('Mongoose connnected on ' + config.URI);
+});
+
+mongoose.connection.on('error', (error) => {
+    console.log('Mongoose connection error' + error);
+});
+
+mongoose.connection.on('disconnected', () => {
+    console.log('Mongoose connection closed');
+});
+
+process.on('SIGINT', () => {
+    mongoose.connection.close(() => {
+        console.log('Mongoose default connection disconnected through app termination');
+        process.exit(0);
+    });
+});
+
 
 app.use(passport.initialize());
 app.use(bodyParser.urlencoded({extended:true}));
@@ -28,7 +52,7 @@ app.use(morgan('combined'));
 var routes = (require('./routes'));
 routes(app);
 
-app.listen(port);
+app.listen(port, config.host, () =>{});
 console.log('Api server started on port ' + port);
 
 module.exports = app;

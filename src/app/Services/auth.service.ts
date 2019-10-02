@@ -17,6 +17,9 @@ export class AuthService {
   getToken() {
     return sessionStorage.getItem('jwt');
   }
+  getUser() {
+    return JSON.parse(sessionStorage.getItem('user'));
+  }
 
   isTokenFresh(token: string): boolean {
     const decoded = jwtHelper.decodeToken(token);
@@ -30,14 +33,11 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     const token = this.getToken();
+    const user = this.getUser();
 
-    if (token) {
-      if (!jwtHelper.isTokenExpired(token)) {
-        return true;
-      } else {
-        return false;
-      }
-    }  else {
+    if (token && user) {
+      return true;
+    } else {
       return false;
     }
   }

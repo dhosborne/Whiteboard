@@ -10,16 +10,16 @@ import { AuthService } from '../../../Services/auth.service';
 export class NavbarComponent implements OnInit {
   user: any;
   constructor(
-    private _router: Router,
+    private router: Router,
     public auth: AuthService
   ) { }
 
   ngOnInit() {
-    this.user = JSON.parse(sessionStorage.getItem('user'));
+    this.user = sessionStorage.getItem('user');
   }
 
   logout() {
     localStorage.removeItem('jwtToken');
-    this._router.navigate(['login']);
+    this.router.navigate(['login']);
   }
 }

@@ -4,6 +4,7 @@ import { Shelter } from '../../../Classes/shelter';
 import { Issue } from '../../../Classes/issue';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IssueService } from '../../../Services/issue.service';
+import { CommonService } from '../../../Services/common.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -23,7 +24,8 @@ export class ShelterListComponent implements OnInit {
     private router: Router,
     private issueService: IssueService,
     private route: ActivatedRoute,
-    private title: Title
+    private title: Title,
+    private common: CommonService
   ) { }
 
   ngOnInit() {

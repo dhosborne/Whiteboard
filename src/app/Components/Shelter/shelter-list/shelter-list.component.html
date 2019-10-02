@@ -54,11 +54,21 @@
                         <tbody>
                             <tr (dblclick)="shelterClicked(shelter._id)">
                                 <td>{{shelter.name}}</td>
-                                <td>{{shelter._7Day      | moment: [7, 'days']   | date: 'MM/dd'}}</td>
-                                <td>{{shelter._28Day     | moment: [28, 'days']  | date: 'MM/dd'}}</td>
-                                <td>{{shelter._84Day     | moment: [84, 'days']  | date: 'MM/dd'}}</td>
-                                <td>{{shelter._168Day    | moment: [168, 'days'] | date: 'MM/dd'}}</td>
-                                <td>{{shelter.airFilters | moment: [3, 'months'] | date: 'MM/dd'}}</td>
+                                <td [ngClass]="{'required': common.checkIsDueDays(shelter?._7Day, '7')}">
+                                    {{shelter._7Day      | moment: [7, 'days']   | date: 'MM/dd'}}
+                                </td>
+                                <td [ngClass]="{'required': common.checkIsDueDays(shelter?._28Day, '28')}">
+                                    {{shelter._28Day     | moment: [28, 'days']  | date: 'MM/dd'}}
+                                </td>
+                                <td [ngClass]="{'required': common.checkIsDueDays(shelter?._84Day, '84')}">
+                                    {{shelter._84Day     | moment: [84, 'days']  | date: 'MM/dd'}}
+                                </td>
+                                <td [ngClass]="{'required': common.checkIsDueDays(shelter?._168Day, '168')}">
+                                    {{shelter._168Day    | moment: [168, 'days'] | date: 'MM/dd'}}
+                                </td>
+                                <td [ngClass]="{'required': common.checkIsDueDays(shelter?.airFilters, '90')}">
+                                    {{shelter.airFilters | moment: [3, 'months'] | date: 'MM/dd'}}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
