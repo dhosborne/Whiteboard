@@ -7,15 +7,15 @@ import { User } from '../Classes/user';
   providedIn: 'root'
 })
 export class AdministrationService {
-  private usersListSubject: BehaviorSubject<User[]>;
-  public userList: Observable<User[]>;
+  private usersListSubject: BehaviorSubject<Array<User>>;
+  public userList: Observable<Array<User>>;
   private userArray: Array<User>;
 
   constructor(
     private accountService: AccountService,
   ) {
     this.requestUsers();
-    this.usersListSubject = new BehaviorSubject<User[]>(this.getUsers());
+    this.usersListSubject = new BehaviorSubject<Array<User>>(this.getUsers());
     this.userList = this.usersListSubject.asObservable();
   }
 
