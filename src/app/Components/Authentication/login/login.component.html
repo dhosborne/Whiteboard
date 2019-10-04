@@ -18,7 +18,7 @@
                   type="password"
                   class="form-control"
                   formControlName="password"
-                  (keyup)="keypressed($event)">
+                  (keydown.enter)="keypressed($event)">
             </div>
             <div class="btn-group">
                 <button type="button" class="btn btn-default" [disabled]="!loginForm.valid" (click)="logIn()">Login</button>

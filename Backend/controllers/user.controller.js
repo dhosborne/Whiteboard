@@ -155,8 +155,7 @@ exports.login = (req, res) => {
                             expiresIn: '1d' // expires in 1 day
                         });
                         log('success! ');
-                        payload = {id: user.id, 'username': user.username, 'firstName': user.firstName, 'lastName': user.lastName};
-                        res.json({success: false, alert: 'success', token: 'JWT ' + token, user: payload}); 
+                        res.json({success: true, alert: 'success', token: 'JWT ' + token}); 
                     } else {
                         res.status(401).send({success: false, alert: 'danger', 
                             message:'Authentication failed, password incorrect'})

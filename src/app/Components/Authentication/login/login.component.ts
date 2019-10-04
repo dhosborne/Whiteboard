@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../../../Services/login.service';
+import { AuthService } from '../../../Services/auth.service';
+import { CommonService } from '../../../Services/common.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ILogin } from '../../../Interfaces/login';
-import { NgFlashMessageService } from 'ng-flash-messages';
-import { AuthService } from '../../../Services/auth.service';
-import { Title } from '@angular/platform-browser';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 const helper = new JwtHelperService();
@@ -24,13 +22,11 @@ export class LoginComponent implements OnInit {
   submitted = false;
 
   constructor(
-    private loginService: LoginService,
     private fb: FormBuilder,
+    private common: CommonService,
     private router: Router,
-    private auth: AuthService,
-    private flash: NgFlashMessageService,
+    private authService: AuthService,
     private route: ActivatedRoute,
-    private title: Title,
   ) { }
 
   ngOnInit() {
@@ -45,16 +41,11 @@ export class LoginComponent implements OnInit {
   }
 
   logIn(): void {
-    this.loginService.login(this.loginForm.value)
-    .subscribe(data => {
-      const details = helper.decodeToken(data.token);
-      sessionStorage.setItem('user', JSON.stringify(details));
-      this.auth.setToken(data.token);
-      this.router.navigate(['/']);
-    }, err => {
-      console.log(err);
-      this.showMessage(err.message);
-    });
+    if (this.authService.login(this.loginForm.value)) {
+      return;
+    } else {
+      this.common.showMessage('Verify username and password, Try Again', 'danger');
+    }
   }
 
   keypressed(event): void {
@@ -65,22 +56,13 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private showMessage(message): void {
-    this.flash.showFlashMessage({
-        messages: [message],
-        dismissible: true,
-        timeout: 10000,
-        type: message.success
-    });
-  }
-
   get f() {
     return this.loginForm.controls;
   }
 
   private setTitle(): void {
     this.route.data.subscribe(data => {
-      this.title.setTitle(data.title);
+      this.common.setPageTitle(data.title);
     });
   }
 
