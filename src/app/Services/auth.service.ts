@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { User } from '../Classes/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { configurations } from 'src/environments/configurations';
 import { LoginService } from './login.service';
 
 const jwtHelper = new JwtHelperService();
@@ -14,7 +13,6 @@ const jwtHelper = new JwtHelperService();
 export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-  endpoint = configurations.backend;
 
   constructor(
     private myRoute: Router,
