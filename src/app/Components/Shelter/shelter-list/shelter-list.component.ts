@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ShelterService } from '../../../Services/shelter.service';
+import { Component, OnInit} from '@angular/core';
 import { Shelter } from '../../../Classes/shelter';
 import { Issue } from '../../../Classes/issue';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IssueService } from '../../../Services/issue.service';
 import { CommonService } from '../../../Services/common.service';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-shelter-list',
@@ -20,32 +18,16 @@ export class ShelterListComponent implements OnInit {
   issuesList = new Array<Issue>();
 
   constructor(
-    private shelterService: ShelterService,
     private router: Router,
     private issueService: IssueService,
     private route: ActivatedRoute,
-    private title: Title,
     private common: CommonService
   ) { }
 
   ngOnInit() {
     this.setTitle();
-    this.getShelterList();
-  }
-
-
-  private getShelterList(): void {
-    this.shelterList.length = 0;
-
-    this.shelterService.getShelters()
-    .subscribe(data => {
-      data.forEach((shelter: Shelter) => {
-        if (this.shelterList.indexOf(shelter) === -1) {
-          this.shelterList.push(shelter);
-        }
-      });
-      this.loadTab(this.shelterList[0].name);
-    });
+    this.shelterList = this.route.snapshot.data.shelters;
+    this.loadTab(this.shelterList[0].name);
   }
 
   private loadTab(name: string): void {
@@ -84,7 +66,7 @@ export class ShelterListComponent implements OnInit {
 
   private setTitle(): void {
     this.route.data.subscribe(data => {
-      this.title.setTitle(data.title);
+      this.common.setPageTitle(data.title);
     });
   }
 

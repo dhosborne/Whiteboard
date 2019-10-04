@@ -40,8 +40,11 @@ import { AccountEditComponent } from './Components/Account/account-edit/account-
 import { AccountDetailsComponent } from './Components/Account/account-details/account-details.component';
 import { AdminDashboardComponent } from './Components/Admin/admin-dashboard/admin-dashboard.component';
 import { PasswordChangeComponent } from './Components/Authentication/password-change/password-change.component';
+
 import { CalibrationResolver } from './Resolvers/calibration.resolver';
 import { IssuesResolver } from './Resolvers/issues.resolver';
+import { AircraftResolver} from './Resolvers/aircraft.resolver';
+import { ShelterResolver } from './Resolvers/shelter.resolver';
 
 
 @NgModule({
@@ -97,7 +100,9 @@ import { IssuesResolver } from './Resolvers/issues.resolver';
     AuthGuard,
     LoginService,
     CalibrationResolver,
-    IssuesResolver
+    IssuesResolver,
+    AircraftResolver,
+    ShelterResolver
   ],
   bootstrap: [AppComponent]
 })

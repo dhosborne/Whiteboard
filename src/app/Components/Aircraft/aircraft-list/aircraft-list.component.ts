@@ -1,5 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
-import { AircraftService } from '../../../Services/aircraft.service';
+import { Component, OnInit } from '@angular/core';
 import { IssueService } from '../../../Services/issue.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Aircraft } from '../../../Classes/aircraft';
@@ -13,7 +12,7 @@ import { Title } from '@angular/platform-browser';
 })
 
 export class AircraftListComponent implements OnInit {
-
+  data: any;
   aircraftList = new Array<Aircraft>();
   aircraft: Aircraft;
 
@@ -21,7 +20,6 @@ export class AircraftListComponent implements OnInit {
   tailSelected: string;
 
   constructor(
-    private aircraftService: AircraftService,
     private issueService: IssueService,
     private router: Router,
     private route: ActivatedRoute,
@@ -29,23 +27,9 @@ export class AircraftListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.aircraftList = this.route.snapshot.data.aircrafts;
+    this.loadTab(this.aircraftList[0].tailNumber);
     this.setTitle();
-    this.loadAircrafts();
-  }
-
-
-  private loadAircrafts(): void {
-    this.aircraftList.length = 0;
-
-    this.aircraftService.getAircrafts()
-    .subscribe(data => {
-      data.forEach((aircraft: Aircraft) => {
-        if (this.aircraftList.indexOf(aircraft) === -1) {
-          this.aircraftList.push(aircraft);
-        }
-      });
-      this.loadTab(this.aircraftList[0].tailNumber);
-    });
   }
 
   private loadTab(tail: string): void {

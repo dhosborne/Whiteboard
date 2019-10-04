@@ -35,6 +35,8 @@ import { AuthGuard } from './Guards/auth.guard';
 
 import { UavconfigDetailsComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-details/uavconfig-details.component';
 import { UavconfigEditComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-edit/uavconfig-edit.component';
+import { ShelterResolver } from './Resolvers/shelter.resolver';
+import { AircraftResolver } from './Resolvers/aircraft.resolver';
 
 
 
@@ -51,20 +53,28 @@ const appRoutes: Routes = [
     {path: 'account/:id', component: AccountDetailsComponent, canActivate: [AuthGuard], data: {title: 'Account Details'}},
     {path: 'account/:id/edit', component: AccountEditComponent, canActivate: [AuthGuard]},
 
-    {path: 'aircrafts', component: AircraftListComponent, canActivate: [AuthGuard], data: {title: 'Aircraft List'}},
+    {path: 'aircrafts',
+      component: AircraftListComponent,
+      canActivate: [AuthGuard],
+      resolve: {aircrafts: AircraftResolver},
+      data: {title: 'Aircraft List'}},
     {path: 'aircrafts/new', component: AircraftEditComponent, canActivate: [AuthGuard], data: {title: 'New Aircraft'}},
     {path: 'aircrafts/inactive', component: AircraftInactiveComponent, canActivate: [AuthGuard], data: {title: 'Inactive Aircrafts'}},
     {path: 'aircrafts/:id', component: AircraftListComponent, canActivate: [AuthGuard], data: {title: 'Aircraft List'}},
     {path: 'aircrafts/:id/details', component: AircraftDetailsComponent, canActivate: [AuthGuard], data: {title: 'Aircraft Details'}},
     {path: 'aircrafts/:id/edit', component: AircraftEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Aircraft'}},
 
-    {path: 'shelters', component: ShelterListComponent, canActivate: [AuthGuard], data: {title: 'Shelter List'}},
+    {path: 'shelters',
+      component: ShelterListComponent,
+      canActivate: [AuthGuard],
+      resolve: {shelters: ShelterResolver},
+      data: {title: 'Shelter List'}},
     {path: 'shelters/new', component: ShelterEditComponent, canActivate: [AuthGuard], data: {title: 'New Shelter'}},
     {path: 'shelters/inactive', component: ShelterInactiveComponent, canActivate: [AuthGuard], data: {title: 'Inactive Shelters'}},
     {path: 'shelters/:id/details', component: ShelterDetailsComponent, canActivate: [AuthGuard], data: {title: 'New Shelter'}},
     {path: 'shelters/:id/edit', component: ShelterEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Shelter'}},
 
-    {path: 'issues', 
+    {path: 'issues',
       component: IssueListComponent,
       resolve: {issues: IssuesResolver},
       canActivate: [AuthGuard],
