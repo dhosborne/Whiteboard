@@ -23,6 +23,7 @@ export class IssueEditComponent implements OnInit {
   aircraftList = new Array<Aircraft>();
   assetList = new Array<string>();
   user: User;
+  asset: string;
 
 
   id: string;
@@ -67,6 +68,7 @@ export class IssueEditComponent implements OnInit {
     this.issueForm.controls.createdBy.setValidators(Validators.required);
     this.issueForm.controls.createdBy.patchValue(this.user.fullName());
 
+
     if (this.route.snapshot.paramMap.has('id')) {
       this.isNew = false;
       this.id = this.route.snapshot.paramMap.get('id');
@@ -77,6 +79,15 @@ export class IssueEditComponent implements OnInit {
           this.updateForm(data);
         }
       });
+    } else {
+      this.route.queryParams.subscribe(params => {
+        if (params.asset) {
+          this.issueForm.controls.asset.setValue(params.asset);
+        }
+      });
+
+      const today = moment().format('YYYY-MM-DD');
+      this.issueForm.controls.date.setValue(today);
     }
   }
 

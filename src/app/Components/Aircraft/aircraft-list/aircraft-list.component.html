@@ -44,7 +44,7 @@
                     <div class="row">
                         <div class="col-auto mr-auto"><legend>Issues</legend></div>
                         <div class="col-auto">
-                            <a [routerLink]="['/issues/new']" routerLinkActive="router-link-active" >
+                            <a [routerLink]="['/issues/new']" [queryParams]="{asset: tailSelected}"  routerLinkActive="router-link-active" >
                                 <i class="material-icons">add</i>New
                             </a>
                         </div>

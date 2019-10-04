@@ -77,7 +77,7 @@
                             <legend>Issues</legend>                                
                         </div>
                         <div class="col-auto">
-                            <a [routerLink]="['/issues/new']" routerLinkActive="router-link-active" >
+                            <a [routerLink]="['/issues/new']" [queryParams]="{asset: nameSelected}" routerLinkActive="router-link-active" >
                                 <i class="material-icons">add</i>
                             </a>
                         </div>
