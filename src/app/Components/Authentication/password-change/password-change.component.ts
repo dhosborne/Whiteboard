@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../../../Services/common.service';
 import { ValidationService } from '../../../Services/validation.service';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { AuthService} from '../../../Services/auth.service';
+import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../../../Services/login.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { JsonPipe } from '@angular/common';
 
 
 @Component({
@@ -13,10 +15,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class PasswordChangeComponent implements OnInit {
   passForm = this.fb.group({
-    email: ['', [
+    email:[],
+    oldPassword: ['', [
       Validators.required,
-      Validators.pattern(this.vs.validEmailPattern), // matches first.last@
-      this.vs.emailDomainValidator] // matches only approved domains
+      Validators.minLength(8),
+      Validators.maxLength(25)]
     ],
     password: ['', [
       Validators.required,
@@ -34,6 +37,7 @@ export class PasswordChangeComponent implements OnInit {
     private common: CommonService,
     private login: LoginService,
     private route: ActivatedRoute,
+    private auth: AuthService,
     private router: Router,
     private fb: FormBuilder,
     private vs: ValidationService,
@@ -46,15 +50,18 @@ export class PasswordChangeComponent implements OnInit {
   }
 
   onSubmit() {
-    const formValues = this.passForm.value;
-    this.login.changePassword(formValues)
-    .subscribe(result => {
-      if (result.success) {
+    this.auth.currentUser.subscribe(user => {
+      const email = user.email;
+      const formValues = this.passForm.value;
+      formValues.email = email;
+
+      this.login.changePassword(formValues)
+      .subscribe(result => {
         this.common.showMessage(result.message, result.alert);
-        this.router.navigate(['logout']);
-      } else {
-        this.common.showMessage(result.message, result.alert);
-      }
+        if (result.success) {
+          this.router.navigate(['logout']);
+        }
+      });
     });
   }
 
