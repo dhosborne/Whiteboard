@@ -9,6 +9,8 @@ import { AuthService } from '../../../Services/auth.service';
 })
 export class NavbarComponent implements OnInit {
   user: any;
+  navBarOpen = false;
+
   constructor(
     private router: Router,
     public auth: AuthService
@@ -23,5 +25,9 @@ export class NavbarComponent implements OnInit {
   logout() {
     sessionStorage.removeItem('jwt');
     this.router.navigate(['login']);
+  }
+
+  toggleNavbar(): void {
+    this.navBarOpen = !this.navBarOpen;
   }
 }

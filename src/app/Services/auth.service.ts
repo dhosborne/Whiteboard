@@ -52,6 +52,8 @@ export class AuthService {
       .subscribe(data => {
         if (data.success) {
           this.setToken(data.token);
+          // update the behavior subject with the new user value
+          this.currentUserSubject.next(jwtHelper.decodeToken(data.token));
           this.myRoute.navigate(['/']);
         }
       });

@@ -47,7 +47,11 @@ const appRoutes: Routes = [
     {path: 'passwordchange', component: PasswordChangeComponent, data: {title: 'Change password'}},
 
 
-    {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard], data: {title: 'Welcome to White Board'}},
+    {path: 'dashboard', 
+      component: DashboardComponent,
+      canActivate: [AuthGuard],
+      runGuardsAndResolvers: 'always',
+      data: {title: 'Welcome to White Board'}},
     {path: 'admin', component: AdminDashboardComponent, canActivate: [AuthGuard], data: {title: 'Admin Dash'}},
 
     {path: 'account/:id', component: AccountDetailsComponent, canActivate: [AuthGuard], data: {title: 'Account Details'}},

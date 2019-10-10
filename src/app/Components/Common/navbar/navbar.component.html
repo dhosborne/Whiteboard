@@ -1,48 +1,51 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-primary no-gutters" *ngIf="auth.isLoggedIn()">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="auth.isLoggedIn()">
     <a class="navbar-brand" href="#">WhiteBoard</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
         <span class="navbar-toggler-icon"></span>
     </button>
-    
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li>
+    <div class="collapse navbar-collapse" [ngClass]="{'show': navBarOpen}">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a [routerLink]="['/#']"
+                routerLinkActive="router-link-active"
+                class="nav-link"
+                >Home</a>
+            </li>
+            <li class="nav-item">
                 <a [routerLink]="['aircrafts']"
                 routerLinkActive="router-link-active"
                 class="nav-link"
                 >Aircrafts</a>
             </li>
-            <li>
+            <li class="nav-item">
                 <a [routerLink]="['shelters']" 
                 routerLinkActive="router-link-active"  
                 class="nav-link" >Shelters</a>
             </li>
-            <li>
+            <li class="nav-item">
                 <a [routerLink]="['issues']" 
                 routerLinkActive="router-link-active"  
                 class="nav-link" >Issues</a>
             </li>
-            <li>
+            <li class="nav-item">
                 <a [routerLink]="['calibrations']" 
                 routerLinkActive="router-link-active"  
                 class="nav-link" >Calibration</a>
             </li>
-            <!-- <li>
+            <!-- <li class="nav-item">
                 <a class="nav-link" 
                     [routerLink]="['admin']" 
                     routerLinkActive="router-link-active" >Admin</a>
             </li> -->
         </ul>
         <ul class="user navbar-nav">
-            <li>
+            <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/account/', user._id]" routerLinkActive="router-link-active" >
-                    <i class="material-icons ">
-                    account_circle
-                    </i>{{user.firstName}}
+                    {{user.firstName}}
                 </a>              
             </li>
-            <li>
-                <a [routerLink]="['/logout']" routerLinkActive="router-link-active"  class="nav-link">
+            <li class="nav-item">
+                <a [routerLink]="['/logout']" class="nav-link">
                     Logout
                 </a>
             </li>
