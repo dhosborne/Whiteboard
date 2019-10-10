@@ -140,14 +140,14 @@ exports.passwordChange = (req, res) => {
 }
 
 exports.login = (req, res) => {
-    log('User \"' + req.body.username + '\" logging in...' );
-    User.findOne({username: req.body.username}, (err, user) => {
+    log('User \"' + req.body.email + '\" logging in...' );
+    User.findOne({email: req.body.email}, (err, user) => {
         if (err) {
             log(err.message + '\n');
         } else {
             if (!user) {
                 res.status(401).send({success: false, alert: 'danger', 
-                    message: 'Authentication failed, username incorrect'});
+                    message: 'Authentication failed, email incorrect'});
             } else {
                 user.comparePassword(req.body.password, (err, isMatch) => {
                     if (isMatch && !err) {
@@ -158,7 +158,7 @@ exports.login = (req, res) => {
                         res.json({success: true, alert: 'success', token: 'JWT ' + token}); 
                     } else {
                         res.status(401).send({success: false, alert: 'danger', 
-                            message:'Authentication failed, password incorrect'})
+                            message:'Authentication failed, password incorrect'});
                     }
                 });
             }            
