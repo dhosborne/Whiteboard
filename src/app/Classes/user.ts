@@ -23,7 +23,7 @@ export class User implements IUser {
         this.email = email;
     }
 
-    public fullName(): string {
+    public getFullName(): string {
         return this.firstName + ' ' + this.lastName;
     }
 }
