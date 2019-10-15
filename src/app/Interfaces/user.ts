@@ -7,4 +7,6 @@ export interface IUser {
     shirtSize: string;
     jacketSize: string;
     passportExpires: string;
+    duties: [string];
+    role: string;
 }

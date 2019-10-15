@@ -9,7 +9,8 @@ export class User implements IUser {
     shirtSize: string;
     jacketSize: string;
     passportExpires: string;
-
+    duties: [string];
+    role: string;
 
     constructor(id: string,
                 firstName: string,

@@ -23,7 +23,9 @@ export class AccountEditComponent implements OnInit {
     employeeNumber: '',
     passportExpires: '',
     shirtSize: '',
-    jacketSize: ''
+    jacketSize: '',
+    duties: [''],
+    role: ''
   });
 
   id: string;

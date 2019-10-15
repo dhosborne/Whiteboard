@@ -1,11 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+//#region Components
 import { LoginComponent } from './Components/Authentication/login/login.component';
 import { LogoutComponent } from './Components/Authentication/logout/logout.component';
 import { SignupComponent } from './Components/Authentication/signup/signup.component';
 import { PasswordChangeComponent } from './Components/Authentication/password-change/password-change.component';
 import { DashboardComponent } from './Components/Common/dashboard/dashboard.component';
-
 import { AccountDetailsComponent } from './Components/Account/account-details/account-details.component';
 import { AccountEditComponent } from './Components/Account/account-edit/account-edit.component';
 
@@ -22,40 +20,57 @@ import { ShelterInactiveComponent } from './Components/Shelter/shelter-inactive/
 import { IssueDetailsComponent } from './Components/Issue/issue-details/issue-details.component';
 import { IssueEditComponent } from './Components/Issue/issue-edit/issue-edit.component';
 import { IssueListComponent } from './Components/Issue/issue-list/issue-list.component';
-import { IssuesResolver } from './Resolvers/issues.resolver';
 import { CalibrationListComponent } from './Components/Calibration/calibration-list/calibration-list.component';
 import { CalibrationDetailsComponent } from './Components/Calibration/calibration-details/calibration-details.component';
 import { CalibrationEditComponent } from './Components/Calibration/calibration-edit/calibration-edit.component';
 import { CalibrationInactiveComponent } from './Components/Calibration/calibration-inactive/calibration-inactive.component';
-import { CalibrationResolver } from './Resolvers/calibration.resolver';
+
 
 import { AdminDashboardComponent } from './Components/Admin/admin-dashboard/admin-dashboard.component';
 
-import { AuthGuard } from './Guards/auth.guard';
 
 import { UavconfigDetailsComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-details/uavconfig-details.component';
 import { UavconfigEditComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-edit/uavconfig-edit.component';
+//#endregion
+
+//#region Guards
+import { AuthGuard } from './Guards/auth.guard';
+import { AdminGuard } from './Guards/admin.guard';
+import { IsSelfOrAdminGuard } from './Guards/is-self-or-admin.guard';
+//#endregion
+
+//#region Modules
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+//#endregion
+
+//#region Resolvers
+import { IssuesResolver } from './Resolvers/issues.resolver';
+import { CalibrationResolver } from './Resolvers/calibration.resolver';
 import { ShelterResolver } from './Resolvers/shelter.resolver';
 import { AircraftResolver } from './Resolvers/aircraft.resolver';
-
-
+//#endregion
 
 const appRoutes: Routes = [
     {path: 'login', component: LoginComponent, data: {title: 'Login'}},
     {path: 'logout', component: LogoutComponent, data: {title: 'Logout'}},
     {path: 'signup', component: SignupComponent, data: {title: 'Signup'}},
-    {path: 'passwordchange', component: PasswordChangeComponent, data: {title: 'Change password'}},
+    {path: 'passwordchange', canActivate: [IsSelfOrAdminGuard], component: PasswordChangeComponent, data: {title: 'Change password'}},
 
 
-    {path: 'dashboard', 
+    {path: 'dashboard',
       component: DashboardComponent,
       canActivate: [AuthGuard],
       runGuardsAndResolvers: 'always',
       data: {title: 'Welcome to White Board'}},
-    {path: 'admin', component: AdminDashboardComponent, canActivate: [AuthGuard], data: {title: 'Admin Dash'}},
+
+      {path: 'admin',
+      component: AdminDashboardComponent,
+      canActivate: [AuthGuard, AdminGuard],
+      data: {title: 'Admin Dash'}},
 
     {path: 'account/:id', component: AccountDetailsComponent, canActivate: [AuthGuard], data: {title: 'Account Details'}},
-    {path: 'account/:id/edit', component: AccountEditComponent, canActivate: [AuthGuard]},
+    {path: 'account/:id/edit', component: AccountEditComponent, canActivate: [AuthGuard, IsSelfOrAdminGuard]},
 
     {path: 'aircrafts',
       component: AircraftListComponent,

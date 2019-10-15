@@ -44,7 +44,15 @@ export class AuthService {
     } else {
       return false;
     }
+  }
 
+  userIsAdmin(): boolean {
+    const user = this.getUser();
+    if (user.role === 'Admin') {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   login(login): boolean {
