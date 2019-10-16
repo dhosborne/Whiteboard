@@ -25,11 +25,6 @@
         <div id="tabContent" class="tab-content" *ngIf="currentSet?.length > 0; else nothing">
             <div class="card text-white bg-primary mb-3 avcard">
                 <div class="card-header">
-                    <div class="row">
-                        <div class="col-auto mr-auto">
-                            {{header}}
-                        </div>
-                    </div>
                 </div>
                 <div class="card-body" #body>
                     <table class="table table-hover">
@@ -38,7 +33,7 @@
                             <th scope="col">Date</th>
                             <th scope="col">Title</th>
                             <th scope="col">Description</th>
-                            <th scope="col">Completed</th>
+                            <th scope="col">Created By</th>
                         </thead>
                         <tbody>
                             <tr class="table-default" *ngFor="let issue of currentSet" (dblclick)="issueClicked(issue._id)">
@@ -46,7 +41,7 @@
                                 <td>{{issue.date | date: 'MM/dd'}}</td>
                                 <td>{{issue.title}}</td>
                                 <td>{{issue.description | slice: 0:25}}</td>
-                                <td>{{issue.completed}}</td>                        
+                                <td>{{issue.createdBy}}</td>                  
                             </tr>
                         </tbody>
                     </table>                    

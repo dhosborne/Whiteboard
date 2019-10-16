@@ -11,6 +11,7 @@ export class User implements IUser {
     passportExpires: string;
     duties: [string];
     role: string;
+    position: string;
 
     constructor(id: string,
                 firstName: string,

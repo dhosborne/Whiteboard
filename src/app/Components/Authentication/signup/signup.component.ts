@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../../../Services/login.service';
 import { ValidationService } from '../../../Services/validation.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NgFlashMessageService } from 'ng-flash-messages';
-import { ISignup } from '../../../Interfaces/signup';
-import { Title } from '@angular/platform-browser';
+import { CommonService } from 'src/app/Services/common.service';
 
 @Component({
   selector: 'app-signup',
@@ -14,11 +12,6 @@ import { Title } from '@angular/platform-browser';
 })
 export class SignupComponent implements OnInit {
   signUpForm = this.fb.group({
-    username: ['', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(25)]
-    ],
     password: ['', [
       Validators.required,
       Validators.minLength(8),
@@ -46,10 +39,9 @@ export class SignupComponent implements OnInit {
     private fb: FormBuilder,
     private loginService: LoginService,
     private router: Router,
-    private flash: NgFlashMessageService,
-    private title: Title,
     private route: ActivatedRoute,
     private vs: ValidationService,
+    private common: CommonService
   ) { }
 
   ngOnInit() {
@@ -60,29 +52,22 @@ export class SignupComponent implements OnInit {
     const formValues = this.signUpForm.value;
 
     this.loginService.signup(formValues)
-    .subscribe( res => {
-      this.router.navigate(['login']);
-    }, err => {
-      this.showMessage(err.message);
+    .subscribe( data => {
+      if (!data.success) {
+        this.common.showMessage(data.message, data.level);
+      } else {
+        this.common.showMessage(data.message, data.level);
+        this.router.navigate(['/admin']);
+      }
     });
   }
-
-  showMessage(message): void {
-    this.flash.showFlashMessage({
-        messages: [message],
-        dismissible: true,
-        timeout: 10000,
-        type: 'info'
-    });
-  }
-
   get f() {
     return this.signUpForm.controls;
   }
 
   private setTitle(): void {
     this.route.data.subscribe(data => {
-      this.title.setTitle(data.title);
+      this.common.setPageTitle(data.title);
     });
   }
 }

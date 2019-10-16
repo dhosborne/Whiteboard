@@ -27,6 +27,7 @@ import { CalibrationInactiveComponent } from './Components/Calibration/calibrati
 
 
 import { AdminDashboardComponent } from './Components/Admin/admin-dashboard/admin-dashboard.component';
+import { AdminAccountEditComponent} from './Components/Admin/admin-account-edit/admin-account-edit.component';
 
 
 import { UavconfigDetailsComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-details/uavconfig-details.component';
@@ -54,7 +55,6 @@ import { AircraftResolver } from './Resolvers/aircraft.resolver';
 const appRoutes: Routes = [
     {path: 'login', component: LoginComponent, data: {title: 'Login'}},
     {path: 'logout', component: LogoutComponent, data: {title: 'Logout'}},
-    {path: 'signup', component: SignupComponent, data: {title: 'Signup'}},
     {path: 'passwordchange', canActivate: [IsSelfOrAdminGuard], component: PasswordChangeComponent, data: {title: 'Change password'}},
 
 
@@ -64,10 +64,15 @@ const appRoutes: Routes = [
       runGuardsAndResolvers: 'always',
       data: {title: 'Welcome to White Board'}},
 
-      {path: 'admin',
-      component: AdminDashboardComponent,
+    {path: 'admin',
       canActivate: [AuthGuard, AdminGuard],
-      data: {title: 'Admin Dash'}},
+      data: {title: 'Admin Dash'},
+      children: [
+        {path: '', component: AdminDashboardComponent, data: {title: 'Admin Dashboard'}},
+        {path: 'account/new', component: SignupComponent },
+        {path: 'account/:id', component: AdminAccountEditComponent, },
+      ]
+    },
 
     {path: 'account/:id', component: AccountDetailsComponent, canActivate: [AuthGuard], data: {title: 'Account Details'}},
     {path: 'account/:id/edit', component: AccountEditComponent, canActivate: [AuthGuard, IsSelfOrAdminGuard]},

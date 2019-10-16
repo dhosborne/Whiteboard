@@ -88,7 +88,7 @@
                             <tr>
                                 <th scope="col">Title</th>
                                 <th scope="col">Date</th>
-                                <th scope="col">Completed</th>
+                                <th scope="col">Creator</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,7 +96,7 @@
                                 <ng-container *ngIf="!issue.completed">
                                     <td>{{issue.title }}</td>
                                     <td>{{issue.date | date: 'MM/dd/yyyy' }}</td>
-                                    <td>{{issue.completed}}</td>                                       
+                                    <td>{{issue.createdBy}}</td>                                       
                                 </ng-container>
                             </tr>
                         </tbody>

@@ -9,4 +9,5 @@ export interface IUser {
     passportExpires: string;
     duties: [string];
     role: string;
+    position: string;
 }

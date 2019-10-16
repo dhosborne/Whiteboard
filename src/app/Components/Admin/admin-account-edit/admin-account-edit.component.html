@@ -1,0 +1,102 @@
+<div class="container card-edit">
+        <div class="car text-white bg-primary mb-3">
+            <div class="card-header">
+                <div class="card-body">
+                    <form [formGroup]="accountForm">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text"
+                            class="form-control"
+                            formControlName="firstName"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text"
+                            class="form-control"
+                            formControlName="lastName"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email"
+                            class="form-control"
+                            formControlName="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="employeeNumber">Employee Number</label>
+                            <input type="text"
+                            class="form-control"
+                            formControlName="employeeNumber">
+                        </div>
+                        <div class="form-group">
+                            <label for="passportExpires">Passport Exp.</label>
+                            <input type="date"
+                            class="form-control"
+                            formControlName="passportExpires">
+                        </div>
+                        <div class="form-group">
+                            <label for="shirtSize">Shirt Size</label>
+                            <select
+                                class="form-control"
+                                name="shirtSize"
+                                formControlName="shirtSize"
+                            >
+                            <option value="">-</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="shirtSize">Jacket Size</label>
+                            <select
+                                class="form-control"
+                                name="jacketSize"
+                                formControlName="jacketSize"
+                            >
+                            <option value="">-</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select
+                                class="form-control"
+                                name="role"
+                                formControlName="role"
+                            >
+                            <option value="">-</option>
+                            <option value="User">User</option>
+                            <option value="Admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="position">Position</label>
+                            <select
+                                class="form-control"
+                                name="position"
+                                formControlName="position"
+                            >
+                            <option value="">-</option>
+                            <option value="New Hire">New Hire</option>
+                            <option value="Avionics">Avionics</option>
+                            <option value="Mechanic">Mechanic</option>
+                            </select>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+                            <button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
+                            <button type="button" class="btn btn-success" [disabled]="!accountForm.valid" (click)="onSubmit()">Submit</button>
+                        </div>   
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
