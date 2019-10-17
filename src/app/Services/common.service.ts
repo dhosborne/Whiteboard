@@ -6,8 +6,6 @@ import { ConfirmationDialogComponent } from '../Components/Common/confirmation-d
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -61,4 +59,5 @@ export class CommonService {
   public checkIsDueDays(date: string, duration: string): boolean {
     return moment(date, 'YYYY-MM-DD').add(duration, 'days').isSameOrBefore(moment.now());
   }
+
 }

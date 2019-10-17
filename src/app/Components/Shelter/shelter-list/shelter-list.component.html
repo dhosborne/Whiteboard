@@ -53,21 +53,21 @@
                         </thead>
                         <tbody>
                             <tr (dblclick)="shelterClicked(shelter._id)">
-                                <td>{{shelter?.name}}</td>
+                                <td>{{shelter.name}}</td>
                                 <td [ngClass]="{'required': common.checkIsDueDays(shelter?._7Day, '7')}">
-                                    {{shelter?._7Day      | moment: [7, 'days']   | date: 'MM/dd/yy'}}
+                                    {{shelter._7Day      | moment: [7, 'days']   | date: 'MM/dd'}}
                                 </td>
                                 <td [ngClass]="{'required': common.checkIsDueDays(shelter?._28Day, '28')}">
-                                    {{shelter?._28Day     | moment: [28, 'days']  | date: 'MM/dd/yy'}}
+                                    {{shelter._28Day     | moment: [28, 'days']  | date: 'MM/dd'}}
                                 </td>
                                 <td [ngClass]="{'required': common.checkIsDueDays(shelter?._84Day, '84')}">
-                                    {{shelter?._84Day     | moment: [84, 'days']  | date: 'MM/dd/yy'}}
+                                    {{shelter._84Day     | moment: [84, 'days']  | date: 'MM/dd'}}
                                 </td>
                                 <td [ngClass]="{'required': common.checkIsDueDays(shelter?._168Day, '168')}">
-                                    {{shelter?._168Day    | moment: [168, 'days'] | date: 'MM/dd/yy'}}
+                                    {{shelter._168Day    | moment: [168, 'days'] | date: 'MM/dd'}}
                                 </td>
                                 <td [ngClass]="{'required': common.checkIsDueDays(shelter?.airFilters, '90')}">
-                                    {{shelter?.airFilters | moment: [3, 'months'] | date: 'MM/dd/yy'}}
+                                    {{shelter.airFilters | moment: [3, 'months'] | date: 'MM/dd'}}
                                 </td>
                             </tr>
                         </tbody>
@@ -77,7 +77,7 @@
                             <legend>Issues</legend>                                
                         </div>
                         <div class="col-auto">
-                            <a [routerLink]="['/issues/new']" routerLinkActive="router-link-active" >
+                            <a [routerLink]="['/issues/new']" [queryParams]="{asset: nameSelected}" routerLinkActive="router-link-active" >
                                 <i class="material-icons">add</i>
                             </a>
                         </div>
@@ -88,17 +88,15 @@
                             <tr>
                                 <th scope="col">Title</th>
                                 <th scope="col">Date</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Created By</th>
+                                <th scope="col">Creator</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let issue of issuesList" (dblclick)="issueClicked(issue._id)">
-                                <ng-container *ngIf="!issue?.completed">
-                                    <td>{{issue?.title }}</td>
-                                    <td>{{issue?.date | date: 'MM/dd/yy' }}</td>
-                                    <td>{{issue?.description | slice: 0:100}}</td>
-                                    <td>{{issue.createdBy}}</td>               
+                                <ng-container *ngIf="!issue.completed">
+                                    <td>{{issue.title }}</td>
+                                    <td>{{issue.date | date: 'MM/dd/yyyy' }}</td>
+                                    <td>{{issue.createdBy}}</td>                                       
                                 </ng-container>
                             </tr>
                         </tbody>

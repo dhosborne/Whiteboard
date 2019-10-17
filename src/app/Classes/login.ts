@@ -1,10 +1,10 @@
 import { ILogin } from '../Interfaces/login';
 
 export class Login implements ILogin {
-    username: string;
+    email: string;
     password: string;
     constructor(
-        username: string,
+        email: string,
         password: string,
     ) {}
 }

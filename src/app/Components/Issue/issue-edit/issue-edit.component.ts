@@ -7,10 +7,10 @@ import { AircraftService } from '../../../Services/aircraft.service';
 import { ShelterService } from '../../../Services/shelter.service';
 import { IssueService } from '../../../Services/issue.service';
 import { CommonService } from '../../../Services/common.service';
+import { AuthService } from '../../../Services/auth.service';
 import { Shelter } from '../../../Classes/shelter';
 import { IIssue } from '../../../Interfaces/issue';
 import * as moment from 'moment';
-import { User } from 'src/app/Classes/user';
 
 @Component({
   selector: 'app-issue-edit',
@@ -22,7 +22,8 @@ export class IssueEditComponent implements OnInit {
   shelterList = new Array<Shelter>();
   aircraftList = new Array<Aircraft>();
   assetList = new Array<string>();
-  user: User;
+  userName: string;
+  asset: string;
 
 
   id: string;
@@ -47,7 +48,8 @@ export class IssueEditComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private location: Location,
-    private common: CommonService
+    private common: CommonService,
+    private auth: AuthService
 
   ) { }
 
@@ -57,15 +59,15 @@ export class IssueEditComponent implements OnInit {
     });
 
     this.loadLists();
-
-    const sessionVar = JSON.parse(sessionStorage.getItem('user'));
-    this.user = new User(sessionVar._id, sessionVar.firstName, sessionVar.lastName, null, null);
+    this.auth.currentUser.subscribe(user => {
+      this.userName = user.firstName + ' ' + user.lastName;
+    });
 
     this.issueForm.controls.title.setValidators(Validators.required);
     this.issueForm.controls.date.setValidators(Validators.required);
     this.issueForm.controls.asset.setValidators(Validators.required);
     this.issueForm.controls.createdBy.setValidators(Validators.required);
-    this.issueForm.controls.createdBy.patchValue(this.user.fullName());
+
 
     if (this.route.snapshot.paramMap.has('id')) {
       this.isNew = false;
@@ -77,6 +79,16 @@ export class IssueEditComponent implements OnInit {
           this.updateForm(data);
         }
       });
+    } else {
+      this.route.queryParams.subscribe(params => {
+        if (params.asset) {
+          this.issueForm.controls.asset.setValue(params.asset);
+        }
+      });
+
+      const today = moment().format('YYYY-MM-DD');
+      this.issueForm.controls.date.setValue(today);
+      this.issueForm.controls.createdBy.patchValue(this.userName);
     }
   }
 

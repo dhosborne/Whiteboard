@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
 import { Issue } from '../../../Classes/issue';
-import { IssueService } from '../../../Services/issue.service';
-import { Title } from '@angular/platform-browser';
+import { CommonService } from 'src/app/Services/common.service';
 
 @Component({
   selector: 'app-issue-list',
@@ -10,33 +9,29 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./issue-list.component.css']
 })
 export class IssueListComponent implements OnInit {
+  data: any;
   issuesList = Array<Issue>();
   currentSet = Array<Issue>();
   header: string;
 
   constructor(
-    private issueService: IssueService,
     private router: Router,
     private route: ActivatedRoute,
-    private title: Title
+    private common: CommonService
   ) { }
 
   ngOnInit() {
+    this.data = this.route.snapshot.data;
+    this.common.setPageTitle(this.data.title);
     this.getIssues();
-    this.setTitle();
-    this.loadTab('open');
   }
 
   private getIssues(): void {
     this.issuesList.length = 0;
-
-    this.issueService.getIssues()
-    .subscribe(data => {
-      data.forEach(issue => {
-        if (this.issuesList.indexOf(issue) === -1) {
-          this.issuesList.push(issue);
-        }
-      });
+    this.data.issues.forEach(issue => {
+      if (this.issuesList.indexOf(issue) === -1) {
+        this.issuesList.push(issue);
+      }
     });
   }
 
@@ -63,11 +58,5 @@ export class IssueListComponent implements OnInit {
 
   issueClicked(id): void {
     this.router.navigate(['issues/' + id + '/details']);
-  }
-
-  private setTitle(): void {
-    this.route.data.subscribe(data => {
-      this.title.setTitle(data.title);
-    });
   }
 }

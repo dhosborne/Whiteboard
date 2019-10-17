@@ -9,7 +9,9 @@ export class User implements IUser {
     shirtSize: string;
     jacketSize: string;
     passportExpires: string;
-
+    duties: [string];
+    role: string;
+    position: string;
 
     constructor(id: string,
                 firstName: string,
@@ -23,7 +25,7 @@ export class User implements IUser {
         this.email = email;
     }
 
-    public fullName(): string {
+    public getFullName(): string {
         return this.firstName + ' ' + this.lastName;
     }
 }

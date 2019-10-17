@@ -1,19 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup} from '@angular/forms';
-import { ActivatedRoute, Router} from '@angular/router';
-import { MatDialog } from '@angular/material';
-import { ConfirmationDialogComponent } from '../../Common/confirmation-dialog/confirmation-dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from 'src/app/Services/account.service';
-import { IUser } from '../../../Interfaces/user';
+import { User } from 'src/app/Classes/user';
+import { IUser } from 'src/app/Interfaces/user';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { CommonService } from 'src/app/Services/common.service';
+import { ConfirmationDialogComponent } from '../../Common/confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
-  selector: 'app-account-edit',
-  templateUrl: './account-edit.component.html',
-  styleUrls: ['./account-edit.component.css']
+  selector: 'app-admin-account-edit',
+  templateUrl: './admin-account-edit.component.html',
+  styleUrls: ['./admin-account-edit.component.css']
 })
-export class AccountEditComponent implements OnInit {
-
+export class AdminAccountEditComponent implements OnInit {
+  id: string;
+  user: User;
   accountForm: FormGroup = this.createForm({
     _id: '',
     firstName: '',
@@ -28,20 +30,16 @@ export class AccountEditComponent implements OnInit {
     position: ''
   });
 
-  id: string;
-
   constructor(
-    private fb: FormBuilder,
-    private accountService: AccountService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog,
-    private common: CommonService
+    private accountService: AccountService,
+    private fb: FormBuilder,
+    private common: CommonService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
-    this.setTitle();
-
     if (this.route.snapshot.paramMap.has('id')) {
       this.id = this.route.snapshot.paramMap.get('id');
 
@@ -52,19 +50,7 @@ export class AccountEditComponent implements OnInit {
     }
   }
 
-  private createForm(model: IUser): FormGroup {
-    return this.fb.group(model);
-  }
-
-  private updateForm(model: Partial<IUser>): void {
-    this.accountForm.patchValue(model);
-  }
-
-  redirect(): void {
-    this.router.navigate(['/account/' + this.id]);
-  }
-
-  onSubmit() {
+  onSubmit(): void {
     if (this.accountForm.invalid) {
       return;
     }
@@ -82,6 +68,9 @@ export class AccountEditComponent implements OnInit {
     }
   }
 
+  onCancel(): void {
+    this.redirect();
+  }
   onDelete(): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '350px',
@@ -101,19 +90,19 @@ export class AccountEditComponent implements OnInit {
     });
   }
 
-  onCancel(): void {
-    this.redirect();
+  private createForm(model: IUser): FormGroup {
+    return this.fb.group(model);
+  }
+
+  private updateForm(model: Partial<IUser>): void {
+    this.accountForm.patchValue(model);
+  }
+
+  private redirect(): void {
+    this.router.navigate(['/admin']);
   }
 
   get f() {
     return this.accountForm.controls;
-  }
-
-  private setTitle(): void {
-    this.route.data.subscribe(data => {
-      if (data) {
-        this.common.setPageTitle(data.title);
-      }
-    });
   }
 }

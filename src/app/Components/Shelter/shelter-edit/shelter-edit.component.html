@@ -22,8 +22,8 @@
                         <small><em class="required">Shelter Name Required</em></small>
                     </div>
                     <div class="form-control-feedback"
-                        *ngIf="f.name.errors && (f.name.errors.pattern && f.name.dirty)">
-                        <small><em class="required">Shelter name must formatted like (ex. "MGCS4001")</em></small>
+                        *ngIf="f.name.errors && (f.name.errors.minLength && f.name.dirty)">
+                        <small><em class="required">Shelter name is too short</em></small>
                     </div>
                 </div>
                 <fieldset>

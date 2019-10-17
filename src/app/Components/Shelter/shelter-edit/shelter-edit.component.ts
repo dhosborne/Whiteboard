@@ -49,7 +49,7 @@ export class ShelterEditComponent implements OnInit {
 
     this.shelterForm.controls.name.setValidators([
       Validators.required,
-      Validators.pattern('^(MGCS)([0-9]{4})$')
+      Validators.minLength(4)
     ]);
 
     if (this.route.snapshot.paramMap.has('id')) {

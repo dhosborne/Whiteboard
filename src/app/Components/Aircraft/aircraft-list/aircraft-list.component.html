@@ -35,9 +35,7 @@
                             {{aircraft?.tailNumber}}
                         </div>
                         <div class="col-auto">
-                            <p [ngClass]="{'required': common.checkIsDueDays(aircraft?.reconDate, '28')}">
-                                Batts Due: {{aircraft?.reconDate | moment: [28, 'days'] | date: 'MM/dd'}}
-                            </p>
+                            Batts Due: {{aircraft?.reconDate | moment: [28, 'days'] | date: 'MM/dd'}}
                         </div>
                     </div>                    
                 </div>
@@ -46,7 +44,7 @@
                     <div class="row">
                         <div class="col-auto mr-auto"><legend>Issues</legend></div>
                         <div class="col-auto">
-                            <a [routerLink]="['/issues/new']" routerLinkActive="router-link-active" >
+                            <a [routerLink]="['/issues/new']" [queryParams]="{asset: tailSelected}"  routerLinkActive="router-link-active" >
                                 <i class="material-icons">add</i>New
                             </a>
                         </div>
@@ -64,7 +62,7 @@
                             <ng-container *ngFor="let issue of issuesList">
                                 <tr *ngIf="!issue.completed" (dblclick)="issueClicked(issue._id)">
                                     <td>{{issue.title}}</td>
-                                    <td>{{issue.date | date: 'MM/dd/yy'}}</td>
+                                    <td>{{issue.date}}</td>
                                     <td>{{issue.description | slice: 0:75}}</td>
                                     <td>{{issue.createdBy}}</td>
                                 </tr>                                    

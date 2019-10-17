@@ -1,1 +1,27 @@
-<p>admin-dashboard works!</p>
+<div class="container card-list">
+    <div class="row">
+        <div class="col-auto"><h4>Users</h4></div>
+        <div class="col-auto">
+            <a [routerLink]="['/admin/account/new']">
+                <i class="material-icons">
+                    add_circle_outline
+                </i>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-auto mr-auto">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <ng-container *ngIf="userList?.length > 0; else nothing">
+                        <ul class="list-group" *ngFor="let user of userList">
+                            <li class="list-group-item" (dblclick)="onClick(user._id)">
+                                {{user.lastName}}, {{user.firstName}} - {{user.employeeNumber}}
+                            </li>
+                        </ul>
+                    </ng-container>
+                </div>
+            </div>              
+        </div>
+    </div>
+</div>

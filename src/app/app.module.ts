@@ -1,28 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import {NgFlashMessagesModule} from 'ng-flash-messages';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AircraftListComponent } from './Components/Aircraft/aircraft-list/aircraft-list.component';
-import { AircraftEditComponent } from './Components/Aircraft/aircraft-edit/aircraft-edit.component';
-import { AircraftDetailsComponent } from './Components/Aircraft/aircraft-details/aircraft-details.component';
-import { DashboardComponent } from './Components/Common/dashboard/dashboard.component';
-import { LoginComponent } from './Components/Authentication/login/login.component';
-import { LogoutComponent } from './Components/Authentication/logout/logout.component';
-import { NavbarComponent } from './Components/Common/navbar/navbar.component';
-import { ShelterEditComponent } from './Components/Shelter/shelter-edit/shelter-edit.component';
-import { ShelterListComponent } from './Components/Shelter/shelter-list/shelter-list.component';
-import { ShelterDetailsComponent } from './Components/Shelter/shelter-details/shelter-details.component';
-import { SignupComponent } from './Components/Authentication/signup/signup.component';
-import { MomentPipe } from './Pipes/moment.pipe';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthGuard } from './Guards/auth.guard';
-import { LoginService } from './Services/login.service';
+//#region Components
 import { IssueEditComponent } from './Components/Issue/issue-edit/issue-edit.component';
 import { IssueDetailsComponent } from './Components/Issue/issue-details/issue-details.component';
 import { IssueListComponent } from './Components/Issue/issue-list/issue-list.component';
@@ -40,7 +16,54 @@ import { AccountEditComponent } from './Components/Account/account-edit/account-
 import { AccountDetailsComponent } from './Components/Account/account-details/account-details.component';
 import { AdminDashboardComponent } from './Components/Admin/admin-dashboard/admin-dashboard.component';
 import { PasswordChangeComponent } from './Components/Authentication/password-change/password-change.component';
+import { AppComponent } from './app.component';
+import { AircraftListComponent } from './Components/Aircraft/aircraft-list/aircraft-list.component';
+import { AircraftEditComponent } from './Components/Aircraft/aircraft-edit/aircraft-edit.component';
+import { AircraftDetailsComponent } from './Components/Aircraft/aircraft-details/aircraft-details.component';
+import { DashboardComponent } from './Components/Common/dashboard/dashboard.component';
+import { LoginComponent } from './Components/Authentication/login/login.component';
+import { LogoutComponent } from './Components/Authentication/logout/logout.component';
+import { NavbarComponent } from './Components/Common/navbar/navbar.component';
+import { ShelterEditComponent } from './Components/Shelter/shelter-edit/shelter-edit.component';
+import { ShelterListComponent } from './Components/Shelter/shelter-list/shelter-list.component';
+import { ShelterDetailsComponent } from './Components/Shelter/shelter-details/shelter-details.component';
+import { SignupComponent } from './Components/Authentication/signup/signup.component';
+//#endregion
 
+//#region Guards
+import { AuthGuard } from './Guards/auth.guard';
+import { AdminGuard } from './Guards/admin.guard';
+import { IsSelfOrAdminGuard } from './Guards/is-self-or-admin.guard';
+//#endregion
+
+//#region Modules
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import {NgFlashMessagesModule} from 'ng-flash-messages';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+
+//#endregion
+
+//#region Pipes
+import { MomentPipe } from './Pipes/moment.pipe';
+//#endregion
+
+//#region Resolvers
+import { CalibrationResolver } from './Resolvers/calibration.resolver';
+import { IssuesResolver } from './Resolvers/issues.resolver';
+import { AircraftResolver} from './Resolvers/aircraft.resolver';
+import { ShelterResolver } from './Resolvers/shelter.resolver';
+//#endregion
+
+//#region Services
+import { LoginService } from './Services/login.service';
+import { AdminAccountEditComponent } from './Components/Admin/admin-account-edit/admin-account-edit.component';
+//#endregion
 
 @NgModule({
   declarations: [
@@ -75,6 +98,7 @@ import { PasswordChangeComponent } from './Components/Authentication/password-ch
     AccountDetailsComponent,
     AdminDashboardComponent,
     PasswordChangeComponent,
+    AdminAccountEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -93,7 +117,13 @@ import { PasswordChangeComponent } from './Components/Authentication/password-ch
   ],
   providers: [
     AuthGuard,
-    LoginService
+    AdminGuard,
+    IsSelfOrAdminGuard,
+    LoginService,
+    CalibrationResolver,
+    IssuesResolver,
+    AircraftResolver,
+    ShelterResolver
   ],
   bootstrap: [AppComponent]
 })

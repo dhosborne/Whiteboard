@@ -45,8 +45,4 @@ export class CalibrationService {
   public calculateDueDate(date, duration): string {
     return moment(date, 'YYYY-MM-DD').add(duration, 'months').format('YYYY-MM-DD');
   }
-
-  public calDue(date, duration): boolean {
-    return moment(date, 'YYYY-MM-DD').add(duration, 'months').isSameOrBefore(moment.now());
-  }
 }

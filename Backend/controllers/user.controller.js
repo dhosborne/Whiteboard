@@ -48,7 +48,7 @@ exports.getUser = (req, res) => {
 
 exports.createUser = (req, res) => {
     if (!req.body.username || !req.body.password) {
-        res.json({success:400, success: false, alert: 'danger', message: 'Please check username or password!'});
+        res.json({status:400, success: false, alert: 'danger', message: 'Please check username or password!'});
     } else {
         var newUser = new User(req.body);
         newUser.save((err) => {
@@ -63,8 +63,8 @@ exports.createUser = (req, res) => {
 
 exports.deleteUser = (req, res) => {
     if(mongoose.Types.ObjectId.isValid(req.params.id)) {
-        User.deleteOne({_id: req.params.id}, (err, result) =>{
-            if (err) {req
+        User.deleteOne({_id: req.params.id}, (err) =>{
+            if (err) {
                 res.send(err);
             } else {
                 res.json({status: 200, success: false, alert: 'danger', message: 'User Deleted Succesfully'});
@@ -118,20 +118,20 @@ exports.passwordChange = (req, res) => {
             log(err.message + '\n');
         } else {
             if (!user) {
-                res.json({status:401, alert:'info', message:'no user with supplied email!'});
+                res.json({status:401, alert:'info', message:'No user with supplied email!'});
             } else {
-                user.comparePassword(req.body.oldPass, (err, isMatch) => {
+                user.comparePassword(req.body.oldPassword, (err, isMatch) => {
                     if(isMatch && !err) {
-                        user.password = req.body.newPass;
-                        user.save({}, (err, result) => {
+                        user.password = req.body.password;
+                        user.save({}, (err) => {
                             if (err) {
-                                res.json({status:500, success:false, alert:'danger', message:err.message})
+                                res.json({status:500, success:false, alert:'danger', message:err.message});
                             } else {
                                 res.json({status:201, success:true, alert:'success', message:'Password change successful'});
                             }
                         });
                     } else {
-                        res.json({status: 401, success:false, alert:'danger', message:'please check your old password`'});
+                        res.json({status: 401, success:false, alert:'danger', message:'Please check your old password'});
                     }
                 });
             }
@@ -140,14 +140,14 @@ exports.passwordChange = (req, res) => {
 }
 
 exports.login = (req, res) => {
-    log('User \"' + req.body.username + '\" logging in...' );
-    User.findOne({username: req.body.username}, (err, user) => {
+    log('User \"' + req.body.email + '\" logging in...' );
+    User.findOne({email: req.body.email}, (err, user) => {
         if (err) {
             log(err.message + '\n');
         } else {
             if (!user) {
                 res.status(401).send({success: false, alert: 'danger', 
-                    message: 'Authentication failed, username incorrect'});
+                    message: 'Authentication failed, email incorrect'});
             } else {
                 user.comparePassword(req.body.password, (err, isMatch) => {
                     if (isMatch && !err) {
@@ -155,11 +155,10 @@ exports.login = (req, res) => {
                             expiresIn: '1d' // expires in 1 day
                         });
                         log('success! ');
-                        payload = {id: user.id, 'username': user.username, 'firstName': user.firstName, 'lastName': user.lastName};
-                        res.json({success: false, alert: 'success', token: 'JWT ' + token, user: payload}); 
+                        res.json({success: true, alert: 'success', token: 'JWT ' + token}); 
                     } else {
                         res.status(401).send({success: false, alert: 'danger', 
-                            message:'Authentication failed, password incorrect'})
+                            message:'Authentication failed, password incorrect'});
                     }
                 });
             }            
