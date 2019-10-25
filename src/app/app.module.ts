@@ -63,6 +63,7 @@ import { ShelterResolver } from './Resolvers/shelter.resolver';
 //#region Services
 import { LoginService } from './Services/login.service';
 import { AdminAccountEditComponent } from './Components/Admin/admin-account-edit/admin-account-edit.component';
+import { AdminPasswordChangeComponent } from './Components/Admin/admin-password-change/admin-password-change.component';
 //#endregion
 
 @NgModule({
@@ -99,6 +100,7 @@ import { AdminAccountEditComponent } from './Components/Admin/admin-account-edit
     AdminDashboardComponent,
     PasswordChangeComponent,
     AdminAccountEditComponent,
+    AdminPasswordChangeComponent,
   ],
   imports: [
     BrowserModule,

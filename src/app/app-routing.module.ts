@@ -28,7 +28,7 @@ import { CalibrationInactiveComponent } from './Components/Calibration/calibrati
 
 import { AdminDashboardComponent } from './Components/Admin/admin-dashboard/admin-dashboard.component';
 import { AdminAccountEditComponent} from './Components/Admin/admin-account-edit/admin-account-edit.component';
-
+import { AdminPasswordChangeComponent } from './Components/Admin/admin-password-change/admin-password-change.component'
 
 import { UavconfigDetailsComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-details/uavconfig-details.component';
 import { UavconfigEditComponent } from './Components/Aircraft/UAVConfiguration/uavconfig-edit/uavconfig-edit.component';
@@ -71,6 +71,7 @@ const appRoutes: Routes = [
         {path: '', component: AdminDashboardComponent, data: {title: 'Admin Dashboard'}},
         {path: 'account/new', component: SignupComponent },
         {path: 'account/:id', component: AdminAccountEditComponent, },
+        {path: 'passwordChange', component: AdminPasswordChangeComponent, data: {title: 'AdminPasswordChange'}}
       ]
     },
 

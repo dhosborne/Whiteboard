@@ -139,6 +139,31 @@ exports.passwordChange = (req, res) => {
     });
 }
 
+exports.adminPasswordChange = (req, res) => {
+    log('AdminPasswordChange...');
+    User.findOne({email: req.body.email}, (err, user) => {
+        if (err) {
+            log(err.message, '\n');
+        } else {
+            if(!user) {
+                log(err.message, '\n');
+                res.json({status: 401, success: false, alert: 'danger', message: 'Email does not exist'});
+            } else {
+                user.password = req.body.password;
+                user.save({}, (err) => {
+                    if(err) {
+                        log(err.message + '\n');
+                        res.json({status: 500, success:false, alert:'danger', message:err.message});
+                    } else {
+                        log('success\n');
+                        res.json({status:201, success:true, alert:'success', message:'Password changed'});
+                    }
+                })
+            }
+        }
+    });
+}
+
 exports.login = (req, res) => {
     log('User \"' + req.body.email + '\" logging in...' );
     User.findOne({email: req.body.email}, (err, user) => {

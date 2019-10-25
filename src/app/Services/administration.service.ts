@@ -20,4 +20,8 @@ export class AdministrationService {
   public listAccounts(): Observable<any> {
     return this.http.get(this.endpoint, this.httpOptions);
   }
+
+  public adminPasswordChange(payload: any): Observable<any> {
+    return this.http.post(this.endpoint + 'adminPasswordChange', payload, this.httpOptions);
+  }
 }

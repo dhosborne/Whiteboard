@@ -93,6 +93,8 @@ module.exports = (app) => {
     app.route('/users')
         .get(User.list)
         .post(User.createUser);
+    app.route('/users/adminPasswordChange')
+        .post(User.adminPasswordChange);
 
     app.route('/users/:id')
         .get(User.getUser)
