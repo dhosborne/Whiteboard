@@ -83,34 +83,37 @@
                 </div>
                 <div class="card-body" #body3>
                     <table class="table table-hover" *ngIf="calThisWeek || calThisMonth || cal3Months; else noCal">
-                        <ng-container *ngIf="calThisWeek">
-                            <thead>
-                                <th>This Week</th>
-                                <th scope="col">Asset</th>
-                                <th scope="col">Serial</th>
-                                <th scope="col">Location</th>
-                                <th scope="col">Due Date</th>
-                            </thead>
-                            <tbody>
+                        <thead>
+                            <th>This Week</th>
+                            <th scope="col">Asset</th>
+                            <th scope="col">Serial</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Due Date</th>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="calThisWeek; else noCalThisWeek">
                                 <tr class="table-default" *ngFor="let cal of calThisWeekList">
                                     <td></td>
                                     <td scope="row">{{cal.name}}</td>
                                     <td scope="row">{{cal?.serialNumber}}</td>
                                     <td scope="row">{{cal.location}}</td>
                                     <td scope="row">{{cal.date | moment: [cal.duration, 'months'] | date:'MM/dd' }}</td>
-                                </tr>
-                            </tbody>
-                            <hr>
-                        </ng-container>
-                        <ng-container *ngIf="calThisMonth">
-                            <thead>
-                                <th>This Month</th>
-                                <th scope="col">Asset</th>
-                                <th scope="col">Serial</th>
-                                <th scope="col">Location</th>
-                                <th scope="col">Due Date</th>
-                            </thead>
-                            <tbody>
+                                </tr>                                
+                            </ng-container>
+                            <ng-template #noCalThisWeek>
+                                <small><em>No outstanding cal this week</em></small>
+                            </ng-template>
+                        </tbody>
+                        <hr>
+                        <thead>
+                            <th>This Month</th>
+                            <th scope="col">Asset</th>
+                            <th scope="col">Serial</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Due Date</th>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="calThisMonth; else noCalThisMonth">
                                 <tr class="table-default" *ngFor="let cal of calThisMonthList">
                                     <td></td>
                                     <td scope="row">{{cal.name}}</td>
@@ -118,18 +121,21 @@
                                     <td scope="row">{{cal.location}}</td>
                                     <td scope="row">{{cal.date | moment: [cal.duration, 'months'] | date:'MM/dd' }}</td>
                                 </tr>
-                            </tbody>
-                            <hr>
-                        </ng-container>
-                        <ng-container *ngIf="cal3Months">
-                            <thead>
-                                <th>3 Months</th>
-                                <th scope="col">Asset</th>
-                                <th scope="col">Serial</th>
-                                <th scope="col">Location</th>
-                                <th scope="col">Due Date</th>
-                            </thead>
-                            <tbody>
+                            </ng-container>
+                            <ng-template #noCalThisMonth>
+                                <small><em>No outstanding cal this month</em></small>
+                            </ng-template>
+                        </tbody>
+                        <hr>
+                        <thead>
+                            <th>3 Months</th>
+                            <th scope="col">Asset</th>
+                            <th scope="col">Serial</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Due Date</th>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="cal3Months; else noCal3Months">
                                 <tr class="table-default" *ngFor="let cal of cal3MonthsList">
                                     <td></td>
                                     <td scope="row">{{cal.name}}</td>
@@ -137,8 +143,11 @@
                                     <td scope="row">{{cal.location}}</td>
                                     <td scope="row">{{cal.date | moment: [cal.duration, 'months'] | date:'MM/dd' }}</td>
                                 </tr>
-                            </tbody>
-                        </ng-container>
+                            </ng-container>
+                            <ng-template #noCal3Months>
+                                <small><em>No outstanding cal forcasted for 3 months</em></small>
+                            </ng-template>
+                        </tbody>
                     </table>
                     <ng-template #noCal>
                         <small><em>No cal due</em></small>

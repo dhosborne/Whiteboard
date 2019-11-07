@@ -41,8 +41,4 @@ export class CalibrationService {
   public deleteCalibration(id): Observable<any> {
     return this.http.delete(this.endpoint + id, this.httpOptions);
   }
-
-  public calculateDueDate(date, duration): string {
-    return moment(date, 'YYYY-MM-DD').add(duration, 'months').format('YYYY-MM-DD');
-  }
 }

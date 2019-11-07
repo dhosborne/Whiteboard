@@ -55,9 +55,22 @@ export class CommonService {
 
     return dialogRef.afterClosed();
   }
+  public calculateDueDate(date, duration, period): string {
+    return moment(date, 'YYYY-MM-DD').add(duration, period).format('YYYY-MM-DD');
+  }
 
   public checkIsDueDays(date: string, duration: string): boolean {
     return moment(date, 'YYYY-MM-DD').add(duration, 'days').isSameOrBefore(moment.now());
   }
 
+  public isDueThisMonth(date): boolean {
+    return moment(date, 'YYYY-MM-DD').isSame(moment.now(), 'month');
+  }
+  public isDueThisWeek(date): boolean {
+    return moment(date, 'YYYY-MM-DD').isSame(moment.now(), 'week');
+  }
+
+  public isPastDue(date, duration, period): boolean {
+    return moment(this.calculateDueDate(date, duration, period)).isSameOrBefore(moment.now());
+  }
 }

@@ -55,7 +55,10 @@
                                 </thead>
                                 <tbody>
                                     <ng-container *ngFor="let cal of currentSet">
-                                        <tr (click)="calClicked(cal._id)">
+                                        <tr
+                                            [ngClass]="{'table-danger': common.isPastDue(cal.date, cal.duration, 'months') && !cal.inCal,
+                                                        'table-warning': common.isDueThisMonth(cal.date) && !cal.inCal}"
+                                             (click)="calClicked(cal._id)">
                                             <th scope="row">{{cal.name}}</th>
                                             <td>{{cal?.serialNumber}}</td>
                                             <td>{{cal.duration}}/Mo.</td>

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../../../Services/common.service';
 import { Calibration } from '../../../Classes/calibration';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -21,7 +20,7 @@ export class CalibrationListComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private common: CommonService
+    private common: CommonService,
   ) { }
 
   ngOnInit() {

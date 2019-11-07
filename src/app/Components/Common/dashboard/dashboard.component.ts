@@ -5,8 +5,8 @@ import { Calibration } from '../../../Classes/calibration';
 import { AircraftService } from '../../../Services/aircraft.service';
 import { ShelterService } from '../../../Services/shelter.service';
 import { CalibrationService } from '../../../Services/calibration.service';
+import { CommonService } from '../../../Services/common.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 import * as moment from 'moment';
 
 
@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
   cal3MonthsList = new Array<Calibration>();
 
   shelterInspectionsThisWeek = false;
+
   calThisWeek = false;
   calThisMonth = false;
   cal3Months = false;
@@ -35,7 +36,7 @@ export class DashboardComponent implements OnInit {
     private calService: CalibrationService,
     private router: Router,
     private route: ActivatedRoute,
-    private title: Title
+    private common: CommonService
   ) { }
 
   ngOnInit() {
@@ -49,29 +50,29 @@ export class DashboardComponent implements OnInit {
     this.calService.getCalibrations()
     .subscribe(data => {
       data.forEach(element => {
-        const dueDate = moment(this.calService.calculateDueDate(element.date, element.duration));
-        if (moment(dueDate).isSame(moment.now(), 'week')) {
+        const dueDate = moment(this.common.calculateDueDate(element.date, element.duration, 'months'));
+        if (this.common.isDueThisWeek(dueDate) && !element.inCal) {
           if (!this.calThisWeek) {
             this.calThisWeek = true;
-            this.calThisWeekList.push(element);
-            return;
           }
+          this.calThisWeekList.push(element);
+          return;
         }
-        if (!moment(dueDate).isSame(moment.now(), 'week') && moment(dueDate).isSame(moment.now(), 'month')) {
+        if ((!this.common.isDueThisWeek(dueDate) && this.common.isDueThisMonth(dueDate)) && !element.inCal) {
           if (!this.calThisMonth) {
             this.calThisMonth = true;
-            this.calThisMonthList.push(element);
-            return;
           }
+          this.calThisMonthList.push(element);
+          return;
         }
 
         const threeMonths = moment(moment.now()).add(3, 'months');
-        if (moment(dueDate).isSame(threeMonths, 'month')) {
+        if (moment(dueDate).isSame(threeMonths, 'month') &&  !element.inCal) {
           if (!this.cal3Months) {
             this.cal3Months = true;
-            this.cal3MonthsList.push(element);
-            return;
           }
+          this.cal3MonthsList.push(element);
+          return;
         }
       });
     });
@@ -79,7 +80,7 @@ export class DashboardComponent implements OnInit {
 
   private setTitle(): void {
     this.route.data.subscribe(data => {
-      this.title.setTitle(data.title);
+      this.common.setPageTitle(data.title);
     });
   }
 
@@ -87,7 +88,7 @@ export class DashboardComponent implements OnInit {
     this.aircraftService.getAircrafts()
     .subscribe(data => {
       data.forEach((element: Aircraft) => {
-        const due = this.shelterService.calculateDueDate(element.reconDate, 28);
+        const due = this.common.calculateDueDate(element.reconDate, 28, 'days');
 
         if (moment(due).isSame(moment.now(), 'week')) {
           this.aircraftList.push(element);
@@ -100,11 +101,11 @@ export class DashboardComponent implements OnInit {
     this.shelterService.getShelters()
     .subscribe(data => {
       data.forEach((element: Shelter) => {
-        const _7dayDue = this.shelterService.calculateDueDate(element._7Day, 7);
-        const _28dayDue = this.shelterService.calculateDueDate(element._28Day, 28);
-        const _84dayDue = this.shelterService.calculateDueDate(element._84Day, 84);
-        const _168dayDue = this.shelterService.calculateDueDate(element._168Day, 168);
-        const airFilters = this.shelterService.calculateDueDate(element.airFilters, 90);
+        const _7dayDue = this.common.calculateDueDate(element._7Day, 7, 'days');
+        const _28dayDue = this.common.calculateDueDate(element._28Day, 28, 'days');
+        const _84dayDue = this.common.calculateDueDate(element._84Day, 84, 'days');
+        const _168dayDue = this.common.calculateDueDate(element._168Day, 168, 'days');
+        const airFilters = this.common.calculateDueDate(element.airFilters, 90, 'days');
 
         const list = {
           _id: element._id,
@@ -112,19 +113,19 @@ export class DashboardComponent implements OnInit {
           inspectionsCount: 0,
         };
 
-        if (moment(_7dayDue).isSame(moment.now(), 'week')) {
+        if (this.common.isDueThisWeek(_7dayDue)) {
           list.inspectionsCount++;
         }
-        if (moment(_28dayDue).isSame(moment.now(), 'week')) {
+        if (this.common.isDueThisWeek(_28dayDue)) {
           list.inspectionsCount++;
         }
-        if (moment(_84dayDue).isSame(moment.now(), 'week')) {
+        if (this.common.isDueThisWeek(_84dayDue)) {
           list.inspectionsCount++;
         }
-        if (moment(_168dayDue).isSame(moment.now(), 'week')) {
+        if (this.common.isDueThisWeek(_168dayDue)) {
           list.inspectionsCount++;
         }
-        if (moment(airFilters).isSame(moment.now(), 'week')) {
+        if (this.common.isDueThisWeek(airFilters)) {
           list.inspectionsCount++;
         }
 
