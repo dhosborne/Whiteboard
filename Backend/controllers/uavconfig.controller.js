@@ -80,6 +80,7 @@ exports.update = (req, res) => {
     var token = Auth.getToken(req.headers);
     if (token) {
         log('Auth token found...');
+        console.log(JSON.parse(body));
         if (mongoose.Types.ObjectId.isValid(req.params.id)){
             Config.findByIdAndUpdate({_id: req.params.id}, {$set: req.body}, (err, result) => {
                 if (err) {

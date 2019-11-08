@@ -8,5 +8,6 @@ export class Calibration implements ICalibration {
     location: string;
     notes: string;
     inCal: boolean;
+    inCalDate: string;
     isActive: boolean;
 }

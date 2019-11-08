@@ -70,6 +70,11 @@ export class CommonService {
     return moment(date, 'YYYY-MM-DD').isSame(moment.now(), 'week');
   }
 
+  public isDue3Months(dueDate): boolean {
+    const threeMonthsFromNow = moment(moment.now()).add(3, 'months');
+    return moment(dueDate).isSame(threeMonthsFromNow, 'month');
+  }
+
   public isPastDue(date, duration, period): boolean {
     return moment(this.calculateDueDate(date, duration, period)).isSameOrBefore(moment.now());
   }

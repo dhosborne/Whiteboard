@@ -82,7 +82,8 @@
                     </div>
                 </div>
                 <div class="card-body" #body3>
-                    <table class="table table-hover" *ngIf="calThisWeek || calThisMonth || cal3Months; else noCal">
+                    <table class="table table-hover" 
+                        *ngIf="calThisWeekList.length > 0 || calThisMonthList.length > 0 || cal3MonthsList.length > 0 ; else noCal">
                         <thead>
                             <th>This Week</th>
                             <th scope="col">Asset</th>
@@ -91,7 +92,7 @@
                             <th scope="col">Due Date</th>
                         </thead>
                         <tbody>
-                            <ng-container *ngIf="calThisWeek; else noCalThisWeek">
+                            <ng-container *ngIf="calThisWeekList.length > 0; else noCalThisWeek">
                                 <tr class="table-default" *ngFor="let cal of calThisWeekList">
                                     <td></td>
                                     <td scope="row">{{cal.name}}</td>
@@ -113,7 +114,7 @@
                             <th scope="col">Due Date</th>
                         </thead>
                         <tbody>
-                            <ng-container *ngIf="calThisMonth; else noCalThisMonth">
+                            <ng-container *ngIf="calThisMonthList.length > 0; else noCalThisMonth">
                                 <tr class="table-default" *ngFor="let cal of calThisMonthList">
                                     <td></td>
                                     <td scope="row">{{cal.name}}</td>
@@ -135,7 +136,7 @@
                             <th scope="col">Due Date</th>
                         </thead>
                         <tbody>
-                            <ng-container *ngIf="cal3Months; else noCal3Months">
+                            <ng-container *ngIf="cal3MonthsList.length > 0; else noCal3Months">
                                 <tr class="table-default" *ngFor="let cal of cal3MonthsList">
                                     <td></td>
                                     <td scope="row">{{cal.name}}</td>

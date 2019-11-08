@@ -9,7 +9,8 @@ var CalibrationSchema = new Schema({
         required: true
     },
     serialNumber: {
-        type: String
+        type: String,
+        default: ''
     },
     date: {
         type: String,
@@ -24,11 +25,16 @@ var CalibrationSchema = new Schema({
         required: true,
     },
     notes: {
-        type: String
+        type: String,
+        default: ''
     },
     inCal: {
         type: Boolean,
         default: false,
+    },
+    inCalDate: {
+        type: String,
+        default: ''
     },
     isActive: {
         type: Boolean,

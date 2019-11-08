@@ -33,6 +33,9 @@
                 <ng-template #missing>
                     <div class="col-sm-3"><h6>Cal Due: <em>calibration data missing</em></h6></div>
                 </ng-template>
+                <ng-container *ngIf="tool?.inCal">
+                    <div class="col-md-3"><h6>Date Sent To Calibration: {{tool.inCalDate | date: 'MM/dd/yyyy'}}</h6></div>
+                </ng-container>
             </div>
             <hr>
             <div class="row">

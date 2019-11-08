@@ -25,11 +25,6 @@ export class DashboardComponent implements OnInit {
 
   shelterInspectionsThisWeek = false;
 
-  calThisWeek = false;
-  calThisMonth = false;
-  cal3Months = false;
-
-
   constructor(
     private aircraftService: AircraftService,
     private shelterService: ShelterService,
@@ -51,28 +46,16 @@ export class DashboardComponent implements OnInit {
     .subscribe(data => {
       data.forEach(element => {
         const dueDate = moment(this.common.calculateDueDate(element.date, element.duration, 'months'));
+
         if (this.common.isDueThisWeek(dueDate) && !element.inCal) {
-          if (!this.calThisWeek) {
-            this.calThisWeek = true;
-          }
           this.calThisWeekList.push(element);
-          return;
         }
-        if ((!this.common.isDueThisWeek(dueDate) && this.common.isDueThisMonth(dueDate)) && !element.inCal) {
-          if (!this.calThisMonth) {
-            this.calThisMonth = true;
-          }
+        if (this.common.isDueThisMonth(dueDate) && !element.inCal) {
           this.calThisMonthList.push(element);
-          return;
         }
 
-        const threeMonths = moment(moment.now()).add(3, 'months');
-        if (moment(dueDate).isSame(threeMonths, 'month') &&  !element.inCal) {
-          if (!this.cal3Months) {
-            this.cal3Months = true;
-          }
+        if (this.common.isDue3Months(dueDate) &&  !element.inCal) {
           this.cal3MonthsList.push(element);
-          return;
         }
       });
     });
@@ -145,7 +128,7 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['aircrafts/' + id + '/edit']);
   }
   public calClicked(id): void {
-    this.router.navigate(['calibrations/' + id + '/edit'])
+    this.router.navigate(['calibrations/' + id + '/edit']);
   }
   public shelterClicked(id): void {
     this.router.navigate(['shelters/' + id + '/edit']);

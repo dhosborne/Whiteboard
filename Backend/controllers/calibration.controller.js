@@ -4,27 +4,22 @@ const mongoose = require('mongoose');
 const Auth = require('./auth.controller');
 
 exports.list = (req, res) => {
-    log('Calibration List Requested...');
     var token = Auth.getToken(req.headers);
     if (token) {
-        log('Auth token found...');
         Calibration.find({isActive: true})
         .sort({date: -1})
         .exec((err, calibrations) => {
             if (err) {
-                log(err.message + '\n');
                 res.json({
                     status:500, 
                     success:false, 
                     alert: 'danger', 
                     message:err.message});
             } else {
-                log('sent\n');
                 res.json(calibrations);
             }
         });
     } else {
-        log('Unauthorized Request Denied\n');
         return res.json({
             status:401, 
             success: false,
@@ -34,22 +29,18 @@ exports.list = (req, res) => {
 }
 
 exports.listInactive = (req, res) => {
-    log('Inactive calibrations list req...');
     var token = Auth.getToken(req.headers);
     if (token ) {
-        log('Auth token found...');
         Calibration.find({isActive: false})
         .sort({date: desc})
         .exec((err, calibrations) => {
             if (err) {
-                log(err.message + '\n');
                 res.json({
                     status:500, 
                     success:false,
                     alert: 'danger', 
                     message:err.message});
             } else {
-                log('sent\n');
                 res.json({
                     status: 200,
                     success: true, 
@@ -58,7 +49,6 @@ exports.listInactive = (req, res) => {
             }
         });
     } else {
-        log('Unauthorized Request Denied\n');
         return res.json({
             status:401, 
             success: false,
@@ -68,22 +58,17 @@ exports.listInactive = (req, res) => {
 }
 
 exports.create = (req, res) => {
-    log('Calibration create request...');
     var token = Auth.getToken(req.headers);
     if (token) {
-        log('Auth token found...');
         const cal = new Calibration(req.body);
-
         cal.save((err, result) => {
             if (err) {
-                log(err.message + '\n');
                 res.json({
                     status:500, 
                     success:false,
                     alert: 'danger',
                     message:err.message});
             } else {
-                log('sent\n');
                 res.json({
                     status:201, 
                     success: true,
@@ -93,7 +78,6 @@ exports.create = (req, res) => {
             }
         });
     } else {
-        log('Unauthorized Request Denied\n');
         return res.json({
             status:401, 
             success: false,
@@ -104,26 +88,21 @@ exports.create = (req, res) => {
 
 
 exports.read = (req, res) => {
-    log('Calibration id: ' + req.params.id + ' info req...');
     var token = Auth.getToken(req.headers);
     if (token) {
-        log('Auth token found...');
         if(mongoose.Types.ObjectId.isValid(req.params.id)) {
             Calibration.findById(req.params.id, (err, result) => {
                 if (err) {
-                    log(err.message + '\n');
                     res.json({
                         status:500, 
                         success:false,
                         alert: 'danger',
                         message:err.message});
                 } else {
-                    log('sent\n');
                     res.json(result);
                 }
             });            
         } else {
-            log(err.message + '\n');
             res.json({
                 status:400, 
                 success:false,
@@ -132,7 +111,6 @@ exports.read = (req, res) => {
         }
 
     } else {
-        log('Unauthorized Request Denied\n');
         return res.json({
             status:401, 
             success: false,
@@ -142,22 +120,18 @@ exports.read = (req, res) => {
 }
 
 exports.update = (req, res) => {
-    log('Calibration id: ' + req.params.id + ' update requested...');
     var token = Auth.getToken(req.headers);
     if (token) {
-        log('Auth token found...');
         if(mongoose.Types.ObjectId.isValid(req.params.id)) {
             Calibration.findByIdAndUpdate({_id: req.params.id}, {$set: req.body}, 
                 (err, result) =>{
                     if (err) {
-                        log(err.message + '\n');
                         res.json({
                             status:500, 
                             success:false,
                             alert: 'danger',
                             message:err.message});
                     } else {
-                        log('sent\n');
                         res.json({
                             status:200, 
                             success: true,
@@ -166,7 +140,6 @@ exports.update = (req, res) => {
                     }
                 });            
         } else {
-            log(err.message + '\n');
             res.json({
                 status:400, 
                 success:false,
@@ -175,7 +148,6 @@ exports.update = (req, res) => {
         }
 
     } else {
-        log('Unauthorized Request Denied\n');
         return res.json({
             status:401, 
             success: false,
@@ -185,14 +157,11 @@ exports.update = (req, res) => {
 }
 
 exports.delete = (req, res) => {
-    log('Delete calibration id: ' + req.params.id + 'requested...');
     var token = Auth.getToken(req.headers);
     if (token) {
-        log('Auth token found...');
         if (mongoose.Types.ObjectId.isValid(req.params.id)) {
             Calibration.deleteOne({_id: req.params.id}, (err, result) => {
                 if (err) {
-                    log(err.message + '\n');
                     res.json({
                         status:500, 
                         success:false,
@@ -200,7 +169,6 @@ exports.delete = (req, res) => {
                         message:err.message
                     });
                 } else {
-                    log('sent\n');
                     res.json({
                         status:200, 
                         success:true,
@@ -210,7 +178,6 @@ exports.delete = (req, res) => {
                 }
             })
         } else {
-            log(err.message +'\n');
             res.json({
                 status: 500, 
                 success:false,
@@ -218,14 +185,10 @@ exports.delete = (req, res) => {
                 message: req.params.id + ' is not a valid id'});
         }
     } else {
-        log('Unauthorized Request Denied\n');
         return res.json({
             status:401, 
             success: false,
             alert: 'danger',
             message:'Unauthorized Request'});
     }
-}
-function log(text) {
-    process.stdout.write(text);
 }

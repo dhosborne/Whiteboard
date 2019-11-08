@@ -20,11 +20,13 @@ export class CalibrationEditComponent implements OnInit {
     location: '',
     notes: '',
     inCal: false,
+    inCalDate: '',
     isActive: true,
   });
 
   id: string;
   isNew = true;
+  toCal = false;
   submitted = false;
 
   constructor(
@@ -64,14 +66,12 @@ export class CalibrationEditComponent implements OnInit {
     if (this.id) {
       this.calService.updateCalibration(this.id, formValues)
       .subscribe(data => {
-        // this.showMessage(data.message);
         this.common.showMessage(data.message, data.alert);
         this.redirect();
       });
     } else {
       this.calService.createCalibration(formValues)
       .subscribe(data => {
-        // this.showMessage(data.message);
         this.common.showMessage(data.message, data.alert);
         this.redirect();
       });
@@ -98,6 +98,14 @@ export class CalibrationEditComponent implements OnInit {
 
   onCancel(): void {
     this.redirect();
+  }
+
+  inCalWasChanged(e): void {
+    if (e.target.checked) {
+      this.calForm.controls.inCalDate.patchValue(moment(moment.now()).format('YYYY-MM-DD'));
+    } else {
+      this.calForm.controls.inCalDate.patchValue('');
+    }
   }
 
   redirect(): void {
