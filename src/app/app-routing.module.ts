@@ -3,7 +3,7 @@ import { LoginComponent } from './Components/Authentication/login/login.componen
 import { LogoutComponent } from './Components/Authentication/logout/logout.component';
 import { SignupComponent } from './Components/Authentication/signup/signup.component';
 import { PasswordChangeComponent } from './Components/Authentication/password-change/password-change.component';
-import { DashboardComponent } from './Components/Common/dashboard/dashboard.component';
+import { DashboardComponent } from './Components/Dashboard/dashboard.component';
 import { AccountDetailsComponent } from './Components/Account/account-details/account-details.component';
 import { AccountEditComponent } from './Components/Account/account-edit/account-edit.component';
 

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Aircraft } from '../../../Classes/aircraft';
-import { Shelter } from '../../../Classes/shelter';
-import { Calibration } from '../../../Classes/calibration';
-import { AircraftService } from '../../../Services/aircraft.service';
-import { ShelterService } from '../../../Services/shelter.service';
-import { CalibrationService } from '../../../Services/calibration.service';
-import { CommonService } from '../../../Services/common.service';
+import { Aircraft } from '../../Classes/aircraft';
+import { Shelter } from '../../Classes/shelter';
+import { Calibration } from '../../Classes/calibration';
+import { AircraftService } from '../../Services/aircraft.service';
+import { ShelterService } from '../../Services/shelter.service';
+import { CalibrationService } from '../../Services/calibration.service';
+import { CommonService } from '../../Services/common.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 

@@ -20,7 +20,7 @@ import { AppComponent } from './app.component';
 import { AircraftListComponent } from './Components/Aircraft/aircraft-list/aircraft-list.component';
 import { AircraftEditComponent } from './Components/Aircraft/aircraft-edit/aircraft-edit.component';
 import { AircraftDetailsComponent } from './Components/Aircraft/aircraft-details/aircraft-details.component';
-import { DashboardComponent } from './Components/Common/dashboard/dashboard.component';
+import { DashboardComponent } from './Components/Dashboard/dashboard.component';
 import { LoginComponent } from './Components/Authentication/login/login.component';
 import { LogoutComponent } from './Components/Authentication/logout/logout.component';
 import { NavbarComponent } from './Components/Common/navbar/navbar.component';
