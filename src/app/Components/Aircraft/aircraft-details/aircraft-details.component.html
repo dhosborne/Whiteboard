@@ -9,7 +9,7 @@
                         </i>
                     </a>
                 </div>
-                <div class="col-auto">
+                <div class="col-sm mb-auto">
                     {{aircraft?.tailNumber}}
                 </div>
                 <div class="col-auto">
@@ -19,9 +19,17 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-auto mb-auto">
-                    <a *ngIf="aircraft" [routerLink]="['/uavconfig', aircraft?._id]" >UAV Configuration</a>
+                <div class="col-sm-auto ">
+                    <h4>{{aircraft?.tailNumber}}</h4>
                 </div> 
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <small>Created by: {{ aircraft?.createdBy }}</small>
+                </div>
+                <div class="col-sm-3">
+                    <small>CreatedOn: {{ aircraft?.createdOn }}</small>
+                </div>
             </div>
             <hr>
             <div class="row" *ngIf="issuesList?.length > 0">

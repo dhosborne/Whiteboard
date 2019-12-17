@@ -8,6 +8,13 @@
   margin: 0 auto;
 }
 
+tr {
+  cursor: pointer;
+}
+
+nav, .nav-tabs, a, i, .clickable {
+  cursor: pointer;
+}
 
 .card-list {
   min-width: 500px;
@@ -20,6 +27,8 @@
   margin: 0 auto;
 }
 
+
+/* Spinner CSS */
 .lds-spinner {
   color: official;
   display: inline-block;

@@ -3,4 +3,8 @@ export interface IAircraft {
     tailNumber: string;
     reconDate: string;
     isActive: boolean;
+    createdBy: string;
+    createdOn: string;
+    updatedBy: string;
+    updatedOn: string;
 }

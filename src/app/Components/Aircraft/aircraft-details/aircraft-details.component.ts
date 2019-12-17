@@ -48,8 +48,10 @@ export class AircraftDetailsComponent implements OnInit {
     });
   }
 
-  onEditClick(): void {
-    this.router.navigate(['/aircrafts/' + this.id + '/edit']);
+  onEditClick(
+
+  ): void {
+    this.router.navigate(['/aircrafts/' + this.aircraft._id + '/edit']);
   }
 
 }

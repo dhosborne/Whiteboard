@@ -4,6 +4,7 @@ import { AircraftService } from '../../../Services/aircraft.service';
 import { ActivatedRoute, Router} from '@angular/router';
 import { IAircraft } from '../../../Interfaces/aircraft';
 import { CommonService } from '../../../Services/common.service';
+import { AuthService } from '../../../Services/auth.service';
 import * as moment from 'moment';
 
 
@@ -17,7 +18,11 @@ export class AircraftEditComponent implements OnInit {
     _id: '',
     tailNumber: '',
     reconDate: '',
-    isActive: true
+    isActive: true,
+    createdBy: '',
+    createdOn: '',
+    updatedBy: '',
+    updatedOn: ''
   });
 
   id: string;
@@ -32,7 +37,7 @@ export class AircraftEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private common: CommonService,
-
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
@@ -71,13 +76,28 @@ export class AircraftEditComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    let currentUserName;
+    let date = moment(moment.now()).format('YYYY-MM-DD');
 
     if (this.aircraftForm.invalid) {
       return;
     }
 
+    // get the current user id
+    this.auth.currentUser.subscribe(user => {
+      currentUserName = user.firstName + ' ' + user.lastName;
+    });
+
     this.aircraftForm.removeControl('_id');
     const formValues = this.aircraftForm.value;
+    formValues.updatedBy = currentUserName;
+    formValues.updatedOn = date;
+
+    // patch the creation value if not already popluated
+    if ( formValues.createdBy === '' || formValues.createdOn === '') {
+      formValues.createdBy = currentUserName;
+      formValues.createdOn = date;
+    }
 
     if (this.route.snapshot.paramMap.has('id')) {
       this.aircraftService.updateAircraft(this.route.snapshot.paramMap.get('id'),
@@ -87,6 +107,7 @@ export class AircraftEditComponent implements OnInit {
         this.redirect();
       });
     } else {
+
       this.aircraftService.createAircraft(formValues)
       .subscribe(data => {
         this.common.showMessage(data.message, data.alert);

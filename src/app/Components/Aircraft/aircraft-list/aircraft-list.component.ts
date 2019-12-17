@@ -51,7 +51,7 @@ export class AircraftListComponent implements OnInit {
   }
 
   aircraftClicked(id: string): void {
-    this.router.navigate(['aircrafts/' + id + '/edit']);
+    this.router.navigate(['aircrafts/' + id + '/details']);
   }
   issueClicked(id): void {
     this.router.navigate(['issues/' + id + '/details']);

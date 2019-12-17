@@ -15,6 +15,22 @@ var AircraftSchema = new Schema ({
     isActive: {
         type: Boolean,
         default: true
+    },
+    createdBy: {
+        type: String,
+        required: true,
+    },
+    createdOn: {
+        type: String,
+        required: true
+    },
+    updatedBy: {
+        type: String,
+        required: true
+    },
+    updatedOn: {
+        type: String,
+        required: true
     }
 }, {collection: 'Aircrafts'});
 
