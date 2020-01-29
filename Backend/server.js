@@ -18,11 +18,11 @@ var options = {
     pass: config.password,
 };
 
-mongoose.connect(config.URI, options)
+mongoose.connect(config.database, options)
 .catch((error) => {console.error(error)});
 
 mongoose.connection.on('connected', () => {
-    console.log('Mongoose connnected on ' + config.URI);
+    console.log('Mongoose connnected on ' + config.database);
 });
 
 mongoose.connection.on('error', (error) => {

@@ -4,6 +4,7 @@ import { User } from '../Classes/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginService } from './login.service';
+import { CommonService } from './common.service';
 
 const jwtHelper = new JwtHelperService();
 
@@ -16,7 +17,8 @@ export class AuthService {
 
   constructor(
     private myRoute: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private common: CommonService
     ) {
     this.currentUserSubject = new BehaviorSubject<User>(this.getUser());
     this.currentUser = this.currentUserSubject.asObservable();
@@ -58,6 +60,7 @@ export class AuthService {
   login(login): boolean {
     this.loginService.login(login)
       .subscribe(data => {
+        console.log(data);
         if (data.success) {
           this.setToken(data.token);
           // update the behavior subject with the new user value
