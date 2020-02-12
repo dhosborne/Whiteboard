@@ -3,8 +3,8 @@ import { Aircraft } from '../../../Classes/aircraft';
 import { Issue } from '../../../Classes/issue';
 import { AircraftService } from '../../../Services/aircraft.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 import { IssueService } from '../../../Services/issue.service';
+import { CommonService } from 'src/app/Services/common.service';
 
 @Component({
   selector: 'app-aircraft-details',
@@ -19,15 +19,17 @@ export class AircraftDetailsComponent implements OnInit {
 
 
   constructor(
+    private common: CommonService,
     private route: ActivatedRoute,
     private aircraftService: AircraftService,
     private issueService: IssueService,
-    private router: Router,
-    private title: Title
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.setTitle();
+    this.route.data.subscribe(data => {
+      this.common.setPageTitle(data.title);
+    });
 
     this.aircraftService.getAircraft(this.route.snapshot.paramMap.get('id'))
     .subscribe(data => {
@@ -42,15 +44,7 @@ export class AircraftDetailsComponent implements OnInit {
     });
   }
 
-  private setTitle(): void {
-    this.route.data.subscribe(data => {
-      this.title.setTitle(data.title);
-    });
-  }
-
-  onEditClick(
-
-  ): void {
+  onEditClick(): void {
     this.router.navigate(['/aircrafts/' + this.aircraft._id + '/edit']);
   }
 

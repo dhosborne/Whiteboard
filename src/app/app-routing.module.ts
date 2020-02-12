@@ -12,6 +12,11 @@ import { AircraftDetailsComponent } from './Components/Aircraft/aircraft-details
 import { AircraftEditComponent } from './Components/Aircraft/aircraft-edit/aircraft-edit.component';
 import { AircraftInactiveComponent } from './Components/Aircraft/aircraft-inactive/aircraft-inactive.component';
 
+import { BulletinListComponent } from './Components/Bulletin/bulletin-list/bulletin-list.component';
+import { BulletinDetailsComponent } from './Components/Bulletin/bulletin-details/bulletin-details.component';
+import { BulletinEditComponent } from './Components/Bulletin/bulletin-edit/bulletin-edit.component';
+import { BulletinInactiveComponent } from './Components/Bulletin/bulletin-inactive/bulletin-inactive.component';
+
 import { ShelterListComponent } from './Components/Shelter/shelter-list/shelter-list.component';
 import { ShelterEditComponent } from './Components/Shelter/shelter-edit/shelter-edit.component';
 import { ShelterDetailsComponent } from './Components/Shelter/shelter-details/shelter-details.component';
@@ -50,6 +55,7 @@ import { IssuesResolver } from './Resolvers/issues.resolver';
 import { CalibrationResolver } from './Resolvers/calibration.resolver';
 import { ShelterResolver } from './Resolvers/shelter.resolver';
 import { AircraftResolver } from './Resolvers/aircraft.resolver';
+import { BulletinResolver } from './Resolvers/bulletin.resolver';
 //#endregion
 
 const appRoutes: Routes = [
@@ -74,9 +80,24 @@ const appRoutes: Routes = [
         {path: 'passwordChange', component: AdminPasswordChangeComponent, data: {title: 'AdminPasswordChange'}}
       ]
     },
-
     {path: 'account/:id', component: AccountDetailsComponent, canActivate: [AuthGuard], data: {title: 'Account Details'}},
     {path: 'account/:id/edit', component: AccountEditComponent, canActivate: [AuthGuard, IsSelfOrAdminGuard]},
+
+
+    {path: 'bulletins',
+      canActivate: [AuthGuard],
+      resolve: {bulletins: BulletinResolver},
+      data: { title: 'Bulletins'},
+      children: [
+        {path: '', component: BulletinListComponent, canActivate: [AuthGuard], data: {title: 'Bulletin List'}},
+        {path: 'inactive', component: BulletinInactiveComponent, canActivate: [AuthGuard], data: {title: 'Inactive Bulletins'}},
+        {path: 'new', component: BulletinEditComponent, canActivate: [AuthGuard], data: {title: 'New Bulletin'}},
+        {path: ':id', component: BulletinDetailsComponent, canActivate: [AuthGuard], data: {title: 'Bulletin Details'}},
+        {path: ':id/edit', component: BulletinEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Bulletin'}}
+      ]
+    },
+
+
 
     {path: 'aircrafts',
       component: AircraftListComponent,

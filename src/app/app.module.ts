@@ -39,10 +39,10 @@ import { IsSelfOrAdminGuard } from './Guards/is-self-or-admin.guard';
 //#region Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {NgFlashMessagesModule} from 'ng-flash-messages';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { NgFlashMessagesModule } from 'ng-flash-messages';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -58,12 +58,18 @@ import { CalibrationResolver } from './Resolvers/calibration.resolver';
 import { IssuesResolver } from './Resolvers/issues.resolver';
 import { AircraftResolver} from './Resolvers/aircraft.resolver';
 import { ShelterResolver } from './Resolvers/shelter.resolver';
+import { BulletinResolver } from './Resolvers/bulletin.resolver';
 //#endregion
 
 //#region Services
 import { LoginService } from './Services/login.service';
 import { AdminAccountEditComponent } from './Components/Admin/admin-account-edit/admin-account-edit.component';
 import { AdminPasswordChangeComponent } from './Components/Admin/admin-password-change/admin-password-change.component';
+
+import { BulletinListComponent } from './Components/Bulletin/bulletin-list/bulletin-list.component';
+import { BulletinEditComponent } from './Components/Bulletin/bulletin-edit/bulletin-edit.component';
+import { BulletinDetailsComponent } from './Components/Bulletin/bulletin-details/bulletin-details.component';
+import { BulletinInactiveComponent } from './Components/Bulletin/bulletin-inactive/bulletin-inactive.component';
 //#endregion
 
 @NgModule({
@@ -101,6 +107,10 @@ import { AdminPasswordChangeComponent } from './Components/Admin/admin-password-
     PasswordChangeComponent,
     AdminAccountEditComponent,
     AdminPasswordChangeComponent,
+    BulletinListComponent,
+    BulletinEditComponent,
+    BulletinDetailsComponent,
+    BulletinInactiveComponent,
   ],
   imports: [
     BrowserModule,
@@ -125,7 +135,8 @@ import { AdminPasswordChangeComponent } from './Components/Admin/admin-password-
     CalibrationResolver,
     IssuesResolver,
     AircraftResolver,
-    ShelterResolver
+    ShelterResolver,
+    BulletinResolver,
   ],
   bootstrap: [AppComponent]
 })

@@ -1,1 +1,50 @@
-<p>shelter-details works!</p>
+<div class="container">
+    <div class="card bg-primary mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-auto mr-auto">
+                    <a><i class="material-icons" (click)="goBack()">chevron_left</i></a>
+                </div>
+                <div class="col-sm mb auto">
+                    {{shelter?.name}}
+                </div>
+                <div class="col-auto">
+                    <i class="material-icons" (click)="onEditClick()">edit</i>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-auto">
+                    {{shelter?.name}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <small>Created by: {{ shelter?.createdBy }}</small>
+                </div>
+                <div class="col-sm-3">Created on: {{shelter?.createdOn}}</div>
+            </div>
+            <hr>
+            <div class="row" *ngIf="issuesList?.length > 0">
+                <legend>Issues</legend>
+                <table class="table table-hover">
+                    <thead>
+                        <th scope="col">Title</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Completed</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let issue of issuesList">
+                            <ng-container *ngIf="!issue.completed">
+                                <td>{{issue.title}}</td>
+                                <td>{{issue.date}}</td>
+                                <td>{{issue.completed}}</td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -26,7 +26,8 @@ var ShelterSchema = new Schema({
     isActive: {
         type: Boolean,
         default: true
-    }
+    },
+    bulletins: [Schema.Types.Mixed]
 }, {collection: 'Shelters'});
 
 module.exports = mongoose.model('Shelter', ShelterSchema);
