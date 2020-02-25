@@ -1,1 +1,193 @@
-<p>uavconfig-edit works!</p>
+<div class="container card-edit">
+    <div class="card text-white bg-primary mb-3">
+        <div class="card-header"></div>
+        <div class="card-body">
+            <form [formGroup]="uavConfigForm">
+                <div class="form-group">
+                    <label for="asset">Tail Number</label>
+                    <input 
+                        type="text"
+                        class="form-control"
+                        formControlName="asset"
+                        placeholder="ex. 108">
+                </div>
+                <div class="form-group">
+                    <label for="electrical">Electrical System</label>
+                    <select name="electrical" id="electrial">
+                        <option value="DC Power">DC Power</option>
+                        <option value="DC Power + DDBA">DC Power + DDBA</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transponder">Transponder Type</label>
+                    <select formControlName="transponder">
+                        <option value="Mode 4">Mode 4</option>
+                        <option value="Mode S">Mode S</option>
+                        <option value="TCAS">TCAS</option>
+                        <option value="ADS-B">ADS-B</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transpondermodel">Transponder Model</label>
+                    <select formControlName="transpondermodel">
+                        <option value="APX-119">APX-119</option>
+                        <option value="DPX-7">DPX-7</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="eoir">EO/IR Type</label>
+                    <select formControlName="eoir">
+                        <option value="None">None</option>
+                        <option value="MTS-A">MTS-A</option>
+                        <option value="MTS-B">MTS-B</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="radartype">Radar Type</label>
+                    <select formControlName="radartype">
+                        <option value="None">None</option>
+                        <option value="Lynx SAR">Lynx SAR</option>
+                        <option value="Maritime">Maritime</option>
+                        <option value="VADER Dual">VADER Dual</option>
+                        <option value="VADER Single">Vader Single</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="network">Payload Network</label>
+                    <select formControlName="network">
+                        <option value="None">None</option>
+                        <option value="Airborne Router">Airborne Router</option>
+                        <option value="BADDC">BADDC</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rftray">RF Tray Omni/Dir 2</label>
+                    <select formControlName="rftray">
+                        <option value="Omni">Omni</option>
+                        <option value="Directional">Directional</option>
+                        <option value="Both">Both</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="videoencodertype">Video Encoder Type</label>
+                    <select formControlName="videoencodertype">
+                        <option value="None">None</option>
+                        <option value="Enerdyne">Enerdyne</option>
+                        <option value="Single H.264">Single H.264</option>
+                        <option value="Dual H.264">Dual H.264</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="audiomixer">Audio Mixer Type</label>
+                    <select formControlName="audiomixer">
+                        <option value="None">None</option>
+                        <option value="AAM">AAM</option>
+                        <option value="AMC">AMC</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="arc210">ARC-210 Model</label>
+                    <select formControlName="arc210">
+                        <option value="1556">1556</option>
+                        <option value="1851">1851</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="lostlink">Lost Link Timer</label>
+                    <input type="text" formControlName="lostlink">
+                </div>
+                <div class="form-group">
+                    <label for="saa">SAA Processor</label>
+                    <select formControlName="saa">
+                        <option value="None">None</option>
+                        <option value="BusBox">BusBox</option>
+                        <option value="SAAP">SAAP</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tcas">TCAS Type</label>
+                    <select formControlName="tcas">
+                        <option value="None">None</option>
+                        <option value="DC Power">DC Power</option>
+                        <option value="AC Power">AC Power</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="airtoair">Air to Air Radar</label>
+                    <select formControlName="airtoair">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dualarc210">Dual ARC-210</label>
+                    <select formControlName="dualarc210">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="enc1hd">Video Encoder 1 HD</label>
+                    <select formControlName="enc1hd">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="priblos">Primary BLOS Type</label>
+                    <select formControlName="priblos">
+                        <option value="KU">KU</option>
+                        <option value="None">None</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="secblos">Secondary BLOS Type</label>
+                    <select formControlName="secblos">
+                        <option value="Inmarsat">Inmarsat</option>
+                        <option value="None">None</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="laseralt">Laser Altimeter</label>
+                    <select formControlName="laseralt">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="wspm">WSPM</label>
+                    <select formControlName="wspm">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ais">AIS</label>
+                    <select formControlName="ais">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="harvester">Harvester</label>
+                    <select formControlName="harvester">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cbanddiplex">Enhanced C-Band Diplexer</label>
+                    <select formControlName="cbanddiplex">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="btn-group">
+                    <button type="button" *ngIf="!isNew" class="btn btn-danger" (click)="onDelete()">Delete</button>
+                    <button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
+                    <button type="button" class="btn btn-success" [disabled]="!uavConfigForm.valid" (click)="onSubmit()">Submit</button>
+                </div> 
+            </form>
+        </div>
+    </div>
+</div>

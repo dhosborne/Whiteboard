@@ -19,6 +19,10 @@ var BulletinSchema = new Schema({
     created_by: {
         type: String,
         required: true
+    },
+    isActive:{
+        type: Boolean,
+        default: true
     }
 }, {collection: 'Bulletins'});
 

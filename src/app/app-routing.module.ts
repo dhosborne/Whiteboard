@@ -92,7 +92,7 @@ const appRoutes: Routes = [
         {path: '', component: BulletinListComponent, canActivate: [AuthGuard], data: {title: 'Bulletin List'}},
         {path: 'inactive', component: BulletinInactiveComponent, canActivate: [AuthGuard], data: {title: 'Inactive Bulletins'}},
         {path: 'new', component: BulletinEditComponent, canActivate: [AuthGuard], data: {title: 'New Bulletin'}},
-        {path: ':id', component: BulletinDetailsComponent, canActivate: [AuthGuard], data: {title: 'Bulletin Details'}},
+        {path: ':id/details', component: BulletinDetailsComponent, canActivate: [AuthGuard], data: {title: 'Bulletin Details'}},
         {path: ':id/edit', component: BulletinEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Bulletin'}}
       ]
     },

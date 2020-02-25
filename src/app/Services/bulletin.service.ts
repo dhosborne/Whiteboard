@@ -8,7 +8,7 @@ import { configurations } from 'src/environments/configurations';
   providedIn: 'root'
 })
 export class BulletinService {
-  endpoint = configurations.backend + '/bulletins/';
+  endpoint = configurations.backend + '/bulletin/';
   httpOptions = {
     headers: new HttpHeaders({
       Authorization: sessionStorage.getItem('jwt'),

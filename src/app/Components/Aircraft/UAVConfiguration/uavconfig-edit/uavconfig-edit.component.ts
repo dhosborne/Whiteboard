@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { ConfirmationDialogComponent } from '../../../Common/confirmation-dialog/confirmation-dialog.component';
-import { NgFlashMessageService } from 'ng-flash-messages';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router} from '@angular/router';
-import { Title } from '@angular/platform-browser';
+import { AuthService } from 'src/app/Services/auth.service';
+import { CommonService } from '../../../../Services/common.service';
+import { IUavConfig } from '../../../../Interfaces/uavconfig';
 
 @Component({
   selector: 'app-uavconfig-edit',
@@ -11,37 +11,76 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./uavconfig-edit.component.css']
 })
 export class UavconfigEditComponent implements OnInit {
+  uavConfigForm: FormGroup = this.createForm({
+    asset: '',
+    electrical: '',
+    transponder: '',
+    transpondermodel: '',
+    eoir: '',
+    radartype: '',
+    network: '',
+    rftray: '',
+    videoencodertype: '',
+    audiomixer: '',
+    arc210: '',
+    lostlink: '',
+    saa: '',
+    tcas: '',
+    airtoair: '',
+    dualarc210: '',
+    enc1hd: '',
+    priblos: '',
+    secblos: '',
+    laseralt: '',
+    wspm: '',
+    ais: '',
+    harvester: '',
+    cbanddiplex: ''
+  });
+
+  id: string;
+  submitted = false;
+  isNew = true;
 
   constructor(
-    private dialog: MatDialog,
-    private route: ActivatedRoute,
+    private fb: FormBuilder,
     private router: Router,
-    private flash: NgFlashMessageService,
-    private title: Title,) { }
+    private route: ActivatedRoute,
+    private common: CommonService,
+    private auth: AuthService
+  ) { }
 
   ngOnInit() {
+    this.route.data.subscribe(data => {
+      this.common.setPageTitle(data.title);
+    });
+  }
+
+  private createForm(model: IUavConfig): FormGroup {
+    return this.fb.group(model);
+  }
+
+  private updateForm(model: Partial<IUavConfig>): void {
+    this.uavConfigForm.patchValue(model);
+  }
+
+  onSubmit():void {
+
   }
 
   onDelete(): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '350px',
-      data: 'Do you really want to delete this Aircraft?'
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-          this.showMessage('Implement me');
-      } else {
-        this.showMessage('Cancelled Delete!');
-      }
-    });
   }
-  private showMessage(message): void {
-    this.flash.showFlashMessage({
-        messages: [message],
-        dismissible: true,
-        timeout: 10000,
-        type: 'info'
-    });
+
+  onCancel(): void {
+
+  }
+
+  redirect(): void {
+    this.router.navigate(['/aircraft']);
+  }
+
+  get f() {
+    return this.uavConfigForm.controls;
   }
 }

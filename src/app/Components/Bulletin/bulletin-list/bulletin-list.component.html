@@ -1,1 +1,41 @@
-<p>bulletin-list works!</p>
+<div class="container card-list">
+    <div class="row">
+        <div class="col-auto mr-auto">
+            <h4>Bulletins</h4>
+        </div>
+        <div class="col-auto">
+            <a [routerLink]="['/bulletins/inactive']" 
+                routerLinkActive="router-link-active" >
+                <small><em>Looking for inactive bulletins?</em></small>
+            </a> 
+        </div>
+        <div class="col-auto">
+            <a [routerLink]="['/bulletins/new']" data-toggle="tooltip" data-placement="top" 
+                title="Add new bulletin" data-original-title="Tooltip on top">
+                <i class="material-icons">
+                    add_circle_outline
+                </i>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Bulletin #</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let bulletin of bulletinList">
+                    <tr (dblclick)="onBulletinClicked(bulletin._id)">
+                        <td>{{bulletin.bulletin_number}}</td>
+                        <td>{{bulletin.title}}</td>
+                        <td>{{bulletin.type}}</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -17,6 +17,19 @@ module.exports = (app) => {
         .patch(Aircraft.update, passport.authenticate('jwt', {session: false}))
         .delete(Aircraft.delete, passport.authenticate('jwt', {session: false}));
     
+    // Bulletin routes
+    const Bulletin = require('./controllers/bulletin.controller');
+    app.route('/bulletin')
+        .get(Bulletin.list, passport.authenticate('jwt', {session: false}))
+        .post(Bulletin.create, passport.authenticate('jwt', {session: false}));
+
+    app.route('/bulletin/inactive')
+        .get(Bulletin.listInactive, passport.authenticate('jwt', {session:false}));
+        
+    app.route('/bulletin/:id')
+        .get(Bulletin.read, passport.authenticate('jwt', {session:false}))
+        .patch(Bulletin.update, passport.authenticate('jwt', {session:false}))
+        .delete(Bulletin.delete, passport.authenticate('jwt', {session:false}));
 
     // Shelter Routes
     const Shelter = require('./controllers/shelter.controller');

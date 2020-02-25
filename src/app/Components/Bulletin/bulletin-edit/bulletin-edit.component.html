@@ -1,1 +1,112 @@
-<p>bulletin-edit works!</p>
+<div class="container">
+    <div class="card text-white bg-primary mb-3">
+        <div class="card-header"></div>
+        <div class="card-body">
+            <form [formGroup]="bulletinForm" novalidate>
+                <div class="form-group">
+                    <label for="bulletin_number">Bulletin Number<span class="required">*</span></label>
+                    <input 
+                    type="text" 
+                    name="bulletin_number" 
+                    id="bulletin_number"
+                    class="form-control"
+                    placeholder="ex. AB 12-1234"
+                    formControlName="bulletin_number"
+                    [ngClass]="{
+                        'is-valid': f.bulletin_number.valid && (f.bulletin_number.touched || f.bulletin_number.dirty),
+                        'is-invalid': f.bulletin_number.invalid && (f.bulletin_number.touched || f.bulletin_number.dirty)}">
+                    <div class="form-control-feedback"
+                        *ngIf="f.bulletin_number.errors && (f.bulletin_number.errors.required && f.bulletin_number.touched)">
+                    <small><em class="required">Bulletin Number is required</em></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="title">Bulletin Title<span class="required">*</span></label>
+                    <input 
+                        type="text" 
+                        name="title" 
+                        id="title"
+                        class="form-control"
+                        placeholder=""
+                        formControlName="title"
+                        [ngClass]="{
+                        'is-valid': f.title.valid && (f.title.touched || f.title.dirty),
+                        'is-invalid': f.title.invalid && (f.title.touched || f.title.dirty)}">
+                    <div class="form-control-feedback"
+                        *ngIf="f.title.errors && (f.title.errors.required && f.title.touched)">
+                        <small><em class="required">Title is required</em></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="type">Bulletin Type<span class="required">*</span></label>
+                    <input 
+                        type="text" 
+                        name="type" 
+                        id="type"
+                        class="form-control"
+                        placeholder=""
+                        formControlName="type"
+                        [ngClass]="{
+                        'is-valid': f.type.valid && (f.type.touched || f.type.dirty),
+                        'is-invalid': f.type.invalid && (f.type.touched || f.type.dirty)}">
+                    <div class="form-control-feedback"
+                        *ngIf="f.type.errors && (f.type.errors.required && f.type.touched)">
+                        <small><em class="required">Type is required</em></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="date_created">Date Added<span class="required">*</span></label>
+                    <input
+                        id="date_created" 
+                        type="date"
+                        class="form-control"
+                        formControlName="date_created"
+                        [ngClass]="{
+                            'is-valid': f.date_created.valid && (f.date_created.touched || f.date_created.dirty),
+                            'is-invalid': f.date_created.invalid && (f.date_created.touched || f.date_created.dirty)}">
+                    <div *ngIf="f.date_created.invalid && (f.date_created.touched)" class="invalid-feedback">Recon Date is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="created_by">Created By <span class="required">*</span></label>
+                    <input class="form-control" 
+                        type="text" name="created_by"
+                        formControlName="created_by" 
+                        [ngClass]="{
+                            'is-valid': f.created_by.valid && (f.created_by.touched || f.created_by.dirty)
+                        }">
+                    <div class="form-control-feedback"
+                        *ngIf="f.created_by.errors && (f.created_by.errors.required && f.created_by.dirty)">
+                        <small><em class="required">Technician name required</em></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input
+                            class="custom-control-input"
+                            type="checkbox"
+                            name="isActive"
+                            id="isActive"
+                            checked=""
+                            formControlName="isActive">
+                        <label for="isActive" class="custom-control-label">Is Active?</label>
+                    </div>
+                </div>
+                <!-- <div class="form-group">
+                    <label for="bulletinURL">Bulletin Link</label>
+                    <input type="file"
+                        #file
+                        name="bulletinURL" 
+                        id="bulletinURL"
+                        class="form-control"
+                        formControlName="bulletinURL"
+                        (change)="onFileSelected()">
+                </div> -->
+                <div class="btn-group">
+                    <button type="button" *ngIf="!isNew" class="btn btn-danger" (click)="onDelete()">Delete</button>
+                    <button type="button" class="btn btn-default" (click)="onCancel()">Cancel</button>
+                    <button type="button" class="btn btn-success" [disabled]="!bulletinForm.valid" (click)="onSubmit()">Submit</button>
+                </div>           
+            </form>
+        </div>
+    </div>
+</div>
