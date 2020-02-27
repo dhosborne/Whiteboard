@@ -30,7 +30,12 @@ const UAVConfigSchema = new Schema({
     wspm: {type: String},
     ais: {type: String},
     harvester: {type: String},
-    cbanddiplex: {type: String},    
+    cbanddiplex: {type: String},
+    belongsTo: {
+        type: mongoose.Types.ObjectId, 
+        unique: true, 
+        required: true
+    } 
 },
 {collection: 'UAV_Configurations'});
 

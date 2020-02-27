@@ -5,6 +5,7 @@ import { AircraftService } from '../../../Services/aircraft.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IssueService } from '../../../Services/issue.service';
 import { CommonService } from 'src/app/Services/common.service';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-aircraft-details',
@@ -46,6 +47,9 @@ export class AircraftDetailsComponent implements OnInit {
 
   onEditClick(): void {
     this.router.navigate(['/aircrafts/' + this.aircraft._id + '/edit']);
+  }
+  onUavConfigClick(): void {
+    this.router.navigate(['/aircrafts/' + this.aircraft._id + '/uavconfig']);
   }
 
 }

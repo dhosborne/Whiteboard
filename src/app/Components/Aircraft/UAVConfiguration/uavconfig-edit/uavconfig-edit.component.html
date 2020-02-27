@@ -13,14 +13,20 @@
                 </div>
                 <div class="form-group">
                     <label for="electrical">Electrical System</label>
-                    <select name="electrical" id="electrial">
+                    <select
+                        formControlName="electrical" 
+                        name="electrical" 
+                        class="form-control">
                         <option value="DC Power">DC Power</option>
                         <option value="DC Power + DDBA">DC Power + DDBA</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="transponder">Transponder Type</label>
-                    <select formControlName="transponder">
+                    <select 
+                        formControlName="transponder"
+                        name="transponder"
+                        class="form-control">
                         <option value="Mode 4">Mode 4</option>
                         <option value="Mode S">Mode S</option>
                         <option value="TCAS">TCAS</option>
@@ -29,14 +35,20 @@
                 </div>
                 <div class="form-group">
                     <label for="transpondermodel">Transponder Model</label>
-                    <select formControlName="transpondermodel">
+                    <select 
+                        formControlName="transpondermodel"
+                        name="transpondermodel"
+                        class="form-control">
                         <option value="APX-119">APX-119</option>
                         <option value="DPX-7">DPX-7</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="eoir">EO/IR Type</label>
-                    <select formControlName="eoir">
+                    <select 
+                        formControlName="eoir"
+                        name="eoir"
+                        class="form-control">
                         <option value="None">None</option>
                         <option value="MTS-A">MTS-A</option>
                         <option value="MTS-B">MTS-B</option>
@@ -44,7 +56,10 @@
                 </div>
                 <div class="form-group">
                     <label for="radartype">Radar Type</label>
-                    <select formControlName="radartype">
+                    <select 
+                        formControlName="radartype"
+                        name="radartype"
+                        class="form-control">
                         <option value="None">None</option>
                         <option value="Lynx SAR">Lynx SAR</option>
                         <option value="Maritime">Maritime</option>
@@ -54,7 +69,10 @@
                 </div>
                 <div class="form-group">
                     <label for="network">Payload Network</label>
-                    <select formControlName="network">
+                    <select 
+                        formControlName="network"
+                        name="network"
+                        class="form-control">
                         <option value="None">None</option>
                         <option value="Airborne Router">Airborne Router</option>
                         <option value="BADDC">BADDC</option>
@@ -62,7 +80,10 @@
                 </div>
                 <div class="form-group">
                     <label for="rftray">RF Tray Omni/Dir 2</label>
-                    <select formControlName="rftray">
+                    <select 
+                        formControlName="rftray"
+                        name="rftray"
+                        class="form-control">
                         <option value="Omni">Omni</option>
                         <option value="Directional">Directional</option>
                         <option value="Both">Both</option>
@@ -70,7 +91,10 @@
                 </div>
                 <div class="form-group">
                     <label for="videoencodertype">Video Encoder Type</label>
-                    <select formControlName="videoencodertype">
+                    <select 
+                        formControlName="videoencodertype"
+                        name="videoencodertype"
+                        class="form-control">
                         <option value="None">None</option>
                         <option value="Enerdyne">Enerdyne</option>
                         <option value="Single H.264">Single H.264</option>
@@ -79,7 +103,10 @@
                 </div>
                 <div class="form-group">
                     <label for="audiomixer">Audio Mixer Type</label>
-                    <select formControlName="audiomixer">
+                    <select 
+                    formControlName="audiomixer"
+                    name="audiomixer"
+                    class="form-control">
                         <option value="None">None</option>
                         <option value="AAM">AAM</option>
                         <option value="AMC">AMC</option>
@@ -87,18 +114,28 @@
                 </div>
                 <div class="form-group">
                     <label for="arc210">ARC-210 Model</label>
-                    <select formControlName="arc210">
+                    <select 
+                        formControlName="arc210"
+                        name="arc210" 
+                        class="form-control">
                         <option value="1556">1556</option>
                         <option value="1851">1851</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="lostlink">Lost Link Timer</label>
-                    <input type="text" formControlName="lostlink">
+                    <input type="text" 
+                        formControlName="lostlink"
+                        name="lostlink"
+                        class="form-control" 
+                        value="96">
                 </div>
                 <div class="form-group">
                     <label for="saa">SAA Processor</label>
-                    <select formControlName="saa">
+                    <select 
+                    formControlName="saa"
+                    name="saa"
+                    class="form-control">
                         <option value="None">None</option>
                         <option value="BusBox">BusBox</option>
                         <option value="SAAP">SAAP</option>
@@ -106,7 +143,10 @@
                 </div>
                 <div class="form-group">
                     <label for="tcas">TCAS Type</label>
-                    <select formControlName="tcas">
+                    <select 
+                    formControlName="tcas"
+                    name="tcas"
+                    class="form-control">
                         <option value="None">None</option>
                         <option value="DC Power">DC Power</option>
                         <option value="AC Power">AC Power</option>
@@ -114,70 +154,100 @@
                 </div>
                 <div class="form-group">
                     <label for="airtoair">Air to Air Radar</label>
-                    <select formControlName="airtoair">
+                    <select 
+                    formControlName="airtoair"
+                    name="airtoair"
+                    class="form-control">
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="dualarc210">Dual ARC-210</label>
-                    <select formControlName="dualarc210">
+                    <select 
+                        formControlName="dualarc210"
+                        name="dualarc210" 
+                        class="form-control">
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="enc1hd">Video Encoder 1 HD</label>
-                    <select formControlName="enc1hd">
+                    <select 
+                        formControlName="enc1hd"
+                        name="enc1hd"
+                        class="form-control">
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="priblos">Primary BLOS Type</label>
-                    <select formControlName="priblos">
+                    <select 
+                        formControlName="priblos"
+                        name="priblos" 
+                        class="form-control">
                         <option value="KU">KU</option>
                         <option value="None">None</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="secblos">Secondary BLOS Type</label>
-                    <select formControlName="secblos">
+                    <select 
+                        formControlName="secblos"
+                        name="secblos"
+                        class="form-control">
                         <option value="Inmarsat">Inmarsat</option>
                         <option value="None">None</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="laseralt">Laser Altimeter</label>
-                    <select formControlName="laseralt">
+                    <select 
+                        formControlName="laseralt"
+                        name="laseralt"
+                        class="form-control">
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="wspm">WSPM</label>
-                    <select formControlName="wspm">
+                    <select 
+                        formControlName="wspm"
+                        name="wspm"
+                        class="form-control">
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="ais">AIS</label>
-                    <select formControlName="ais">
+                    <select 
+                        formControlName="ais"
+                        name="ais"
+                        class="form-control">
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="harvester">Harvester</label>
-                    <select formControlName="harvester">
+                    <select 
+                        formControlName="harvester"
+                        name="harvester"
+                        class="form-control">
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="cbanddiplex">Enhanced C-Band Diplexer</label>
-                    <select formControlName="cbanddiplex">
+                    <select 
+                        formControlName="cbanddiplex"
+                        name="cbanddiplex" 
+                        class="form-control">
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>

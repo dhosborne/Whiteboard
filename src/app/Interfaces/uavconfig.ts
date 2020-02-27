@@ -1,4 +1,5 @@
 export interface IUavConfig {
+    _id: string;
     asset: string;
     electrical: string;
     transponder: string;
@@ -23,4 +24,5 @@ export interface IUavConfig {
     ais: string;
     harvester: string;
     cbanddiplex: string;
+    belongsTo: string;
 }

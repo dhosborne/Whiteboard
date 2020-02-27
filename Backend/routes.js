@@ -76,11 +76,10 @@ module.exports = (app) => {
 
     const UavConfig = require('./controllers/uavconfig.controller')
     app.route('/uavconfig')
-        .get(UavConfig.list, passport.authenticate('jwt', {session: false}))
-        .post(UavConfig.create, passport.authenticate('jwt', {session: false}));
+        .post(UavConfig.createConfig, passport.authenticate('jwt', {session: false}));
     
     app.route('/uavconfig/:id')
-        .get(UavConfig.read, passport.authenticate('jwt', {session: false}))
+        .get(UavConfig.getConfig, passport.authenticate('jwt', {session: false}))
         .patch(UavConfig.update, passport.authenticate('jwt', {session: false}))
         .delete(UavConfig.delete, passport.authenticate('jwt', {session: false}));
 

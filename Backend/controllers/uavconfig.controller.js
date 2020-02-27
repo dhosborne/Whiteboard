@@ -1,134 +1,108 @@
 'use strict'
-const Config = require('../models/uavconfig.model');
+const UAVConfig = require('../models/uavconfig.model');
 const Auth = require('./auth.controller');
+const mongoose = require('mongoose');
 
-
-exports.list = (req, res) => {
-    log('Uavconfig list requested');
+exports.getConfig = (req, res) => {
     var token = Auth.getToken(req.headers);
-    if (token) {
-        log('Auth token found...');
-        Config.find({})
-        .sort({tail_number: 1})
-        .exec((err, configs) => {
-            if (err) {
-                log(err.message + '\n');
-                res.json({status:500, success:false, alert: 'danger',  message:err.message});
-            } else {
-                log('sent\n');
-                res.json(configs);
-            }
-        });        
-    } else {
-        log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, alert: 'danger',  message:'Unauthorized Request'});
-    }
-
-};
-
-exports.create = (req, res) => {
-    log('Create UAVConfig request...');
-    var token = Auth.getToken(req.headers);
-    if (token) {
-        log('Auth Token Found...')
-        const uavconfig = new Config(req.body);
-        uavconfig.save((err, config) => {
-            if(err) {
-                log(err.message + '\n');
-                res.json({status:500, success:false, alert: 'danger',  message:err.message});
-            } else {
-                log('sent\n');
-                res.json({status:201, success: true, alert: 'success',   message: 'Configuration Successfully Added', config});
-            }
-        });
-    } else {
-        log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, alert: 'danger',  message:'Unauthorized Request'});
-    }
-
-};
-
-exports.read = (req, res) => {
-    log('Uavconfig id: ' + req.params.id + ' info requested');
-    var token = Auth.getToken(req.headers);
-    if (token) {
-        log('Auth token found...')
+    if(token) {
         if(mongoose.Types.ObjectId.isValid(req.params.id)){
-            Config.findById(req.params.id, (err, config) => {
-                if (err) {
-                    log(err.message + '\n')
-                    res.json({status:500, success:false, alert: 'danger',  message:err.message});
+            UAVConfig.findOne({belongsTo: req.params.id}, (err, results) =>{
+                if(err) {
+                    return err(res, err.message);
                 } else {
-                    log('sent\n');
-                    res.json(config);           
-                }
-            });              
-        } else {
-            log(err.message + '\n');
-            res.json({status:400, success:false, message: 'UAVConfig id: ' + req.params.id + ' is not a valid id'});            
-        }
-         
-    } else {
-        log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, alert: 'danger',  message:'Unauthorized Request'});
-    }
-     
-};
-
-exports.update = (req, res) => {
-    log('UAVconfig id: ' + req.params.id + ' update requested...');
-    var token = Auth.getToken(req.headers);
-    if (token) {
-        log('Auth token found...');
-        console.log(JSON.parse(body));
-        if (mongoose.Types.ObjectId.isValid(req.params.id)){
-            Config.findByIdAndUpdate({_id: req.params.id}, {$set: req.body}, (err, result) => {
-                if (err) {
-                    log(err.message + '\n');
-                    res.json({status:500, success:false, alert: 'danger',  message:err.message});
-                } else {
-                    log('sent\n');
-                    res.json({status:200, success: true, alert: 'success', message: 'UAV Confg updated', result});
+                    return success(res, '', results);
                 }
             });
-        } else {
-            log(err.message + '\n');
-            res.json({status:400, success:false, message: 'UAVConfig id: ' + req.params.id + ' is not a valid id'});            
         }
-
     } else {
-        log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, alert: 'danger',  message:'Unauthorized Request'});
+        return unauthorized(res);
     }
 };
 
-exports.delete = (req, res) =>{
-    log('Delete UAV Config id: ' + req.params.id + ' delete request...');
+exports.createConfig = (req, res) => {
     var token = Auth.getToken(req.headers);
-
-    if (token ) {
-        log('Auth token found...');
-        if (mongoose.Types.ObjectId.isValid(req.params.id)) {
-            Config.deleteOne({_id: req.params.id}, (err, result) => {
-                if (err) {
-                    log(err.message + '\n');
-                    res.json({status:500, success:false, alert: 'danger',  message:err.message});
+    if(token) {
+        if(mongoose.Types.ObjectId.isValid(req.body.belongsTo)) {
+            const config = new UAVConfig(req.body);
+            config.save((err, results) => {
+                if(err){
+                    return failure(res, err.message);
                 } else {
-                    log('sent\n');
-                    res.json({status:200, success: true, alert: 'success', message: 'UAV Configuration Deleted Successfully'});
+                    return success(res, 'UAV Configuration saved', results);
                 }
             })
         } else {
-            log(err.message + '\n');
-            res.json({status:400, success:false, alert: 'danger', message: 'UAVConfig id: ' + req.params.id + ' is not a valid id'});
-        }        
+            return failure(res, 'BelongsTo is missing or is not a valid MongooseId')
+        }
     } else {
-        log('Unauthorized Request Denied\n');
-        return res.json({status:401, success: false, alert: 'danger',  message:'Unauthorized Request'});        
+        return unauthorized(res);
     }
+};
 
+exports.update = (req, res) => {
+    var token = Auth.getToken(req.headers);
+    if(token){
+        if(mongoose.Types.ObjectId.isValid(req.params.id)) {
+            UAVConfig.findOneAndUpdate({belongsTo: mongoose.Types.ObjectId(req.body.belongsTo)}, {$set: req.body}, (err, results) => {
+                if(err) {
+                    return failure(res, err.message);
+                } else {
+                    return success(res, 'UAV Configuration updated', results);
+                }
+            });
+        } else {
+            return failure(res, 'UAV Configuration id is missing or invalid');
+        }
+    } else {
+        return unauthorized(res);
+    }
+};
+
+exports.delete = (req, res) => {
+    var token = Auth.getToken(req.headers);
+
+    if(token){
+        if(mongoose.Types.ObjectId.isValid(req.body.belongsTo)){
+            UAVConfig.deleteOne({belongsTo: mongoose.ObjectId(req.body.belongsTo)}, (err, results) => {
+                if(err) {
+                    return failure(res, err.message)
+                } else {
+                    return success(res, 'UAV Configuration deleted', results);
+                }
+            });
+        } else {
+            return failure(res, 'UAV Configuration Id is invalid');
+        }
+    } else {
+        return unauthorized(res);
+    }
+};
+
+function unauthorized(res) {
+    return res.json({
+        status: 401,
+        success: false,
+        alert: 'danger',
+        message: 'Unathorized Request: token missing'
+    });
 }
 
-function log(text) {
-    process.stdout.write(text);
+function failure(res, message) {
+    return res.json({
+        status: 500,
+        success: false,
+        alert: 'info',
+        message: message
+    });
+}
+
+function success(res, messages, results){
+    return res.json({
+        status: 200,
+        success: true,
+        alert: 'success',
+        message: messages,
+        results: results
+    })
 }

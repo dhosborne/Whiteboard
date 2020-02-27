@@ -1,1 +1,119 @@
-<p>uavconfig-details works!</p>
+<div class="container card-edit">
+    <div class="card text-white bg-primary mb-3">
+        <ng-container *ngIf="config; else noconfig">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <i class="material-icons" (click)="goBack()">
+                            chevron_left
+                        </i>
+                    </div>
+                    <div class="col-sm-9">
+                        <h4>CBP{{config?.asset}} - UAV Configuration</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover" (dblclick)="onEditClick()">
+                    <tbody>
+                        <tr>
+                            <td>Electrical System</td>
+                            <td>{{config.electrical}}</td>
+                        </tr>
+                        <tr>
+                            <td>Transponder Type</td>
+                            <td>{{config.transponder}}</td>
+                        </tr>
+                        <tr>
+                            <td>Transponder Model</td>
+                            <td>{{config.transpondermodel}}</td>
+                        </tr>
+                        <tr>
+                            <td>EO/IR Type</td>
+                            <td>{{config.eoir}}</td>
+                        </tr>
+                        <tr>
+                            <td>Radar Type</td>
+                            <td>{{config.radartype}}</td>
+                        </tr>
+                        <tr>
+                            <td>Payload Network</td>
+                            <td>{{config.network}}</td>
+                        </tr>
+                        <tr>
+                            <td>RF Tray Omni/Dir 2</td>
+                            <td>{{config.rftray}}</td>
+                        </tr>
+                        <tr>
+                            <td>Video Encoder Type</td>
+                            <td>{{config.videoencodertype}}</td>
+                        </tr>
+                        <tr>
+                            <td>Audio Mixer Type</td>
+                            <td>{{config.audiomixer}}</td>
+                        </tr>
+                        <tr>
+                            <td>ARC-210 Model</td>
+                            <td>{{config.arc210}}</td>
+                        </tr>
+                        <tr>
+                            <td>Lost Link Timer</td>
+                            <td>{{config.lostlink}}</td>
+                        </tr>
+                        <tr>
+                            <td>SAA Processor</td>
+                            <td>{{config.saa}}</td>
+                        </tr>
+                        <tr>
+                            <td>TCAS Type</td>
+                            <td>{{config.tcas}}</td>
+                        </tr>
+                        <tr>
+                            <td>Air to Air Radar</td>
+                            <td>{{config.airtoair}}</td>
+                        </tr>
+                        <tr>
+                            <td>Dual ARC-210</td>
+                            <td>{{config.dualarc210}}</td>
+                        </tr>
+                        <tr>
+                            <td>Video Encoder 1 HD</td>
+                            <td>{{config.enc1hd}}</td>
+                        </tr>
+                        <tr>
+                            <td>Primary BLOS Type</td>
+                            <td>{{config.priblos}}</td>
+                        </tr>
+                        <tr>
+                            <td>Secondary BLOS Type</td>
+                            <td>{{config.secblos}}</td>
+                        </tr>
+                        <tr>
+                            <td>Laser Altimeter</td>
+                            <td>{{config.laseralt}}</td>
+                        </tr>
+                        <tr>
+                            <td>WSPM</td>
+                            <td>{{config.wspm}}</td>
+                        </tr>
+                        <tr>
+                            <td>AIS</td>
+                            <td>{{config.ais}}</td>
+                        </tr>
+                        <tr>
+                            <td>Harvester</td>
+                            <td>{{config.harvester}}</td>
+                        </tr>
+                        <tr>
+                            <td>Enhanced C-Band Diplexer</td>
+                            <td>{{config.cbanddiplex}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>            
+        </ng-container>
+    </div>
+</div>
+<ng-template #noconfig>
+    <a (click)="onEditClick()">no config found, create one?</a>
+</ng-template>

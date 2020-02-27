@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AircraftService } from '../Services/aircraft.service';
-import { Resolve } from '@angular/router';
+import { Resolve, ActivatedRoute } from '@angular/router';
 
 @Injectable()
 export class AircraftResolver implements Resolve<any> {
-    constructor(private aircraftService: AircraftService) {}
+    constructor(
+        private route: ActivatedRoute,
+        private aircraftService: AircraftService) {}
     resolve() {
         return this.aircraftService.getAircrafts();
     }

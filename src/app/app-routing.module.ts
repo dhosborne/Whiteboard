@@ -68,7 +68,8 @@ const appRoutes: Routes = [
       component: DashboardComponent,
       canActivate: [AuthGuard],
       runGuardsAndResolvers: 'always',
-      data: {title: 'Welcome to White Board'}},
+      data: {title: 'Welcome to White Board'}
+    },
 
     {path: 'admin',
       canActivate: [AuthGuard, AdminGuard],
@@ -85,11 +86,12 @@ const appRoutes: Routes = [
 
 
     {path: 'bulletins',
-      canActivate: [AuthGuard],
-      resolve: {bulletins: BulletinResolver},
-      data: { title: 'Bulletins'},
       children: [
-        {path: '', component: BulletinListComponent, canActivate: [AuthGuard], data: {title: 'Bulletin List'}},
+        {path: '', pathMatch: 'full',
+          component: BulletinListComponent,
+          resolve: {bulletins: BulletinResolver},
+          canActivate: [AuthGuard],
+          data: {title: 'Bulletin List'}},
         {path: 'inactive', component: BulletinInactiveComponent, canActivate: [AuthGuard], data: {title: 'Inactive Bulletins'}},
         {path: 'new', component: BulletinEditComponent, canActivate: [AuthGuard], data: {title: 'New Bulletin'}},
         {path: ':id/details', component: BulletinDetailsComponent, canActivate: [AuthGuard], data: {title: 'Bulletin Details'}},
@@ -97,18 +99,25 @@ const appRoutes: Routes = [
       ]
     },
 
-
-
     {path: 'aircrafts',
-      component: AircraftListComponent,
       canActivate: [AuthGuard],
-      resolve: {aircrafts: AircraftResolver},
-      data: {title: 'Aircraft List'}},
-    {path: 'aircrafts/new', component: AircraftEditComponent, canActivate: [AuthGuard], data: {title: 'New Aircraft'}},
-    {path: 'aircrafts/inactive', component: AircraftInactiveComponent, canActivate: [AuthGuard], data: {title: 'Inactive Aircrafts'}},
-    {path: 'aircrafts/:id', component: AircraftListComponent, canActivate: [AuthGuard], data: {title: 'Aircraft List'}},
-    {path: 'aircrafts/:id/details', component: AircraftDetailsComponent, canActivate: [AuthGuard], data: {title: 'Aircraft Details'}},
-    {path: 'aircrafts/:id/edit', component: AircraftEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Aircraft'}},
+      children:
+      [
+        {path: '',
+          component: AircraftListComponent,
+          canActivate: [AuthGuard],
+          resolve: {aircrafts: AircraftResolver},
+          data: {title: 'Aircraft List'},
+          pathMatch: 'full'},
+        {path: 'new', component: AircraftEditComponent, data: {title: 'New Aircraft'}},
+        {path: 'inactive', component: AircraftInactiveComponent, data: {title: 'Inactive Aircrafts'}},
+        {path: ':id', component: AircraftListComponent, data: {title: 'Aircraft List'}},
+        {path: ':id/details', component: AircraftDetailsComponent, data: {title: 'Aircraft Details'}},
+        {path: ':id/edit', component: AircraftEditComponent, data: {title: 'Edit Aircraft'}},
+        {path: ':id/uavconfig', component: UavconfigDetailsComponent, data: {title: 'Uav Configuration'}},
+        {path: ':id/uavconfig/edit', component: UavconfigEditComponent, data: {title: 'Edit Configuration'}}
+      ]
+    },
 
     {path: 'shelters',
       component: ShelterListComponent,
