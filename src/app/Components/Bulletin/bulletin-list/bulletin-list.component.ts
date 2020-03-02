@@ -30,7 +30,7 @@ export class BulletinListComponent implements OnInit {
   }
 
   onBulletinClicked(id: string): void {
-    this.router.navigate(['bulletins/' + id + '/detials']);
+    this.router.navigate(['bulletins/' + id + '/details']);
   }
 
   inActiveClicked(): void {

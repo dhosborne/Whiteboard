@@ -86,16 +86,17 @@ const appRoutes: Routes = [
 
 
     {path: 'bulletins',
-      children: [
+      canActivate: [AuthGuard],
+      children:
+      [
         {path: '', pathMatch: 'full',
           component: BulletinListComponent,
           resolve: {bulletins: BulletinResolver},
-          canActivate: [AuthGuard],
           data: {title: 'Bulletin List'}},
-        {path: 'inactive', component: BulletinInactiveComponent, canActivate: [AuthGuard], data: {title: 'Inactive Bulletins'}},
-        {path: 'new', component: BulletinEditComponent, canActivate: [AuthGuard], data: {title: 'New Bulletin'}},
-        {path: ':id/details', component: BulletinDetailsComponent, canActivate: [AuthGuard], data: {title: 'Bulletin Details'}},
-        {path: ':id/edit', component: BulletinEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Bulletin'}}
+        {path: 'inactive', component: BulletinInactiveComponent, data: {title: 'Inactive Bulletins'}},
+        {path: 'new', component: BulletinEditComponent, data: {title: 'New Bulletin'}},
+        {path: ':id/details', component: BulletinDetailsComponent, data: {title: 'Bulletin Details'}},
+        {path: ':id/edit', component: BulletinEditComponent, data: {title: 'Edit Bulletin'}}
       ]
     },
 
@@ -119,49 +120,65 @@ const appRoutes: Routes = [
       ]
     },
 
-    {path: 'shelters',
-      component: ShelterListComponent,
-      canActivate: [AuthGuard],
-      resolve: {shelters: ShelterResolver},
-      data: {title: 'Shelter List'}},
-    {path: 'shelters/new', component: ShelterEditComponent, canActivate: [AuthGuard], data: {title: 'New Shelter'}},
-    {path: 'shelters/inactive', component: ShelterInactiveComponent, canActivate: [AuthGuard], data: {title: 'Inactive Shelters'}},
-    {path: 'shelters/:id/details', component: ShelterDetailsComponent, canActivate: [AuthGuard], data: {title: 'New Shelter'}},
-    {path: 'shelters/:id/edit', component: ShelterEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Shelter'}},
+  {path: 'shelters',
+    canActivate: [AuthGuard],
+    children:
+    [
+      {path: '',
+        pathMatch: 'full',
+        component: ShelterListComponent,
+        resolve: {shelters: ShelterResolver},
+        data: {title: 'Shelter list'}
+      },
+      {path: 'new', component: ShelterEditComponent, canActivate: [AuthGuard], data: {title: 'New Shelter'}},
+      {path: 'inactive', component: ShelterInactiveComponent, canActivate: [AuthGuard], data: {title: 'Inactive Shelters'}},
+      {path: ':id/details', component: ShelterDetailsComponent, canActivate: [AuthGuard], data: {title: 'New Shelter'}},
+      {path: ':id/edit', component: ShelterEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Shelter'}},
+    ]
+
+  },
 
     {path: 'issues',
-      component: IssueListComponent,
-      resolve: {issues: IssuesResolver},
       canActivate: [AuthGuard],
-      data: {title: 'Issues List'}},
-    {path: 'issues/new', component: IssueEditComponent, canActivate: [AuthGuard], data: {title: 'New Issue'}},
-    {path: 'issues/:id/details', component: IssueDetailsComponent, canActivate: [AuthGuard], data: {title: 'Details'}},
-    {path: 'issues/:id/edit', component: IssueEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Issue'}},
+      children:
+      [
+        {path: '',
+          pathMatch: 'full',
+          component: IssueListComponent,
+          resolve: {issues: IssuesResolver},
+          data: {title: 'Issues List'}
+        },
+        {path: 'new', component: IssueEditComponent, canActivate: [AuthGuard], data: {title: 'New Issue'}},
+        {path: ':id/details', component: IssueDetailsComponent, canActivate: [AuthGuard], data: {title: 'Details'}},
+        {path: ':id/edit', component: IssueEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Issue'}},
+      ]
+    },
 
     {path: 'calibrations',
-      component: CalibrationListComponent,
-      resolve: { calList: CalibrationResolver},
       canActivate: [AuthGuard],
-      data: {title: 'Calibrations List'}
+      children:
+      [
+        {path: '',
+        component: CalibrationListComponent,
+        resolve: {calList: CalibrationResolver},
+        canActivate: [AuthGuard],
+        data: {title: 'Calibrations List'}},
+        {path: 'new', component: CalibrationEditComponent, data: {title: 'New Calibration'}},
+        {path: 'inactive', component: CalibrationInactiveComponent, data: {title: 'Inactive Calibrations'}},
+        {path: ':id/details', component: CalibrationDetailsComponent, data: {title: 'Calibrations Details'}},
+        {path: ':id/edit', component: CalibrationEditComponent, data: {title: 'Edit Calibration'}},
+      ]
     },
-    {path: 'calibrations/new', component: CalibrationEditComponent, canActivate: [AuthGuard], data: {title: 'New Calibration'}},
-    {path: 'calibrations/inactive', component: CalibrationInactiveComponent,
-      canActivate: [AuthGuard], data: {title: 'Inactive Calibrations'}},
-    {path: 'calibrations/:id/details', component: CalibrationDetailsComponent,
-      canActivate: [AuthGuard], data: {title: 'Calibrations Details'}},
-    {path: 'calibrations/:id/edit', component: CalibrationEditComponent, canActivate: [AuthGuard], data: {title: 'Edit Calibration'}},
-
-    {path: 'uavconfig/:id', component: UavconfigDetailsComponent, canActivate: [AuthGuard], data: {title: 'UAV Config Details'}},
-    {path: 'uavconfig/:id/edit', component: UavconfigEditComponent, canActivate: [AuthGuard], data: {title: 'UAV Config Edit'}},
-
-
     // redirect bad and empty paths to dashboard component
     {path: '**', redirectTo: '/dashboard', pathMatch: 'full', canActivate: [AuthGuard]},
   ];
+
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes, {onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
+
+
 export class AppRoutingModule {
 
 
