@@ -70,6 +70,7 @@ import { BulletinListComponent } from './Components/Bulletin/bulletin-list/bulle
 import { BulletinEditComponent } from './Components/Bulletin/bulletin-edit/bulletin-edit.component';
 import { BulletinDetailsComponent } from './Components/Bulletin/bulletin-details/bulletin-details.component';
 import { BulletinInactiveComponent } from './Components/Bulletin/bulletin-inactive/bulletin-inactive.component';
+import { ReferenceListComponent } from './Components/Reference/reference-list/reference-list.component';
 //#endregion
 
 @NgModule({
@@ -111,6 +112,7 @@ import { BulletinInactiveComponent } from './Components/Bulletin/bulletin-inacti
     BulletinEditComponent,
     BulletinDetailsComponent,
     BulletinInactiveComponent,
+    ReferenceListComponent,
   ],
   imports: [
     BrowserModule,

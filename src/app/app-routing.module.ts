@@ -56,6 +56,7 @@ import { CalibrationResolver } from './Resolvers/calibration.resolver';
 import { ShelterResolver } from './Resolvers/shelter.resolver';
 import { AircraftResolver } from './Resolvers/aircraft.resolver';
 import { BulletinResolver } from './Resolvers/bulletin.resolver';
+import { ReferenceListComponent } from './Components/Reference/reference-list/reference-list.component';
 //#endregion
 
 const appRoutes: Routes = [
@@ -167,6 +168,14 @@ const appRoutes: Routes = [
         {path: 'inactive', component: CalibrationInactiveComponent, data: {title: 'Inactive Calibrations'}},
         {path: ':id/details', component: CalibrationDetailsComponent, data: {title: 'Calibrations Details'}},
         {path: ':id/edit', component: CalibrationEditComponent, data: {title: 'Edit Calibration'}},
+      ]
+    },
+    {
+      path: 'reference',
+      canActivate: [AuthGuard],
+      children:
+      [
+        {path: '', component: ReferenceListComponent, data: {title: 'Quick Reference'}}
       ]
     },
     // redirect bad and empty paths to dashboard component
