@@ -14,68 +14,70 @@
         </div>
     </div>
     <div class="row">
-        <ul class="nav nav-tabs">
-            <ng-container *ngFor="let av of aircraftList">
-                <li class="nav-item" >
-                    <a class="nav-link"
-                        [ngClass]="{
-                            'active': av.tailNumber === tailSelected,
-                            '': av.tailNumber !== tailSelected
-                        }"
-                    (click)="tabSelected(av.tailNumber)">{{av.tailNumber}}</a>
-                </li>
-            </ng-container>
-        </ul>
-    </div>
-    <div class="row">
-        <div id="tabContent" class="tab-content" *ngIf="aircraft; else nothing">
-            <div class="card text-white bg-primary mb-3 card-list">
-                <div class="card-header clickable">
-                    <div class="row" (dblclick)="aircraftClicked(aircraft._id)">
-                        <div class="col-auto mr-auto">
-                            {{aircraft?.tailNumber}}
-                        </div>
-                        <div class="col-auto">
-                            Batts Due: {{aircraft?.reconDate | moment: [28, 'days'] | date: 'MM/dd'}}
-                        </div>
-                    </div>                    
-                </div>
-
-                <div class="card-body" #body>
-                    <div class="row">
-                        <div class="col-auto mr-auto"><legend>Issues</legend></div>
-                        <div class="col-auto">
-                            <a [routerLink]="['/issues/new']" [queryParams]="{asset: tailSelected}"  routerLinkActive="router-link-active"
-                                data-toggle="tooltip" data-placement="top" title="Add new issue to {{aircraft.tailNumber}}" data-original-title="Tooltip on top" >
-                                <i class="material-icons" >add</i>
-                            </a>
-                        </div>
+        <div class="col-lg-12">
+            <ul class="nav nav-tabs">
+                <ng-container *ngFor="let av of aircraftList">
+                    <li class="nav-item" >
+                        <a class="nav-link"
+                            [ngClass]="{
+                                'active': av.tailNumber === tailSelected,
+                                '': av.tailNumber !== tailSelected
+                            }"
+                        (click)="tabSelected(av.tailNumber)">{{av.tailNumber}}</a>
+                    </li>
+                </ng-container>
+            </ul>            
+        </div>
+        <div class="col-lg-12">
+            <div id="tabContent" class="tab-content" *ngIf="aircraft; else nothing">
+                <div class="card text-white bg-primary mb-3 card-list">
+                    <div class="card-header clickable">
+                        <div class="row" (dblclick)="aircraftClicked(aircraft._id)">
+                            <div class="col-auto mr-auto">
+                                {{aircraft?.tailNumber}}
+                            </div>
+                            <div class="col-auto">
+                                Batts Due: {{aircraft?.reconDate | moment: [28, 'days'] | date: 'MM/dd'}}
+                            </div>
+                        </div>                    
                     </div>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Tile</th>
-                                <th scope="col">Date</th>
-                                <th scope="col"></th>
-                                <th scope="col">Creator</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <ng-container *ngFor="let issue of issuesList">
-                                <tr *ngIf="!issue.completed" (dblclick)="issueClicked(issue._id)">
-                                    <td>{{issue.title}}</td>
-                                    <td>{{issue.date}}</td>
-                                    <td>{{issue.description | slice: 0:75}}</td>
-                                    <td>{{issue.createdBy}}</td>
-                                </tr>                                    
-                            </ng-container>
-                        </tbody>
-                    </table>
+    
+                    <div class="card-body" #body>
+                        <div class="row">
+                            <div class="col-auto mr-auto"><legend>Issues</legend></div>
+                            <div class="col-auto">
+                                <a [routerLink]="['/issues/new']" [queryParams]="{asset: tailSelected}"  routerLinkActive="router-link-active"
+                                    data-toggle="tooltip" data-placement="top" title="Add new issue to {{aircraft.tailNumber}}" data-original-title="Tooltip on top" >
+                                    <i class="material-icons" >add</i>
+                                </a>
+                            </div>
+                        </div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tile</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col"></th>
+                                    <th scope="col">Creator</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let issue of issuesList">
+                                    <tr *ngIf="!issue.completed" (dblclick)="issueClicked(issue._id)">
+                                        <td>{{issue.title}}</td>
+                                        <td>{{issue.date}}</td>
+                                        <td>{{issue.description | slice: 0:75}}</td>
+                                        <td>{{issue.createdBy}}</td>
+                                    </tr>                                    
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-        <ng-template #nothing>
-            <h6><em>Select a tab to display aircraft info</em></h6>
-        </ng-template>
     </div>
+    <ng-template #nothing>
+        <h6><em>Select a tab to display aircraft info</em></h6>
+    </ng-template>
 </div>
