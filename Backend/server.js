@@ -12,17 +12,18 @@ mongoose.Promise = require('bluebird');
 var options = {
     useNewUrlParser: true,
     useCreateIndex: true,
+    useUnifiedTopology: true,
     family: 4,
     promiseLibrary: require('bluebird'),
     user: config.username,
     pass: config.password,
 };
 
-mongoose.connect(config.database, options)
+mongoose.connect(config.uri, options)
 .catch((error) => {console.error(error)});
 
 mongoose.connection.on('connected', () => {
-    console.log('Mongoose connnected on ' + config.database);
+    console.log('Mongoose connnected');
 });
 
 mongoose.connection.on('error', (error) => {
