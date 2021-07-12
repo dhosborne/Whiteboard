@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CalibrationInactiveComponent } from './calibration-inactive.component';
 
@@ -6,7 +6,7 @@ describe('CalibrationInactiveComponent', () => {
   let component: CalibrationInactiveComponent;
   let fixture: ComponentFixture<CalibrationInactiveComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CalibrationInactiveComponent ]
     })

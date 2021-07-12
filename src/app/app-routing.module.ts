@@ -179,11 +179,11 @@ const appRoutes: Routes = [
       ]
     },
     // redirect bad and empty paths to dashboard component
-    {path: '**', redirectTo: '/dashboard', pathMatch: 'full', canActivate: [AuthGuard]},
+    { path: '**', redirectTo: '/dashboard', pathMatch: 'full' },
   ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes, {onSameUrlNavigation: 'reload'})],
+  imports: [RouterModule.forRoot(appRoutes, { onSameUrlNavigation: 'reload', relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 
